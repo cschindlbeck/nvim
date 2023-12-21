@@ -5,9 +5,9 @@ return {
         -- treesitter settings
         local config = require("nvim-treesitter.configs")
         config.setup({
-            ensure_installed = {"lua"},
-            highlight = {enable = true},
-            indent = {enable = true},
+            ensure_installed = { "lua" },
+            highlight = { enable = true },
+            indent = { enable = true },
         })
     end
 }
