@@ -1,9 +1,7 @@
 return {
     {
         "williamboman/mason.nvim",
-        config = function()
-            require("mason").setup({})
-        end
+        opts = {}
     },
     {
         "williamboman/mason-lspconfig.nvim",
@@ -19,7 +17,6 @@ return {
                 -- "dockerfile-language-server",
                 -- "eslint-lsp",
                 -- "eslint_d",
-                -- "flake8",
                 -- "hadolint",
                 -- "jedi-language-server",
                 -- "json-lsp",
@@ -38,6 +35,7 @@ return {
                 -- "xmlformatter",
                 -- "yaml-language-server",
                 -- "yamlfmt",
+                "yamlls",
                 -- "yamllint",
             }
         },
@@ -68,6 +66,7 @@ return {
             lspconfig.lua_ls.setup({})
             lspconfig.pyright.setup({})
             lspconfig.terraformls.setup({})
+            lspconfig.yamlls.setup({})
 
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
             vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
