@@ -74,9 +74,9 @@ return {
 
             -- Autoformat
             vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
-            -- vim.keymap.set('n', '<space>f', function()
-            --     vim.lsp.buf.format { async = true }
-            -- end, opts)
+            vim.keymap.set('n', '<space>f', function()
+                vim.lsp.buf.format { async = true }
+            end, opts)
         end
     },
 
