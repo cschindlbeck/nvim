@@ -1,7 +1,17 @@
 return {
     {
         "williamboman/mason.nvim",
-        opts = {}
+        -- should install automatically but doesnt
+        opts = {
+            -- options = {
+            -- ensure_installed = {
+            --     "flake8",
+            --     "shellcheck",
+            --     "shfmt",
+            --     "stylua",
+            -- }
+            -- }
+        }
     },
     {
         "williamboman/mason-lspconfig.nvim",
@@ -26,9 +36,6 @@ return {
                 -- "prettier",
                 "pyright",
                 -- "rust-analyzer",
-                -- "shellcheck",
-                -- "shfmt",
-                -- "stylua",
                 -- "tablo",
                 -- "texlab",
                 "terraformls",
