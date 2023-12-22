@@ -17,6 +17,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         opts = {
             ensure_installed = {
+                "bashls",
                 -- "clangd",
                 -- "cmake-language-server",
                 -- "codelldb",
