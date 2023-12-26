@@ -1,10 +1,9 @@
-# Neovim from scratch
+# ⚡ Neovim config
 
+Chris' neovim config files in lua based on 💤 lazy plugin manager
 
-Chris' neovim config
-Chris' neovim confi
+## 🔋 Includes
 
+- 3 selectable colorschemes
+- 4 selectable codepilots
 
-TODO
-
-add dir structure to modularize plugins
