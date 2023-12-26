@@ -24,19 +24,16 @@ return {
                 -- "codespell",
                 -- "cpplint",
                 -- "cpptools",
-                -- "docker-compose-language-service",
-                -- "dockerfile-language-server",
+                "docker_compose_language_service",
+                "dockerls",
                 -- "eslint-lsp",
                 -- "eslint_d",
-                -- "hadolint",
                 -- "jedi-language-server",
                 -- "json-lsp",
                 -- "llm-ls",
                 -- "lua-language-server",
                 "lua_ls",
-                -- "prettier",
                 "pyright",
-                -- "rust-analyzer",
                 -- "tablo",
                 -- "texlab",
                 "terraformls",
@@ -71,6 +68,9 @@ return {
         -- },
         config = function()
             local lspconfig = require("lspconfig")
+
+            lspconfig.dockerls.setup({})
+            lspconfig.docker_compose_language_service.setup({})
             lspconfig.lua_ls.setup({})
             lspconfig.pyright.setup({})
             lspconfig.terraformls.setup({})
