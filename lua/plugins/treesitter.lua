@@ -2,19 +2,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     build = ":TSUpdate",
     opts = {
-        ensure_installed = {
-            "bash",
-            "dockerfile",
-            "gitcommit",
-            "gitattributes",
-            "lua",
-            "markdown",
-            "markdown_inline",
-            "python",
-            "regex",
-            "vim",
-            "yaml",
-        },
+        auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
     }
