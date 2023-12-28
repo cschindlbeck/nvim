@@ -1,22 +1,40 @@
+-- none ls wraps command line tools such as linter and formatter as an LSP for neovim to process
 return {
-    "nvimtools/none-ls.nvim",
-    config = function()
-        local null_ls = require("null-ls")
-        null_ls.setup({
-            sources = {
-                -- formatting
-                null_ls.builtins.formatting.stylua,
-                null_ls.builtins.formatting.prettier,
+	"nvimtools/none-ls.nvim",
+	config = function()
+		local null_ls = require("null-ls")
+		null_ls.setup({
+			-- make sure these are installed in mason
+			sources = {
+				-- formatting
+				null_ls.builtins.formatting.black.with({
+					extra_args = {
+						"--line-length=120",
+						"--skip-string-normalization",
+					},
+				}),
+				null_ls.builtins.formatting.isort,
+				null_ls.builtins.formatting.stylua,
+				null_ls.builtins.formatting.shfmt,
 
-                -- diagnotics
-                -- null_ls.builtins.diagnostics.flake8,
+				-- diagnotics
+				null_ls.builtins.diagnostics.ansiblelint,
+				null_ls.builtins.diagnostics.hadolint,
+				null_ls.builtins.diagnostics.markdownlint,
+				-- null_ls.builtins.diagnostics.luacheck,
+				null_ls.builtins.diagnostics.pylama.with({
+					extra_args = { "--max-line-length=120" },
+				}),
+				null_ls.builtins.diagnostics.shellcheck,
+				null_ls.builtins.diagnostics.shellcheck, -- shell script diagnostics
+				null_ls.builtins.diagnostics.yamllint,
 
-                -- completion
-                null_ls.builtins.completion.luasnip,
-                null_ls.builtins.completion.spell,
-            },
-        })
+				-- completion
+				null_ls.builtins.completion.luasnip,
+				null_ls.builtins.completion.spell,
+			},
+		})
 
-        vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
-    end,
+		vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+	end,
 }
