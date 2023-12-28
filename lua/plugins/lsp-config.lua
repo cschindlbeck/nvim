@@ -1,17 +1,7 @@
 return {
 	{
 		"williamboman/mason.nvim",
-		-- should install automatically but doesnt
-		opts = {
-			-- options = {
-			-- ensure_installed = {
-			--     "flake8",
-			--     "shellcheck",
-			--     "shfmt",
-			--     "stylua",
-			-- }
-			-- }
-		},
+		opts = {},
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
@@ -87,5 +77,31 @@ return {
 				vim.lsp.buf.format({ async = true })
 			end, opts)
 		end,
+	},
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		opts = {
+			ensure_installed = {
+				"ansible-lint",
+				"black",
+				"docker-compose-language-service",
+				"dockerls",
+				"hadolint",
+				"isort",
+				"lua_ls",
+				"markdownlint",
+				"pylama",
+				"pyright",
+				"shfmt",
+				"shellcheck",
+				"stylua",
+				"terraformls",
+				"yaml-language-server",
+				"yamlfmt",
+				"yamllint",
+			},
+			auto_update = true,
+			run_on_start = true,
+		},
 	},
 }
