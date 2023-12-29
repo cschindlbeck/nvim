@@ -19,7 +19,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		-- this alternative should work, but it doesnt
+		-- this alternative should work, but it does not
 		-- opts = {
 		--   servers = {
 		--     lua_ls = {},
