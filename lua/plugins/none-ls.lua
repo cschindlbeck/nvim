@@ -21,7 +21,7 @@ return {
 				null_ls.builtins.formatting.shfmt,
 				-- null_ls.builtins.formatting.yamlfmt,
 
-				-- diagnotics
+				-- diagnostics
 				null_ls.builtins.diagnostics.ansiblelint,
 				null_ls.builtins.diagnostics.hadolint,
 				null_ls.builtins.diagnostics.markdownlint,

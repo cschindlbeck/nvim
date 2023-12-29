@@ -6,4 +6,3 @@ Chris' neovim config files in lua based on 💤 lazy plugin manager
 
 - 3 selectable colorschemes
 - 4 selectable codepilots
-
