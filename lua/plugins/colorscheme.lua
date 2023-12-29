@@ -57,4 +57,4 @@ local vscode = {
 	end,
 }
 
-return nord
+return vscode
