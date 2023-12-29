@@ -14,10 +14,12 @@ return {
 					},
 				}),
 				null_ls.builtins.formatting.isort,
-				null_ls.builtins.formatting.markdownlint,
+				null_ls.builtins.formatting.markdownlint.with({
+					extra_args = { "--max-line-length=120" },
+				}),
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.shfmt,
-				null_ls.builtins.formatting.yamlfmt,
+				-- null_ls.builtins.formatting.yamlfmt,
 
 				-- diagnotics
 				null_ls.builtins.diagnostics.ansiblelint,
@@ -28,7 +30,7 @@ return {
 					extra_args = { "--max-line-length=120" },
 				}),
 				null_ls.builtins.diagnostics.shellcheck, -- shell script diagnostics
-				null_ls.builtins.diagnostics.yamllint,
+				-- null_ls.builtins.diagnostics.yamllint,
 
 				-- completion
 				null_ls.builtins.completion.luasnip,
