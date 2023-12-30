@@ -14,11 +14,11 @@ local options = {
 	number = true, -- show line numbers
 	relativenumber = false, -- relative numbers
 	scrolloff = 15, -- stop scrolling at the top and bottom until the end
-	shiftwidth = 4, -- number of spaces in indentation
+	shiftwidth = 2, -- number of spaces in indentation
 	sidescrolloff = 8, -- same for the sides
-	softtabstop = 4, --
+	softtabstop = 2, --
 	swapfile = false, -- no annoying swap file
-	tabstop = 4, -- number of spaces for tab
+	tabstop = 2, -- number of spaces for tab
 }
 
 for k, v in pairs(options) do
