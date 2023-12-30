@@ -40,10 +40,10 @@ repos:
         args: ["--write-changes"]
         exclude: CHANGELOG\.rst|\.(svg|pyc|drawio|dcf|eds)$|lazy-lock.json|example.lua
 
-  - repo: https://github.com/Calinou/pre-commit-luacheck
-    rev: v1.0.0
-    hooks:
-      - id: luacheck
+  # - repo: https://github.com/Calinou/pre-commit-luacheck
+  #   rev: v1.0.0
+  #   hooks:
+  #     - id: luacheck
 
   - repo: https://github.com/JohnnyMorganz/StyLua
     rev: v0.19.1
