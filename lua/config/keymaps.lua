@@ -26,6 +26,16 @@ vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 vim.keymap.set("n", "<S-h>", ":bprev<CR>", {})
 vim.keymap.set("n", "<S-l>", ":bnext<CR>", {})
 
+-- Resize panes
+vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", {})
+vim.keymap.set("n", "<C-Down>", ":resize +2<CR>", {})
+vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", {})
+vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", {})
+vim.keymap.set("t", "<C-Up>", "<cmd>resize -2<CR>", {})
+vim.keymap.set("t", "<C-Down>", "<cmd>resize +2<CR>", {})
+vim.keymap.set("t", "<C-Left>", "<cmd>vertical resize -2<CR>", {})
+vim.keymap.set("t", "<C-Right>", "<cmd>vertical resize +2<CR>", {})
+
 -- Yank entire file
 vim.keymap.set("n", "<C-a>", "gg<S-v>G")
 
