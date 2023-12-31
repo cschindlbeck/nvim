@@ -2,6 +2,9 @@
 -- KEYMAPS
 --
 
+-- disable space for leader
+vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
+
 -- Remap window navigation
 vim.keymap.set("n", "<C-k>", ":wincmd k<CR>")
 vim.keymap.set("n", "<C-j>", ":wincmd j<CR>")
