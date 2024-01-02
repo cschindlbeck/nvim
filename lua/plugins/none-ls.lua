@@ -17,7 +17,7 @@ return {
         null_ls.builtins.formatting.markdownlint.with({
           extra_args = { "--max-line-length=120" },
         }),
-        null_ls.builtins.formatting.stylua,
+        -- null_ls.builtins.formatting.stylua,  -- appears to be done anyway
         null_ls.builtins.formatting.shfmt,
         -- null_ls.builtins.formatting.yamlfmt,
 
