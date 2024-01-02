@@ -49,6 +49,7 @@ return {
       lspconfig.lua_ls.setup({ capabilities = capabilities })
       lspconfig.pyright.setup({ capabilities = capabilities })
       lspconfig.terraformls.setup({ capabilities = capabilities })
+      lspconfig.texlab.setup({ capabilities = capabilities })
       -- lspconfig.yamlls.setup({})
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
