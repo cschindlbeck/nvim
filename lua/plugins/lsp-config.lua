@@ -67,7 +67,7 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = {
       ensure_installed = {
-        "ansible-lint",
+        { "ansible-lint", version = "6.10.0", auto_update = false },
         "black",
         "docker-compose-language-service",
         "dockerls",
