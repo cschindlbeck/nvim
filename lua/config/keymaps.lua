@@ -27,6 +27,7 @@ vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 -- Remap buffer navigation
 vim.keymap.set("n", "<S-h>", ":bprev<CR>", {})
 vim.keymap.set("n", "<S-l>", ":bnext<CR>", {})
+vim.keymap.set("n", "<Leader>bd", [[:bdelete<CR>]], {})
 
 -- Resize panes
 vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", {})
@@ -57,4 +58,5 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "<leader>tr", [[:TroubleToggle<CR>]]) -- not working, why?
 
 -- Buffer delete
+vim.keymap.set("n", "<leader>b", "<Nop>", { silent = true, remap = false })
 vim.keymap.set("n", "<leader>bd", [[:bdelete]]) -- not working, why?
