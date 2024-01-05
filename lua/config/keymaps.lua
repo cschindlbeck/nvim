@@ -2,9 +2,12 @@
 -- KEYMAPS
 --
 
--- disable space for leader
+-- disable space/Q
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 vim.keymap.set("n", "Q", "<Nop>", { silent = true, remap = false })
+
+-- disable highlight of search after esc
+vim.keymap.set("n", "<esc>", ":noh<return><esc>", { silent = true, remap = false })
 
 -- Remap window navigation
 vim.keymap.set("n", "<C-k>", ":wincmd k<CR>")
@@ -66,7 +69,7 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- Trouble
-vim.keymap.set("n", "<leader>tr", [[:TroubleToggle<CR>]]) -- not working, why?
+vim.keymap.set("n", "<leader>tr", "<cmd>TroubleToggle<cr>") -- not working, why?
 
 -- Buffer delete
 vim.keymap.set("n", "<leader>b", "<Nop>", { silent = true, remap = false })
