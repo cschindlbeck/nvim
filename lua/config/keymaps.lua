@@ -4,6 +4,7 @@
 
 -- disable space for leader
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
+vim.keymap.set("n", "Q", "<Nop>", { silent = true, remap = false })
 
 -- Remap window navigation
 vim.keymap.set("n", "<C-k>", ":wincmd k<CR>")
@@ -46,13 +47,23 @@ vim.keymap.set("n", "<C-a>", "gg<S-v>G")
 vim.keymap.set("x", "<leader>p", '"_dP')
 vim.keymap.set("n", "<leader>p", '"+p')
 
+-- Yank into clipboard
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+
 -- Delete into void buffer
-vim.keymap.set("n", "<leader>d", '"_d')
-vim.keymap.set("v", "<leader>d", '"_d')
+vim.keymap.set({ "n", "v" }, "<leader>d", '"_d')
 
 -- Move selected lines in visual mode up, down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+-- Sane defaults
+vim.keymap.set("n", "J", "mzJ`z")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
 
 -- Trouble
 vim.keymap.set("n", "<leader>tr", [[:TroubleToggle<CR>]]) -- not working, why?
