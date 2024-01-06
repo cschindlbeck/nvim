@@ -45,7 +45,12 @@ repos:
   #   hooks:
   #     - id: luacheck
 
-  - repo: https://github.com/JohnnyMorganz/StyLua
-    rev: v0.19.1
+  # - repo: https://github.com/JohnnyMorganz/StyLua
+  #   rev: v0.19.1
+  #   hooks:
+  #     - id: stylua # or stylua-system / stylua-github
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.38.0
     hooks:
-      - id: stylua # or stylua-system / stylua-github
+    - id: markdownlint

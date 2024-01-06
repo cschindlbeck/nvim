@@ -20,11 +20,15 @@ return {
         -- null_ls.builtins.formatting.stylua,  -- appears to be done anyway
         null_ls.builtins.formatting.shfmt,
         -- null_ls.builtins.formatting.yamlfmt,
-
+        -- MD013:
+        --   # Number of characters
+        --   line_length: 80
         -- diagnostics
         null_ls.builtins.diagnostics.ansiblelint,
         null_ls.builtins.diagnostics.hadolint,
-        null_ls.builtins.diagnostics.markdownlint,
+        null_ls.builtins.diagnostics.markdownlint.with({
+          extra_args = { "--max-line-length=120" },
+        }),
         -- null_ls.builtins.diagnostics.luacheck,
         null_ls.builtins.diagnostics.pylama.with({
           extra_args = { "--max-line-length=120" },
