@@ -1,26 +1,32 @@
 name: lint
 
-on:
-  pull_request:
-    branches:
-      - main
+on: [push]
+# on:
+#   pull_request:
+#     branches:
+#       - main
 
 jobs:
   lint:
     runs-on: [ubuntu-latest]
     steps:
-    # - name: Checkout sources
-    #   uses: actions/checkout@v2
-    # - name: Setup luacheck
-    #   run: |
-    #     sudo apt update &&
-    #     sudo apt install -y lua5.1 luarocks &&
-    #     sudo luarocks install luacheck
-    # - name: Run luacheck
-    #   run: |
-    #     luacheck lua/*
-    - uses: actions/checkout@v4
-    - uses: JohnnyMorganz/stylua-action@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Setup
+      run: |
+        sudo apt-get update
+        sudo apt-get install luarocks
+        sudo luarocks install luacheck
+    - name: Lint
+      run: luacheck lua/
+
+  format:
+    runs-on: [ubuntu-latest]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Run stylua
+      uses: JohnnyMorganz/stylua-action@v3
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         version: latest # NOTE: we recommend pinning to a specific version in case of formatting changes
