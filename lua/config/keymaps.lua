@@ -6,6 +6,10 @@
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 vim.keymap.set("n", "Q", "<Nop>", { silent = true, remap = false })
 
+-- save with control s because muscle memory is a bitch
+vim.keymap.set("n", "<C-s>", ":w<CR>", { silent = true, remap = false })
+vim.keymap.set("i", "<C-s>", "<esc>:w<CR>", { silent = true, remap = false })
+
 -- disable highlight of search after esc
 vim.keymap.set("n", "<esc>", ":noh<return><esc>", { silent = true, remap = false })
 
