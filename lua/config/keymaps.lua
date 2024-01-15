@@ -1,17 +1,18 @@
 --
 -- KEYMAPS
 --
+local silencio = { silent = true, remap = false }
 
 -- disable space/Q
-vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
-vim.keymap.set("n", "Q", "<Nop>", { silent = true, remap = false })
+vim.keymap.set("n", "<Space>", "<Nop>", silencio)
+vim.keymap.set("n", "Q", "<Nop>", silencio)
 
 -- save with control s because muscle memory is a bitch
-vim.keymap.set("n", "<C-s>", ":w<CR>", { silent = true, remap = false })
-vim.keymap.set("i", "<C-s>", "<esc>:w<CR>", { silent = true, remap = false })
+vim.keymap.set("n", "<C-s>", ":w<CR>", silencio)
+vim.keymap.set("i", "<C-s>", "<esc>:w<CR>", silencio)
 
 -- disable highlight of search after esc
-vim.keymap.set("n", "<esc>", ":noh<return><esc>", { silent = true, remap = false })
+vim.keymap.set("n", "<esc>", ":noh<return><esc>", silencio)
 
 -- Remap window navigation
 vim.keymap.set("n", "<C-k>", ":wincmd k<CR>")
@@ -35,7 +36,6 @@ vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 -- Remap buffer navigation
 vim.keymap.set("n", "<S-h>", ":bprev<CR>", {})
 vim.keymap.set("n", "<S-l>", ":bnext<CR>", {})
-vim.keymap.set("n", "<Leader>bd", [[:bdelete<CR>]], {})
 
 -- Resize panes
 vim.keymap.set("n", "<C-Up>", ":resize -2<CR>", {})
@@ -76,5 +76,8 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "<leader>tr", "<cmd>TroubleToggle<cr>") -- not working, why?
 
 -- Buffer delete
-vim.keymap.set("n", "<leader>b", "<Nop>", { silent = true, remap = false })
-vim.keymap.set("n", "<leader>bd", [[:bdelete]]) -- not working, why?
+vim.keymap.set("n", "<leader>bd", [[:bdelete]], { silent = true, noremap = true }) -- not working, why is leader b Nop?
+
+-- Insert empty line above/below (m keeps cursor in place)
+vim.keymap.set("n", "<CR>", "m`o<Esc>``")
+vim.keymap.set("n", "<S-CR>", "m`O<Esc>``") -- does not work as expected
