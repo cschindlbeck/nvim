@@ -13,6 +13,8 @@ local options = {
   clipboard = "unnamedplus", -- connection to the system clipboard
   colorcolumn = "120", -- show vertical column
   expandtab = true, -- enable the use of space in tab
+  -- foldenable = true, -- enable fold
+  -- foldmethod = "manual", -- manual fold
   hlsearch = true, --
   incsearch = true, --
   ignorecase = true, -- case insensitive searching
@@ -29,7 +31,7 @@ local options = {
   termguicolors = true, --
   undofile = true, --
   updatetime = 50, --
-  wrap = false, --
+  wrap = true, -- wrap lines
 }
 
 for k, v in pairs(options) do
