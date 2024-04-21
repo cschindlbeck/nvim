@@ -13,4 +13,5 @@ return {
       vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", {})
     end,
   },
+  { "akinsho/git-conflict.nvim", version = "*", config = true },
 }
