@@ -22,25 +22,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = false,
-    -- this alternative should work, but it does not
-    -- opts = {
-    --   servers = {
-    --     lua_ls = {},
-    --     terraformls = {},
-    --     pyright = {
-    --       settings = {
-    --         python = {
-    --           analysis = {
-    --             typeCheckingMode = "off",
-    --             autoSearchPaths = true,
-    --             useLibraryCodeForTypes = true,
-    --             diagnosticMode = "workspace",
-    --           },
-    --         },
-    --       },
-    --     },
-    --   },
-    -- },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       local lspconfig = require("lspconfig")
@@ -52,7 +33,19 @@ return {
       lspconfig.dockerls.setup({ capabilities = capabilities })
       lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
       lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.pyright.setup({ capabilities = capabilities })
+      lspconfig.pyright.setup({
+        capabilities = capabilities,
+        settings = {
+          python = {
+            analysis = {
+              typeCheckingMode = "off",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "workspace",
+            },
+          },
+        },
+      })
       lspconfig.terraformls.setup({ capabilities = capabilities })
       lspconfig.texlab.setup({ capabilities = capabilities })
       -- lspconfig.yamlls.setup({})
