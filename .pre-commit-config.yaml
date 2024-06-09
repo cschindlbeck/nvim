@@ -11,10 +11,11 @@
 #     pre-commit autoupdate
 #
 # See https://github.com/pre-commit/pre-commit
+---
 repos:
   # Standard hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.6.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -34,7 +35,7 @@ repos:
   # Spellcheck in comments and docs
   # skipping of *.svg files is not working...
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.2
+    rev: v2.3.0
     hooks:
       - id: codespell
         args: ["--write-changes"]
@@ -46,11 +47,12 @@ repos:
       - id: luacheck
 
   - repo: https://github.com/JohnnyMorganz/StyLua
-    rev: v0.19.1
+    rev: v0.20.0
     hooks:
-      - id: stylua # or stylua-system / stylua-github
+      - id: stylua  # or stylua-system / stylua-github
+        args: ["."]
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.38.0
+    rev: v0.41.0
     hooks:
-    - id: markdownlint
+      - id: markdownlint
