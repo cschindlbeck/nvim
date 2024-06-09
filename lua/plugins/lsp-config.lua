@@ -32,6 +32,19 @@ return {
       })
       lspconfig.dockerls.setup({ capabilities = capabilities })
       lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true,
+            },
+          },
+        },
+      })
       lspconfig.lua_ls.setup({ capabilities = capabilities })
       lspconfig.pyright.setup({
         capabilities = capabilities,
@@ -78,13 +91,14 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = {
       ensure_installed = {
-        "ansiblels", -- 1.2.1 on arch
+        "ansiblels",    -- 1.2.1 on arch
         -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
         "ansible-lint", -- 24.2.0 on arch
         "bashls",
         "black",
         "docker-compose-language-service",
         "dockerls",
+        "gopls",
         "hadolint",
         "isort",
         "lua_ls",
