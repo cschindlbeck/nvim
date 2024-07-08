@@ -46,7 +46,10 @@ return {
           },
         },
       })
-      lspconfig.terraformls.setup({ capabilities = capabilities })
+      lspconfig.terraformls.setup({
+        capabilities = capabilities,
+        filetypes = { "terraform", "tf", "hcl" },
+      })
       lspconfig.texlab.setup({ capabilities = capabilities })
       -- lspconfig.yamlls.setup({})
 
