@@ -49,6 +49,15 @@ return {
       lspconfig.terraformls.setup({
         capabilities = capabilities,
         filetypes = { "terraform", "tf", "hcl" },
+        root_dir = function(fname)
+          return require("lspconfig").util.root_pattern(
+            ".terraform",
+            "main.tf",
+            "variables.tf",
+            "outputs.tf",
+            "terraform.tfvars"
+          )(fname) or require("lspconfig").util.path.dirname(fname)
+        end,
       })
       lspconfig.texlab.setup({ capabilities = capabilities })
       -- lspconfig.yamlls.setup({})
