@@ -13,7 +13,23 @@ return {
       ':lua require"telescope.builtin".find_files({ hidden = true })<CR>',
       { noremap = true, silent = true }
     )
-    vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+    vim.keymap.set("n", "<leader>fg", function()
+      builtin.live_grep({
+        -- Add or modify the vimgrep_arguments to include hidden files
+        vimgrep_arguments = {
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--hidden", -- This flag tells rg to include hidden files
+          "--glob",
+          "!.git/", -- You might want to exclude .git directory explicitly
+        },
+      })
+    end, {})
     vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
     vim.keymap.set("n", "<leader>fr", ":Telescope oldfiles<CR>", {})
