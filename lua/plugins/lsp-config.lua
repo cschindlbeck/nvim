@@ -81,6 +81,7 @@ return {
         "ansiblels", -- 1.2.1 on arch
         -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
         "ansible-lint", -- 24.2.0 on arch
+        "bashls",
         "black",
         "docker-compose-language-service",
         "dockerls",
@@ -88,9 +89,11 @@ return {
         "isort",
         "lua_ls",
         "markdownlint",
+        "pylama",
         "pylint",
         "pyright",
         "selene",
+        "shellcheck",
         "shellharden",
         "shfmt",
         "stylua",
