@@ -91,7 +91,7 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = {
       ensure_installed = {
-        "ansiblels",    -- 1.2.1 on arch
+        "ansiblels", -- 1.2.1 on arch
         -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
         "ansible-lint", -- 24.2.0 on arch
         "bashls",
