@@ -5,11 +5,7 @@ return {
     require("conform").setup({
       formatters = {
         yamlfmt = {
-          command = "yamlfmt", -- Ensure yamlfmt is in your PATH
-          args = {
-            "-formatter",
-            "type=basic,include_document_start=true,max_line_length=120,retain_line_breaks_single=true,indentless_arrays=false,pad_line_comments=2",
-          },
+          command = "yamlfmt --global_conf", -- Ensure yamlfmt is in your PATH
           stdin = true, -- Makes yamlfmt read from stdin
         },
       },
