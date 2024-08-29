@@ -45,6 +45,7 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
+          { name = "copilot" },
           { name = "buffer" },
           { name = "luasnip" },
           { name = "nvim_lsp" },
@@ -66,6 +67,7 @@ return {
             --   ...
             --   return vim_item
             -- end
+            symbol_map = { Copilot = "" },
           }),
         },
       })
