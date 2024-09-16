@@ -30,7 +30,27 @@ return {
         filetypes = { "yaml", "yml", "ansible" },
         -- root_dir = lspconfig.util.root_pattern("roles", "playbooks")
       })
-      lspconfig.dockerls.setup({ capabilities = capabilities })
+      lspconfig.dockerls.setup({
+        capabilities = capabilities,
+        on_attach = function(_, bufnr)
+          -- Key mapping to apply code actions (e.g., <leader>a)
+          vim.api.nvim_buf_set_keymap(
+            bufnr,
+            "n",
+            "<leader>ca",
+            "<cmd>lua vim.lsp.buf.code_action()<CR>",
+            { noremap = true, silent = true }
+          )
+          -- Optionally automatically apply code actions on save
+          -- vim.cmd([[
+          --   augroup lsp_auto_fix
+          --     autocmd!
+          --     autocmd BufWritePre <buffer> lua vim.lsp.buf.code_action({context = {only = {"quickfix"}}})
+          --   augroup END
+          -- ]])
+        end,
+      })
+
       lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
       lspconfig.lua_ls.setup({ capabilities = capabilities })
       lspconfig.pyright.setup({
