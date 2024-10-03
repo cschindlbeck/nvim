@@ -21,7 +21,7 @@ return {
         }),
         null_ls.builtins.formatting.stylua, -- appears to be done anyway
         null_ls.builtins.formatting.shfmt,
-        null_ls.builtins.formatting.shellharden,
+        -- null_ls.builtins.formatting.shellharden,  -- needs cargo
         -- null_ls.builtins.formatting.yamlfmt,
         -- MD013:
         --   # Number of characters
@@ -36,11 +36,11 @@ return {
           extra_args = { "--max-line-length=120" },
         }),
         -- null_ls.builtins.diagnostics.selene, -- lua needs glibc2.33 not available on ubuntu2004
-        null_ls.builtins.diagnostics.pylint.with({
-          diagnostics_postprocess = function(diagnostic)
-            diagnostic.code = diagnostic.message_id
-          end,
-        }),
+        -- null_ls.builtins.diagnostics.pylint.with({
+        --   diagnostics_postprocess = function(diagnostic)
+        --     diagnostic.code = diagnostic.message_id
+        --   end,
+        -- }),
         null_ls.builtins.diagnostics.yamllint,
 
         ----------------
