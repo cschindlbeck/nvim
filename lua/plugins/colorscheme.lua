@@ -71,4 +71,4 @@ local vscode = {
   end,
 }
 
-return dracula
+return nord
