@@ -33,6 +33,33 @@ return {
       lspconfig.dockerls.setup({ capabilities = capabilities })
       lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
       -- lspconfig.lua_ls.setup({ capabilities = capabilities })
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            gofumpt = true,
+            semanticTokens = true,
+            staticcheck = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true,
+              fieldalignment = true,
+              inferTypeArgs = true,
+            },
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
+      })
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
         settings = {
@@ -48,7 +75,6 @@ return {
           },
         },
       })
-
       lspconfig.pyright.setup({
         capabilities = capabilities,
         settings = {
@@ -130,6 +156,7 @@ return {
         "black",
         "docker-compose-language-service",
         "dockerls",
+        "gopls",
         "hadolint",
         "isort",
         "lua_ls",
