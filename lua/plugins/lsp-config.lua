@@ -88,6 +88,9 @@ return {
               "*flow*.{yml,yaml}",
               ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
               "*docker-compose*.{yml,yaml}",
+              -- https://github.com/fluxcd/kustomize-controller/releases/download/v1.3.0/kustomize-controller.crds.yaml
+              -- https://github.com/fluxcd/source-controller/releases/download/v1.3.0/source-controller.crds.yaml
+              -- https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml
             },
           },
         },
