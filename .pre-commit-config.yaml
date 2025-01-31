@@ -1,3 +1,4 @@
+---
 # To use:
 #
 #     pre-commit run -a
@@ -14,7 +15,7 @@
 repos:
   # Standard hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -30,27 +31,23 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
       - id: fix-byte-order-marker
-
   # Spellcheck in comments and docs
   # skipping of *.svg files is not working...
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.2
+    rev: v2.3.0
     hooks:
       - id: codespell
         args: ["--write-changes"]
         exclude: CHANGELOG\.rst|\.(svg|pyc|drawio|dcf|eds)$|lazy-lock.json|example.lua
-
   - repo: https://github.com/Calinou/pre-commit-luacheck
     rev: v1.0.0
     hooks:
       - id: luacheck
-
-  - repo: https://github.com/JohnnyMorganz/StyLua
-    rev: v0.19.1
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.14.0
     hooks:
-      - id: stylua # or stylua-system / stylua-github
-
+      - id: yamlfmt
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.38.0
+    rev: v0.43.0
     hooks:
-    - id: markdownlint
+      - id: markdownlint

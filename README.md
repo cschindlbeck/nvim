@@ -21,15 +21,15 @@ git clone https://github.com/cschindlbeck/nvim.git ~/.config/nvim
 
 ## Requirements
 
-NVIM v9.5.0
+This is tested against latest stable (currently NVIM v0.10.0)
 
 ## Code Quality
 
-Using pre-commit for linting/formatting, needs
+Using pre-commit for linting/formatting, with
 
 - luacheck
 
-- stylua
+- yamlfmt
 
 - markdownlint
 

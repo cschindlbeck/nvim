@@ -22,9 +22,40 @@ local chatgpt = {
 -- Github copilot
 -- First time enter Copilot setup and then press enter again (bug in notification plugin)
 -- Then the browser pops up and asks for a code, the code is in the clipboard so just middle mouse button
+-- local github = {
+--   "github/copilot.vim",
+-- }
 
-local github = {
-  "github/copilot.vim",
+-- Github copilot zbirenbaum variant
+local githubcopilot = {
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+        filetypes = {
+          yaml = true,
+          markdown = false,
+          help = false,
+          gitcommit = false,
+          gitrebase = false,
+          hgcommit = false,
+          svn = false,
+          cvs = false,
+          ["."] = false,
+        },
+      })
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
 }
 
 -- LLM nvim open-source copilot clone with ghost text completion
@@ -77,4 +108,5 @@ local codeium = {
   end,
 }
 
+-- return { githubcopilot }
 return {}

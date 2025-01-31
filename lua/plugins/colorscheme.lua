@@ -19,6 +19,20 @@ local nord = {
   end,
 }
 
+-- Dracula theme
+local dracula = {
+  -- add dracula
+  { "Mofiqul/dracula.nvim" },
+
+  -- Configure LazyVim to load dracula
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "dracula",
+    },
+  },
+}
+
 -- VSCode theme
 local vscode = {
   "Mofiqul/vscode.nvim",
@@ -57,4 +71,4 @@ local vscode = {
   end,
 }
 
-return vscode
+return nord

@@ -20,27 +20,37 @@ return {
           extra_args = { "--max-line-length=120" },
         }),
         null_ls.builtins.formatting.stylua, -- appears to be done anyway
-        null_ls.builtins.formatting.shfmt,
+        null_ls.builtins.formatting.shfmt.with({
+          extra_args = { "-i", "2", "-ci" },
+        }),
+        -- null_ls.builtins.formatting.shellharden, -- needs cargo
+        null_ls.builtins.formatting.terraform_fmt,
         -- null_ls.builtins.formatting.yamlfmt,
         -- MD013:
         --   # Number of characters
         --   line_length: 80
 
         -----------------
-        -- diagnostics --
+        -- linter --
         -----------------
-        null_ls.builtins.diagnostics.ansiblelint,
+        -- null_ls.builtins.diagnostics.ansiblelint,
         null_ls.builtins.diagnostics.hadolint,
         null_ls.builtins.diagnostics.markdownlint.with({
           extra_args = { "--max-line-length=120" },
         }),
-        -- null_ls.builtins.diagnostics.luacheck,
-        null_ls.builtins.diagnostics.pylama.with({
-          extra_args = { "--max-line-length=120" },
+        -- null_ls.builtins.diagnostics.selene, -- lua needs glibc2.33 not available on ubuntu2004
+        -- null_ls.builtins.diagnostics.pylint.with({
+        --   diagnostics_postprocess = function(diagnostic)
+        --     diagnostic.code = diagnostic.message_id
+        --   end,
+        -- }),
+        null_ls.builtins.diagnostics.yamllint.with({
+          extra_args = {
+            "-d",
+            "{extends: default, rules: {indentation: {spaces: 2, indent-sequences: consistent}, "
+              .. "line-length: {max: 150}, document-start: {present: false}}}",
+          },
         }),
-        null_ls.builtins.diagnostics.shellcheck, -- shell script diagnostics
-        -- null_ls.builtins.diagnostics.yamllint,
-
         ----------------
         -- completion --
         ----------------

@@ -1,5 +1,5 @@
-name: lint
-
+---
+name: lint_and_format
 on: [push]
 # on:
 #   pull_request:
@@ -7,28 +7,30 @@ on: [push]
 #       - main
 
 jobs:
-  lint:
-    runs-on: [ubuntu-latest]
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Setup
-      run: |
-        sudo apt-get update
-        sudo apt-get install luarocks
-        sudo luarocks install luacheck
-    - name: Lint
-      run: luacheck lua/
-
   format:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Run stylua
-      uses: JohnnyMorganz/stylua-action@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        version: latest # NOTE: we recommend pinning to a specific version in case of formatting changes
-        # CLI arguments
-        args: --check .
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: yamlfmt
+        uses: yk-lab/yamlfmt-action@v1.0.0
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup lua
+        run: |
+          sudo apt-get update
+          sudo apt-get install luarocks
+          sudo luarocks install luacheck
+
+      - name: Lint lua
+        run: luacheck lua/
+
+      - name: Lint yaml
+        uses: reviewdog/action-yamllint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          fail_on_error: true
