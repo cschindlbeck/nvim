@@ -32,7 +32,23 @@ return {
       -- })
       lspconfig.dockerls.setup({ capabilities = capabilities })
       lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
-      lspconfig.lua_ls.setup({ capabilities = capabilities })
+      -- lspconfig.lua_ls.setup({ capabilities = capabilities })
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            format = {
+              enable = true,
+              defaultConfig = {
+                indent_style = "space",
+                indent_size = "2",
+                max_line_length = "120",
+              },
+            },
+          },
+        },
+      })
+
       lspconfig.pyright.setup({
         capabilities = capabilities,
         settings = {
@@ -50,13 +66,8 @@ return {
         capabilities = capabilities,
         filetypes = { "terraform", "tf", "hcl" },
         root_dir = function(fname)
-          return require("lspconfig").util.root_pattern(
-            ".terraform",
-            "main.tf",
-            "variables.tf",
-            "outputs.tf",
-            "terraform.tfvars"
-          )(fname) or require("lspconfig").util.path.dirname(fname)
+          return require("lspconfig").util.root_pattern(".terraform", "main.tf", "variables.tf", "outputs.tf", "terraform.tfvars")(fname)
+            or require("lspconfig").util.path.dirname(fname)
         end,
       })
       lspconfig.texlab.setup({ capabilities = capabilities })
@@ -73,21 +84,15 @@ return {
               ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
               ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
               ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-              ["https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml"] =
-              "tf-controller.crds.yaml",
-              ["https://github.com/fluxcd/kustomize-controller/releases/download/v1.3.0/kustomize-controller.crds.yaml"] =
-              "kustomize-controller.crds.yaml",
-              ["https://github.com/fluxcd/source-controller/releases/download/v1.3.0/source-controller.crds.yaml"] =
-              "source-controller.crds.yaml",
+              ["https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml"] = "tf-controller.crds.yaml",
+              ["https://github.com/fluxcd/kustomize-controller/releases/download/v1.3.0/kustomize-controller.crds.yaml"] = "kustomize-controller.crds.yaml",
+              ["https://github.com/fluxcd/source-controller/releases/download/v1.3.0/source-controller.crds.yaml"] = "source-controller.crds.yaml",
               ["https://json.schemastore.org/dependabot-2.0"] = ".github/dependabot.{yml,yaml}",
               ["https://json.schemastore.org/drone"] = ".drone.{yml,yaml}",
               ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-              ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] =
-              "*api*.{yml,yaml}",
-              ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] =
-              "*flow*.{yml,yaml}",
-              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
-              "*docker-compose*.{yml,yaml}",
+              ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+              ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
               -- https://github.com/fluxcd/kustomize-controller/releases/download/v1.3.0/kustomize-controller.crds.yaml
               -- https://github.com/fluxcd/source-controller/releases/download/v1.3.0/source-controller.crds.yaml
               -- https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml
