@@ -1,7 +1,7 @@
 ---
 name: lint_and_format
 
-on:
+on:  # yamllint disable-line rule:truthy
   push:
     branches:
       - main
@@ -11,32 +11,16 @@ on:
       - main
 
 jobs:
-  format:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: yamlfmt
-        uses: yk-lab/yamlfmt-action@v1.0.0
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup lua
+      - name: Setup python
+        uses: actions/setup-python@v5
+      - name: Install luacheck
         run: |
           sudo apt-get update
           sudo apt-get install luarocks
           sudo luarocks install luacheck
-
-      - name: Lint lua
-        run: luacheck lua/
-
-      - name: Lint yaml
-        uses: reviewdog/action-yamllint@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          fail_on_error: true
+      - uses: pre-commit/action@v3.0.1
