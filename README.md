@@ -11,7 +11,9 @@ Chris' neovim config files in lua based on 💤 lazy plugin manager
 
 ## TODOs
 
-keymaps not working, leader is cleared prematurely
+- keymaps not working, leader is cleared prematurely, which is not working?
+- dot repeat is not working in f command
+- delete into void register is not working (at least on a mac)
 
 ## Install
 
@@ -19,9 +21,11 @@ keymaps not working, leader is cleared prematurely
 git clone https://github.com/cschindlbeck/nvim.git ~/.config/nvim
 ```
 
-## Requirements
+## Requirements/Dependencies
 
-This is tested against latest stable (currently NVIM v0.10.0)
+This is tested against latest stable (currently NVIM v0.10.4)
+
+For the plugins you will need to install: xclip, npm, luachecks, pyright, NerdFont
 
 ## Code Quality
 

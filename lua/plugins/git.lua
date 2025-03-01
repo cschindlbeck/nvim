@@ -14,4 +14,19 @@ return {
     end,
   },
   { "akinsho/git-conflict.nvim", version = "*", config = true },
+  {
+    "folke/snacks.nvim",
+    ---@type snacks.Config
+    opts = {
+      lazygit = {
+        enabled = true,
+      },
+    },
+  },
+  vim.api.nvim_set_keymap(
+    "n",
+    "<leader>lg",
+    ':lua require("snacks").lazygit.open()<CR>',
+    { noremap = true, silent = true }
+  ),
 }
