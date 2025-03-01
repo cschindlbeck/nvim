@@ -11,9 +11,8 @@ Chris' neovim config files in lua based on 💤 lazy plugin manager
 
 ## TODOs
 
-- keymaps not working, leader is cleared prematurely, which is not working?
-- dot repeat is not working in f command
 - delete into void register is not working (at least on a mac)
+- toggle terminal does not close as expected
 
 ## Install
 
