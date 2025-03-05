@@ -44,7 +44,7 @@ repos:
     rev: v2.0.2
     hooks:
       - id: stylua
-        args: ["--indent-width", "2", "--indent-type", "Spaces", "--column-width", "160"]
+        args: ["--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120"]
   # Lint lua
   - repo: https://github.com/Calinou/pre-commit-luacheck
     rev: v1.0.0
