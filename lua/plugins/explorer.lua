@@ -1,6 +1,5 @@
 return {
   "folke/snacks.nvim",
-  ---@type snacks.Config
   opts = {
     explorer = {
       -- your explorer configuration comes here
@@ -20,7 +19,8 @@ return {
     {
       "<leader>e",
       function()
-        Snacks.picker.explorer()
+        local snacks = require("snacks.picker")
+        snacks.explorer()
       end,
       desc = "Toggle Explorer",
     },

@@ -16,7 +16,6 @@ return {
   { "akinsho/git-conflict.nvim", version = "*", config = true },
   {
     "folke/snacks.nvim",
-    ---@type snacks.Config
     opts = {
       lazygit = {
         enabled = true,

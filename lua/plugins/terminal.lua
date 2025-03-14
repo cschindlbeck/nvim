@@ -1,48 +1,58 @@
 return {
   "folke/snacks.nvim",
-  ---@type snacks.Config
   opts = {
     terminal = {
       win = {
-        -- for a bottom split terminal, setting a fixed height (in lines)
         size = { height = 15 },
       },
     },
   },
   keys = (function()
-    local last_position = "bottom" -- Default position
+    local last_position = "bottom"
 
-    local function toggle_last_terminal()
-      Snacks.terminal.toggle(nil, { win = { position = last_position } })
+    local function safe_close()
+      -- Gracefully handle missing terminal
+      pcall(require("snacks.terminal").close)
     end
 
     return {
       {
         "<leader>tt",
-        toggle_last_terminal,
+        function()
+          local snacks = require("snacks.terminal")
+          -- Toggle or create new terminal if none exists
+          if not snacks.exists() then
+            snacks.open(nil, { win = { position = last_position } })
+          else
+            snacks.toggle()
+          end
+        end,
         desc = "Toggle last opened terminal",
       },
       {
         "<leader>th",
         function()
+          safe_close()
           last_position = "bottom"
-          Snacks.terminal.open(nil, { win = { position = "bottom" } })
+          require("snacks.terminal").open(nil, { win = { position = "bottom" } })
         end,
         desc = "Open terminal below",
       },
       {
         "<leader>tv",
         function()
+          safe_close()
           last_position = "right"
-          Snacks.terminal.open(nil, { win = { position = "right" } })
+          require("snacks.terminal").open(nil, { win = { position = "right" } })
         end,
         desc = "Open terminal to the right",
       },
       {
         "<leader>tf",
         function()
+          safe_close()
           last_position = "float"
-          Snacks.terminal.open(nil, { win = { position = "float" } })
+          require("snacks.terminal").open(nil, { win = { position = "float" } })
         end,
         desc = "Open floating terminal",
       },
