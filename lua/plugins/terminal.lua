@@ -17,6 +17,14 @@ return {
 
     return {
       {
+        "<leader>tc",
+        function()
+          local snacks = require("snacks.terminal")
+          snacks.close()
+        end,
+        desc = "Close terminal",
+      },
+      {
         "<leader>tt",
         function()
           local snacks = require("snacks.terminal")
