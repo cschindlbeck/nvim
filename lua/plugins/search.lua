@@ -1,6 +1,7 @@
+-- luacheck: globals Snacks
+-- luacheck: globals filter
 return {
   "folke/snacks.nvim",
-  ---@type snacks.Config
   dependencies = { "nvim-lua/plenary.nvim" },
   opts = {
     picker = {
