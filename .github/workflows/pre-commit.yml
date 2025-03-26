@@ -24,3 +24,5 @@ jobs:
         uses: lunarmodules/luacheck@v1
 
       - uses: pre-commit/action@v3.0.1
+        env:
+          SKIP: luacheck
