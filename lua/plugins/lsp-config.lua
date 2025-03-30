@@ -39,9 +39,23 @@ return {
         settings = {
           gopls = {
             completeUnimported = true,
+            gofumpt = true,
+            semanticTokens = true,
+            staticcheck = true,
             usePlaceholders = true,
             analyses = {
               unusedparams = true,
+              fieldalignment = true,
+              inferTypeArgs = true,
+            },
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
             },
           },
         },
