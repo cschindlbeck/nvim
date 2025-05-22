@@ -127,16 +127,13 @@ return {
         "ansible-lint", -- 24.2.0 on arch
         -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
         "bashls",
-        "black",
         "docker-compose-language-service",
         "dockerls",
         "hadolint",
-        "isort",
         "lua_ls",
         "markdownlint",
-        "pylama",
-        "pylint",
         "pyright",
+        "ruff",
         "selene",
         "shellcheck",
         -- "shellharden", -- needs cargo
