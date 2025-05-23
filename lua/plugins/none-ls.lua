@@ -13,10 +13,7 @@ return {
           extra_args = { "--max-line-length=120" },
         }),
         null_ls.builtins.formatting.ruff.with({
-          extra_args = {
-            "--line-length=120",
-            -- "--skip-string-normalization",
-          },
+          extra_args = { "--fix", "--line-length=120" },
         }),
         null_ls.builtins.formatting.stylua.with({
           extra_args = { "--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120" },

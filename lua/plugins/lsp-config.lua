@@ -52,13 +52,26 @@ return {
       lspconfig.pyright.setup({
         capabilities = capabilities,
         settings = {
+          pyright = {
+            -- Using Ruff's import organizer
+            disableOrganizeImports = true,
+          },
           python = {
             analysis = {
-              typeCheckingMode = "off",
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              diagnosticMode = "workspace",
+              -- typeCheckingMode = "off",
+              -- autoSearchPaths = true,
+              -- useLibraryCodeForTypes = true,
+              -- diagnosticMode = "workspace",
+              -- Ignore all files for analysis to exclusively use Ruff for linting
+              ignore = { "*" },
             },
+          },
+        },
+      })
+      lspconfig.ruff.setup({
+        init_options = {
+          settings = {
+            -- Ruff language server settings go here
           },
         },
       })
