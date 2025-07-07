@@ -1,3 +1,4 @@
+-- luacheck: globals Snacks
 return {
   {
     "lewis6991/gitsigns.nvim",
@@ -13,4 +14,20 @@ return {
       vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", {})
     end,
   },
+  { "akinsho/git-conflict.nvim", version = "*", config = true },
+  {
+    "folke/snacks.nvim",
+    ---@type snacks.Config
+    opts = {
+      lazygit = {
+        enabled = true,
+      },
+    },
+  },
+  vim.api.nvim_set_keymap(
+    "n",
+    "<leader>lg",
+    ':lua require("snacks").lazygit.open()<CR>',
+    { noremap = true, silent = true }
+  ),
 }

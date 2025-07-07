@@ -29,6 +29,7 @@ local options = {
   swapfile = false, -- no annoying swap file
   tabstop = 2, -- number of spaces for tab
   termguicolors = true, --
+  timeoutlen = 500, -- set timeout for leaderkey
   undofile = true, --
   updatetime = 50, --
   wrap = true, -- wrap lines

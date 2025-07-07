@@ -1,14 +1,35 @@
 return {
-  "ggandor/flit.nvim",
-  version = "*",
-  dependencies = {
-    "ggandor/leap.nvim",
-    "tpope/vim-repeat",
-  },
-  opts = {
-    keys = { f = "f", F = "F", t = "t", T = "T" },
-    -- A string like "nv", "nvo", "o", etc.
-    labeled_modes = "nv",
-    multiline = true,
+  {
+    "folke/flash.nvim",
+    opts = {
+      jump = {
+        autojump = false,
+      },
+      label = {
+        after = true,
+        before = false,
+        rainbow = {
+          enabled = true,
+          shade = 6,
+        },
+      },
+      highlight = {
+        backdrop = true,
+        matches = false,
+      },
+      modes = {
+        search = {
+          enabled = true,
+          jump = { nohlsearch = false },
+        },
+        char = {
+          jump_labels = true,
+        },
+      },
+      remote_op = {
+        restore = true,
+        motion = false,
+      },
+    },
   },
 }

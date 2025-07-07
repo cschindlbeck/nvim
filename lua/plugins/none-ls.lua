@@ -19,7 +19,9 @@ return {
         null_ls.builtins.formatting.markdownlint.with({
           extra_args = { "--max-line-length=120" },
         }),
-        null_ls.builtins.formatting.stylua, -- appears to be done anyway
+        null_ls.builtins.formatting.stylua.with({
+          extra_args = { "--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120" },
+        }),
         null_ls.builtins.formatting.shfmt.with({
           extra_args = { "-i", "2", "-ci" },
         }),
@@ -48,7 +50,7 @@ return {
           extra_args = {
             "-d",
             "{extends: default, rules: {indentation: {spaces: 2, indent-sequences: consistent}, "
-              .. "line-length: {max: 150}, document-start: {present: false}}}",
+              .. "line-length: {max: 120}, document-start: disable}}",
           },
         }),
         ----------------
