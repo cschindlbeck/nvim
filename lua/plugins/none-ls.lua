@@ -11,7 +11,7 @@ return {
         ----------------
         null_ls.builtins.formatting.black.with({
           extra_args = {
-            "--line-length=120",
+            "--line-length=160",
             "--skip-string-normalization",
           },
         }),
@@ -50,7 +50,7 @@ return {
           extra_args = {
             "-d",
             "{extends: default, rules: {indentation: {spaces: 2, indent-sequences: consistent}, "
-              .. "line-length: {max: 120}, document-start: disable}}",
+            .. "line-length: {max: 150}, document-start: {present: false}}}",
           },
         }),
         ----------------
