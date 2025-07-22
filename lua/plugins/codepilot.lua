@@ -35,15 +35,15 @@ local githubcopilot = {
     config = function()
       require("copilot").setup({
         suggestion = {
-          enabled = true,
+          enabled = true, -- enable the suggestion popup
           auto_trigger = true,
           debounce = 75,
-          -- keymap = {
-          --   accept = "<C-g>",
-          --   next = "<C-n>",
-          --   prev = "<C-p>",
-          --   dismiss = "<C-e>",
-          -- },
+          keymap = {
+            accept = "<C-g>",
+            next = "<C-n>",
+            prev = "<C-p>",
+            dismiss = "<C-e>",
+          },
         },
         panel = { enabled = true },
         filetypes = {
