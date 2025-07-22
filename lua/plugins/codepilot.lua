@@ -34,13 +34,23 @@ local githubcopilot = {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          debounce = 75,
+          -- keymap = {
+          --   accept = "<C-g>",
+          --   next = "<C-n>",
+          --   prev = "<C-p>",
+          --   dismiss = "<C-e>",
+          -- },
+        },
+        panel = { enabled = true },
         filetypes = {
           yaml = true,
           markdown = false,
           help = false,
-          gitcommit = false,
+          gitcommit = true,
           gitrebase = false,
           hgcommit = false,
           svn = false,
@@ -108,5 +118,5 @@ local codeium = {
   end,
 }
 
--- return { githubcopilot }
-return {}
+return { githubcopilot }
+-- return {}
