@@ -35,7 +35,7 @@ local githubcopilot = {
     config = function()
       require("copilot").setup({
         suggestion = {
-          enabled = true, -- enable the suggestion popup
+          enabled = false, -- disable the inline suggestion ghosttext, it is annoying
           auto_trigger = true,
           debounce = 75,
           keymap = {
