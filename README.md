@@ -1,6 +1,6 @@
 # ⚡ Neovim config
 
-![lualint](https://github.com/cschindlbeck/nvim/actions/workflows/lint.yml/badge.svg)
+![pre-commit](https://github.com/cschindlbeck/nvim/actions/workflows/pre-commit.yml/badge.svg)
 
 Chris' neovim config files in lua based on 💤 lazy plugin manager
 
