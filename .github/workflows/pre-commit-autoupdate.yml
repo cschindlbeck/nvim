@@ -2,6 +2,7 @@
 name: "Pre-commit auto-update"
 
 on:
+  push:
   schedule:
     - cron: '0 0 * * 0'
 
