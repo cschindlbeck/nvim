@@ -45,7 +45,6 @@ return {
             usePlaceholders = true,
             analyses = {
               unusedparams = true,
-              fieldalignment = true,
               inferTypeArgs = true,
             },
             hints = {
