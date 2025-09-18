@@ -1,5 +1,5 @@
 ---
-name: pre-commit
+name: "pre-commit"
 
 on:
   pull_request:
@@ -10,19 +10,20 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: "Checkout"
         uses: actions/checkout@v5
         with:
           ref: ${{ github.event_name == 'push' && 'main' || github.event.pull_request.head.ref }}
 
-      - name: Setup Terraform
+      - name: "Setup Terraform"
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.5.7
 
-      - name: Luacheck linter
+      - name: "Luacheck linter"
         uses: lunarmodules/luacheck@v1
 
-      - uses: pre-commit/action@v3.0.1
+      - name: "Run pre-commit"
+        uses: pre-commit/action@v3.0.1
         env:
           SKIP: luacheck
