@@ -13,7 +13,7 @@ return {
         "docker_compose_language_service",
         "dockerls",
         "lua_ls",
-        "pyright",
+        -- "pyright",
         "terraformls",
       },
     },
