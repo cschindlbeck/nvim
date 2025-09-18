@@ -126,10 +126,22 @@ return {
         },
       })
 
-      -- Keymaps
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+      -- Navigation
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-      vim.keymap.set({ "n" }, "<leader>ca", vim.lsp.buf.code_action, {})
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+      vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+
+      -- Refactor / actions
+      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+
+      -- Diagnostics
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {})
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {})
+      -- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})  -- set for open picker
+      vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, {})
 
       -- Autoformat
       vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
