@@ -8,13 +8,9 @@ return {
     opts = {
       auto_install = true,
       ensure_installed = {
-        -- "ansiblels",
+        -- Only list if you not use setup_handlers below
         "bashls",
         "docker_compose_language_service",
-        "dockerls",
-        "lua_ls",
-        -- "pyright",
-        "terraformls",
       },
     },
   },
