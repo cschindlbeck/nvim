@@ -12,7 +12,6 @@ return {
         "bashls",
         "docker_compose_language_service",
         "dockerls",
-        "jedi_language_server",
         "lua_ls",
         "pyright",
         "terraformls",
