@@ -7,6 +7,7 @@ return {
     "williamboman/mason-lspconfig.nvim",
     opts = {
       auto_install = true,
+      automatic_enable = false,
       ensure_installed = {
         -- Only list if you not use setup_handlers below
         "bashls",
@@ -19,16 +20,28 @@ return {
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      local lspconfig = require("lspconfig")
-      -- lspconfig.ansiblels.setup({
+      -- Ansible
+      -- vim.lsp.config.ansiblels = {
       --   capabilities = capabilities,
       --   filetypes = { "yaml", "yml", "ansible" },
       --   -- root_dir = lspconfig.util.root_pattern("roles", "playbooks")
-      -- })
-      lspconfig.dockerls.setup({ capabilities = capabilities })
-      lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
-      -- lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.gopls.setup({
+      -- }
+      -- vim.lsp.enable("ansiblels")
+
+      -- Docker
+      vim.lsp.config.dockerls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("dockerls")
+
+      -- Docker Compose
+      vim.lsp.config.docker_compose_language_service = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("docker_compose_language_service")
+
+      -- Go
+      vim.lsp.config.gopls = {
         capabilities = capabilities,
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         settings = {
@@ -53,8 +66,11 @@ return {
             },
           },
         },
-      })
-      lspconfig.lua_ls.setup({
+      }
+      vim.lsp.enable("gopls")
+
+      -- Lua
+      vim.lsp.config.lua_ls = {
         capabilities = capabilities,
         settings = {
           Lua = {
@@ -68,8 +84,11 @@ return {
             },
           },
         },
-      })
-      lspconfig.pyright.setup({
+      }
+      vim.lsp.enable("lua_ls")
+
+      -- Pyright
+      vim.lsp.config.pyright = {
         capabilities = capabilities,
         settings = {
           python = {
@@ -81,22 +100,25 @@ return {
             },
           },
         },
-      })
-      lspconfig.terraformls.setup({
+      }
+      vim.lsp.enable("pyright")
+
+      -- Terraform
+      vim.lsp.config.terraformls = {
         capabilities = capabilities,
-        filetypes = { "terraform", "tf", "hcl" },
-        root_dir = function(fname)
-          return require("lspconfig").util.root_pattern(
-            ".terraform",
-            "main.tf",
-            "variables.tf",
-            "outputs.tf",
-            "terraform.tfvars"
-          )(fname) or require("lspconfig").util.path.dirname(fname)
-        end,
-      })
-      lspconfig.texlab.setup({ capabilities = capabilities })
-      lspconfig.yamlls.setup({
+        filetypes = { "terraform", "hcl" },
+      }
+      vim.lsp.enable("terraformls")
+
+      -- Texlab
+      vim.lsp.config.texlab = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("texlab")
+
+      -- Yaml
+      vim.lsp.config.yamlls = {
+        -- lspconfig.yamlls.setup({
         settings = {
           yaml = {
             schemas = {
@@ -124,7 +146,8 @@ return {
             },
           },
         },
-      })
+      }
+      vim.lsp.enable("yamlls")
 
       -- Navigation
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
