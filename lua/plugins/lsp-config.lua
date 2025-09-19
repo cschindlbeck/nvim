@@ -28,6 +28,12 @@ return {
       -- }
       -- vim.lsp.enable("ansiblels")
 
+      -- Bash
+      vim.lsp.config.bashls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("bashls")
+
       -- Docker
       vim.lsp.config.dockerls = {
         capabilities = capabilities,
