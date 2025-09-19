@@ -106,16 +106,7 @@ return {
       -- Terraform
       vim.lsp.config.terraformls = {
         capabilities = capabilities,
-        filetypes = { "terraform", "tf", "hcl" },
-        root_dir = function(fname)
-          return require("lspconfig").util.root_pattern(
-            ".terraform",
-            "main.tf",
-            "variables.tf",
-            "outputs.tf",
-            "terraform.tfvars"
-          )(fname) or require("lspconfig").util.path.dirname(fname)
-        end,
+        filetypes = { "terraform", "hcl" },
       }
       vim.lsp.enable("terraformls")
 
