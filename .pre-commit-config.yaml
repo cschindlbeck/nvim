@@ -15,7 +15,7 @@
 repos:
   # Standard hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -34,14 +34,14 @@ repos:
   # Spellcheck in comments and docs
   # skipping of *.svg files is not working...
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
+    rev: v2.4.1
     hooks:
       - id: codespell
         args: ["--write-changes"]
         exclude: CHANGELOG\.rst|\.(svg|pyc|drawio|dcf|eds)$|lazy-lock.json|example.lua
   # Format lua
   - repo: https://github.com/JohnnyMorganz/StyLua
-    rev: v2.0.2
+    rev: v2.2.0
     hooks:
       - id: stylua
         args: ["--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120"]
@@ -54,11 +54,11 @@ repos:
         #   "120"]
   # Format yaml
   - repo: https://github.com/google/yamlfmt
-    rev: v0.14.0
+    rev: v0.17.2
     hooks:
       - id: yamlfmt
   # Lint markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.43.0
+    rev: v0.45.0
     hooks:
       - id: markdownlint
