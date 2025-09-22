@@ -28,6 +28,11 @@ return {
         -- null_ls.builtins.formatting.shellharden, -- needs cargo
         null_ls.builtins.formatting.terraform_fmt,
         -- null_ls.builtins.formatting.yamlfmt,
+        null_ls.builtins.formatting.yamlfmt.with({
+          extra_args = { "--offset,", "0" },
+        }),
+        --     # args: [--mapping, '2', --sequence, '2', --offset, '0', --colons, --width, '150']
+        -- args: [--mapping, '2', --sequence, '2', --offset, '0']
         -- MD013:
         --   # Number of characters
         --   line_length: 80
@@ -50,7 +55,7 @@ return {
           extra_args = {
             "-d",
             "{extends: default, rules: {indentation: {spaces: 2, indent-sequences: consistent}, "
-              .. "line-length: {max: 120}, document-start: disable}}",
+              .. "line-length: {max: 150}, document-start: {present: false}}}",
           },
         }),
         ----------------
