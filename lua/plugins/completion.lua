@@ -26,6 +26,9 @@ return {
       local cmp = require("cmp")
       local lspkind = require("lspkind")
       cmp.setup({
+        preselect = cmp.PreselectMode.None,
+        completion = { completeopt = "noselect" },
+
         snippet = {
           -- REQUIRED - you must specify a snippet engine
           expand = function(args)
