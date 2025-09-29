@@ -114,6 +114,7 @@ return {
           },
         },
       }
+      vim.lsp.enable("pyright")
 
       vim.lsp.config.ruff = {
         init_options = {
