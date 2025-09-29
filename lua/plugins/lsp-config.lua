@@ -128,6 +128,7 @@ return {
         -- lspconfig.yamlls.setup({
         settings = {
           yaml = {
+            format = { enable = false }, -- will be done by none-ls
             schemas = {
               kubernetes = "k8s-*.yaml",
               ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
