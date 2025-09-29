@@ -26,6 +26,9 @@ return {
       local cmp = require("cmp")
       local lspkind = require("lspkind")
       cmp.setup({
+        preselect = cmp.PreselectMode.None,
+        completion = { completeopt = "noselect" },
+
         snippet = {
           -- REQUIRED - you must specify a snippet engine
           expand = function(args)
@@ -45,11 +48,11 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
-          { name = "buffer" },
-          { name = "copilot" },
-          { name = "luasnip" },
-          { name = "nvim_lsp" },
-          { name = "path" },
+          { name = "copilot", group_index = 1 },
+          { name = "buffer", group_index = 2 },
+          { name = "luasnip", group_index = 2 },
+          { name = "nvim_lsp", group_index = 2 },
+          { name = "path", group_index = 2 },
         }),
         sorting = {
           comparators = {
