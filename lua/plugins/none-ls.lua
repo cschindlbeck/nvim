@@ -6,36 +6,38 @@ return {
     null_ls.setup({
       -- make sure these are installed in mason via mason install tool from lsp-config lua
       sources = {
-        ----------------
-        -- formatting --
-        ----------------
-        null_ls.builtins.formatting.black.with({
-          extra_args = {
-            "--line-length=160",
-            "--skip-string-normalization",
-          },
-        }),
-        null_ls.builtins.formatting.isort,
-        null_ls.builtins.formatting.markdownlint.with({
-          extra_args = { "--max-line-length=120" },
-        }),
-        null_ls.builtins.formatting.stylua.with({
-          extra_args = { "--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120" },
-        }),
-        null_ls.builtins.formatting.shfmt.with({
-          extra_args = { "-i", "2", "-ci" },
-        }),
-        -- null_ls.builtins.formatting.shellharden, -- needs cargo
-        null_ls.builtins.formatting.terraform_fmt,
-        -- null_ls.builtins.formatting.yamlfmt,
-        null_ls.builtins.formatting.yamlfmt.with({
-          extra_args = { "--offset,", "0" },
-        }),
-        --     # args: [--mapping, '2', --sequence, '2', --offset, '0', --colons, --width, '150']
-        -- args: [--mapping, '2', --sequence, '2', --offset, '0']
-        -- MD013:
-        --   # Number of characters
-        --   line_length: 80
+        -- moved to conform in formatting.lua
+
+        -- ----------------
+        -- -- formatting --
+        -- ----------------
+        -- null_ls.builtins.formatting.black.with({
+        --   extra_args = {
+        --     "--line-length=160",
+        --     "--skip-string-normalization",
+        --   },
+        -- }),
+        -- null_ls.builtins.formatting.isort,
+        -- null_ls.builtins.formatting.markdownlint.with({
+        --   extra_args = { "--max-line-length=120" },
+        -- }),
+        -- null_ls.builtins.formatting.stylua.with({
+        --   extra_args = { "--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120" },
+        -- }),
+        -- null_ls.builtins.formatting.shfmt.with({
+        --   extra_args = { "-i", "2", "-ci" },
+        -- }),
+        -- -- null_ls.builtins.formatting.shellharden, -- needs cargo
+        -- null_ls.builtins.formatting.terraform_fmt,
+        -- -- null_ls.builtins.formatting.yamlfmt,
+        -- null_ls.builtins.formatting.yamlfmt.with({
+        --   extra_args = { "--offset,", "0" },
+        -- }),
+        -- --     # args: [--mapping, '2', --sequence, '2', --offset, '0', --colons, --width, '150']
+        -- -- args: [--mapping, '2', --sequence, '2', --offset, '0']
+        -- -- MD013:
+        -- --   # Number of characters
+        -- --   line_length: 80
 
         -----------------
         -- linter --
