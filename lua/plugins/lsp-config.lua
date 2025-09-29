@@ -7,15 +7,11 @@ return {
     "williamboman/mason-lspconfig.nvim",
     opts = {
       auto_install = true,
+      automatic_enable = false,
       ensure_installed = {
-        -- "ansiblels",
+        -- Only list if you not use setup_handlers below
         "bashls",
         "docker_compose_language_service",
-        "dockerls",
-        "jedi_language_server",
-        "lua_ls",
-        "pyright",
-        "terraformls",
       },
     },
   },
@@ -24,16 +20,34 @@ return {
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      local lspconfig = require("lspconfig")
-      -- lspconfig.ansiblels.setup({
+      -- Ansible
+      -- vim.lsp.config.ansiblels = {
       --   capabilities = capabilities,
       --   filetypes = { "yaml", "yml", "ansible" },
       --   -- root_dir = lspconfig.util.root_pattern("roles", "playbooks")
-      -- })
-      lspconfig.dockerls.setup({ capabilities = capabilities })
-      lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
-      -- lspconfig.lua_ls.setup({ capabilities = capabilities })
-      lspconfig.gopls.setup({
+      -- }
+      -- vim.lsp.enable("ansiblels")
+
+      -- Bash
+      vim.lsp.config.bashls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("bashls")
+
+      -- Docker
+      vim.lsp.config.dockerls = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("dockerls")
+
+      -- Docker Compose
+      vim.lsp.config.docker_compose_language_service = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("docker_compose_language_service")
+
+      -- Go
+      vim.lsp.config.gopls = {
         capabilities = capabilities,
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         settings = {
@@ -58,8 +72,12 @@ return {
             },
           },
         },
-      })
-      lspconfig.lua_ls.setup({
+      }
+      vim.lsp.enable("gopls")
+
+      -- Lua
+      vim.lsp.config.lua_ls = {
+        cmd = { "lua-language-server" },
         capabilities = capabilities,
         settings = {
           Lua = {
@@ -73,8 +91,11 @@ return {
             },
           },
         },
-      })
-      lspconfig.pyright.setup({
+      }
+      vim.lsp.enable("lua_ls")
+
+      -- Pyright
+      vim.lsp.config.pyright = {
         capabilities = capabilities,
         settings = {
           pyright = {
@@ -92,29 +113,33 @@ return {
             },
           },
         },
-      })
-      lspconfig.ruff.setup({
+      }
+
+      vim.lsp.config.ruff = {
         init_options = {
           settings = {
             -- Ruff language server settings go here
           },
         },
-      })
-      lspconfig.terraformls.setup({
+      }
+      vim.lsp.enable("ruff")
+
+      -- Terraform
+      vim.lsp.config.terraformls = {
         capabilities = capabilities,
-        filetypes = { "terraform", "tf", "hcl" },
-        root_dir = function(fname)
-          return require("lspconfig").util.root_pattern(
-            ".terraform",
-            "main.tf",
-            "variables.tf",
-            "outputs.tf",
-            "terraform.tfvars"
-          )(fname) or require("lspconfig").util.path.dirname(fname)
-        end,
-      })
-      lspconfig.texlab.setup({ capabilities = capabilities })
-      lspconfig.yamlls.setup({
+        filetypes = { "terraform", "hcl" },
+      }
+      vim.lsp.enable("terraformls")
+
+      -- Texlab
+      vim.lsp.config.texlab = {
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("texlab")
+
+      -- Yaml
+      vim.lsp.config.yamlls = {
+        -- lspconfig.yamlls.setup({
         settings = {
           yaml = {
             schemas = {
@@ -133,21 +158,30 @@ return {
               ["https://json.schemastore.org/dependabot-2.0"] = ".github/dependabot.{yml,yaml}",
               ["https://json.schemastore.org/drone"] = ".drone.{yml,yaml}",
               ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-              -- ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.0/schema.json"] = "*api*.{yml,yaml}",
               ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
               ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
-              -- https://github.com/fluxcd/kustomize-controller/releases/download/v1.3.0/kustomize-controller.crds.yaml
-              -- https://github.com/fluxcd/source-controller/releases/download/v1.3.0/source-controller.crds.yaml
-              -- https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml
             },
           },
         },
-      })
+      }
+      vim.lsp.enable("yamlls")
 
-      -- Keymaps
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+      -- Navigation
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-      vim.keymap.set({ "n" }, "<leader>ca", vim.lsp.buf.code_action, {})
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
+      vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+
+      -- Refactor / actions
+      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+
+      -- Diagnostics
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {})
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {})
+      -- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})  -- set for open picker
+      vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, {})
 
       -- Autoformat
       vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
