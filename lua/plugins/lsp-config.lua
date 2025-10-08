@@ -125,9 +125,11 @@ return {
 
       -- Yaml
       vim.lsp.config.yamlls = {
-        -- lspconfig.yamlls.setup({
         settings = {
           yaml = {
+            format = {
+              enable = false,
+            },
             schemas = {
               kubernetes = "k8s-*.yaml",
               ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
