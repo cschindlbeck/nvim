@@ -8,10 +8,15 @@ return {
       -- refer to the configuration section below
     },
     picker = {
+      hidden = true,
+      ignored = false,
       sources = {
         explorer = {
-          -- your explorer picker configuration comes here
-          -- or leave it empty to use the default settings
+          layout = {
+            layout = {
+              width = 30,
+            },
+          },
         },
       },
     },

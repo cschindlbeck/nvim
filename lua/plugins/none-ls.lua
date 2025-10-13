@@ -49,10 +49,15 @@ return {
         --   end,
         -- }),
         null_ls.builtins.diagnostics.yamllint.with({
+          filetypes = { "yaml", "yml" }, -- remove helm here
           extra_args = {
             "-d",
-            "{extends: default, rules: {indentation: {spaces: 2, indent-sequences: consistent}, "
-              .. "line-length: {max: 150}, document-start: {present: false}}}",
+            "{extends: default, rules: {"
+              .. "document-start: disable, "
+              .. "comments: {require-starting-space: true, ignore-shebangs: true, min-spaces-from-content: 1}, "
+              .. "indentation: {spaces: 2, indent-sequences: consistent}, "
+              .. "line-length: {max: 150}"
+              .. "}}",
           },
         }),
         ----------------
