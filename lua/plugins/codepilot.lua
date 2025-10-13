@@ -34,6 +34,13 @@ local githubcopilot = {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
+        server_opts_overrides = {
+          settings = {
+            telemetry = {
+              telemetryLevel = "off",
+            },
+          },
+        },
         suggestion = {
           enabled = false, -- disable the inline suggestion ghosttext, it is annoying
           auto_trigger = true,
