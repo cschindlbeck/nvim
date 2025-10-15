@@ -117,7 +117,7 @@ return {
       -- Terraform
       vim.lsp.config.terraformls = {
         capabilities = capabilities,
-        filetypes = { "terraform", "hcl" },
+        filetypes = { "tf", "terraform", "hcl" },
       }
       vim.lsp.enable("terraformls")
 
