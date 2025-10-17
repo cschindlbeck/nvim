@@ -102,17 +102,32 @@ return {
       vim.lsp.config.pyright = {
         capabilities = capabilities,
         settings = {
+          pyright = {
+            -- Using Ruff's import organizer
+            disableOrganizeImports = true,
+          },
           python = {
             analysis = {
-              typeCheckingMode = "off",
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              diagnosticMode = "workspace",
+              -- typeCheckingMode = "off",
+              -- autoSearchPaths = true,
+              -- useLibraryCodeForTypes = true,
+              -- diagnosticMode = "workspace",
+              -- Ignore all files for analysis to exclusively use Ruff for linting
+              ignore = { "*" },
             },
           },
         },
       }
       vim.lsp.enable("pyright")
+
+      vim.lsp.config.ruff = {
+        init_options = {
+          settings = {
+            -- Ruff language server settings go here
+          },
+        },
+      }
+      vim.lsp.enable("ruff")
 
       -- Terraform
       vim.lsp.config.terraformls = {
@@ -198,17 +213,14 @@ return {
         "ansible-lint", -- 24.2.0 on arch
         -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
         "bashls",
-        "black",
         "docker-compose-language-service",
         "dockerls",
         "gopls",
         "hadolint",
-        "isort",
         "lua_ls",
         "markdownlint",
-        "pylama",
-        "pylint",
         "pyright",
+        "ruff",
         "selene",
         "shellcheck",
         -- "shellharden", -- needs cargo
