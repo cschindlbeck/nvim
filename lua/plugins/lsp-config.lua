@@ -177,10 +177,10 @@ return {
 
       -- Autoformat
       vim.api.nvim_create_autocmd("BufWritePre", {
-        callback = function()
-          local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+        callback = function(args)
+          local clients = vim.lsp.get_clients({ bufnr = args.buf })
           if #clients > 0 then
-            vim.lsp.buf.format({ async = false })
+            vim.lsp.buf.format({ async = false, bufnr = args.buf })
           end
         end,
       })
