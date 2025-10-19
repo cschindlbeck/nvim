@@ -17,7 +17,7 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    lazy = false,
+    event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Ansible
@@ -31,18 +31,21 @@ return {
       -- Bash
       vim.lsp.config.bashls = {
         capabilities = capabilities,
+        filetypes = { "sh", "bash" },
       }
       vim.lsp.enable("bashls")
 
       -- Docker
       vim.lsp.config.dockerls = {
         capabilities = capabilities,
+        filetypes = { "dockerfile" },
       }
       vim.lsp.enable("dockerls")
 
       -- Docker Compose
       vim.lsp.config.docker_compose_language_service = {
         capabilities = capabilities,
+        -- filetypes = { "yaml", "yml" },
       }
       vim.lsp.enable("docker_compose_language_service")
 
@@ -78,6 +81,7 @@ return {
       -- Lua
       vim.lsp.config.lua_ls = {
         cmd = { "lua-language-server" },
+        filetypes = { "lua" },
         capabilities = capabilities,
         settings = {
           Lua = {
@@ -113,7 +117,7 @@ return {
       -- Terraform
       vim.lsp.config.terraformls = {
         capabilities = capabilities,
-        filetypes = { "terraform", "hcl" },
+        filetypes = { "tf", "terraform", "hcl" },
       }
       vim.lsp.enable("terraformls")
 
@@ -125,7 +129,6 @@ return {
 
       -- Yaml
       vim.lsp.config.yamlls = {
-        -- lspconfig.yamlls.setup({
         settings = {
           yaml = {
             format = { enable = false }, -- will be done by none-ls
@@ -171,7 +174,14 @@ return {
       vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, {})
 
       -- Autoformat
-      vim.cmd([[autocmd BufWritePre * lua vim.lsp.buf.format()]])
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        callback = function(args)
+          local clients = vim.lsp.get_clients({ bufnr = args.buf })
+          if #clients > 0 then
+            vim.lsp.buf.format({ async = false, bufnr = args.buf })
+          end
+        end,
+      })
       local opts = {}
       vim.keymap.set("n", "<space>f", function()
         vim.lsp.buf.format({ async = true })

@@ -6,8 +6,8 @@ return {
     null_ls.setup({
       -- make sure these are installed in mason via mason install tool from lsp-config lua
       sources = {
+        update_in_insert = false,
         -- moved to conform in formatting.lua
-
         -- ----------------
         -- -- formatting --
         -- ----------------
@@ -25,6 +25,7 @@ return {
         --   extra_args = { "--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120" },
         -- }),
         -- null_ls.builtins.formatting.shfmt.with({
+        --   filetypes = { "sh", "bash" },
         --   extra_args = { "-i", "2", "-ci" },
         -- }),
         -- -- null_ls.builtins.formatting.shellharden, -- needs cargo
