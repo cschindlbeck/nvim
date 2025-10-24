@@ -120,12 +120,17 @@ return {
       }
       vim.lsp.enable("pyright")
 
+      -- Ruff
       vim.lsp.config.ruff = {
+        cmd = { "ruff", "server" },
+        filetypes = { "python" },
+        root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml" },
         init_options = {
           settings = {
-            -- Ruff language server settings go here
+            logLevel = "info",
           },
         },
+        capabilities = capabilities,
       }
       vim.lsp.enable("ruff")
 
@@ -203,6 +208,30 @@ return {
       vim.keymap.set("n", "<space>f", function()
         vim.lsp.buf.format({ async = true })
       end, opts)
+
+      -- Format on save using Ruff for Python files
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.py",
+        callback = function(args)
+          vim.lsp.buf.format({
+            async = false,
+            bufnr = args.buf,
+            filter = function(client)
+              return client.name == "ruff"
+            end,
+          })
+        end,
+      })
+
+      -- Manual format keybinding
+      vim.keymap.set("n", "<space>f", function()
+        vim.lsp.buf.format({
+          async = true,
+          filter = function(client)
+            return client.name == "ruff"
+          end,
+        })
+      end, { desc = "Format with Ruff" })
     end,
   },
   {
