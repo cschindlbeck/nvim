@@ -52,7 +52,7 @@ return {
           extra_args = {
             "-d",
             "{extends: default, rules: {indentation: {spaces: 2, indent-sequences: consistent}, "
-              .. "line-length: {max: 150}, document-start: {present: false}}}",
+            .. "line-length: {max: 150}, document-start: {present: true}}}",
           },
         }),
         ----------------
