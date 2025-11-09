@@ -73,7 +73,7 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- Buffer delete
-vim.keymap.set("n", "<leader>bd", [[:bdelete]], { silent = true, noremap = true }) -- not working, why is leader b Nop?
+vim.keymap.set("n", "<leader>bd", [[:bdelete<CR>]], { silent = true, noremap = true }) -- not working, why is leader b Nop?
 
 -- Insert empty line above/below (m keeps cursor in place)
 vim.keymap.set("n", "<CR>", "m`o<Esc>``", silencio)
