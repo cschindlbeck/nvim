@@ -41,7 +41,7 @@ repos:
         exclude: CHANGELOG\.rst|\.(svg|pyc|drawio|dcf|eds)$|lazy-lock.json|example.lua
   # Format lua
   - repo: https://github.com/JohnnyMorganz/StyLua
-    rev: v2.3.0
+    rev: v2.3.1
     hooks:
       - id: stylua
         args: ["--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120"]
