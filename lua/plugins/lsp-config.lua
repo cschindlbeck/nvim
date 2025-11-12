@@ -138,30 +138,32 @@ return {
           yaml = {
             validate = true,
             schemaStore = { enable = false, url = "" },
-            schemas = require("schemastore").yaml.schemas(),
+            schemas = require("schemastore").yaml.schemas({
+              extra = {
+                {
+                  description = "Flux Tofu Controller CRDs",
+                  fileMatch = { "tf-controller.crds.yaml" },
+                  name = "tf-controller.crds.yaml",
+                  url = "https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml",
+                },
+                {
+                  description = "Flux Kustomize Controller CRDs",
+                  fileMatch = { "kustomize-controller.crds.yaml" },
+                  name = "kustomize-controller.crds.yaml",
+                  url = "https://github.com/fluxcd/kustomize-controller/releases/download/v1.7.2/kustomize-controller.crds.yaml",
+                },
+                {
+                  description = "Flux Source Controller CRDs",
+                  fileMatch = { "source-controller.crds.yaml" },
+                  name = "source-controller.crds.yaml",
+                  url = "https://github.com/fluxcd/source-controller/releases/download/v1.7.3/source-controller.crds.yaml",
+                },
+              },
+            }),
           },
         },
       }
       vim.lsp.enable("yamlls")
-
-      -- should work but doesnt
-      -- extra = {
-      --   {
-      --     description = "Flux Tofu Controller CRDs",
-      --     fileMatch = { "tf-controller.crds.yaml" },
-      --     url = "https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml",
-      --   },
-      --   {
-      --     description = "Flux Kustomize Controller CRDs",
-      --     fileMatch = { "kustomize-controller.crds.yaml" },
-      --     url = "https://github.com/fluxcd/kustomize-controller/releases/download/v1.3.0/kustomize-controller.crds.yaml",
-      --   },
-      --   {
-      --     description = "Flux Source Controller CRDs",
-      --     fileMatch = { "source-controller.crds.yaml" },
-      --     url = "https://github.com/fluxcd/source-controller/releases/download/v1.3.0/source-controller.crds.yaml",
-      --   },
-      -- },
 
       -- Navigation
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
