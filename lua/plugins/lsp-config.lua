@@ -4,9 +4,6 @@ return {
     opts = {},
   },
   {
-    "b0o/schemastore.nvim",
-  },
-  {
     "williamboman/mason-lspconfig.nvim",
     opts = {
       auto_install = true,
@@ -17,6 +14,9 @@ return {
         "docker_compose_language_service",
       },
     },
+  },
+  {
+    "b0o/schemastore.nvim",
   },
   {
     "neovim/nvim-lspconfig",
