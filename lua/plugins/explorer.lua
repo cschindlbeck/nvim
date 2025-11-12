@@ -8,6 +8,8 @@ return {
       -- refer to the configuration section below
     },
     picker = {
+      hidden = true,
+      ignored = false,
       sources = {
         explorer = {
           -- your explorer picker configuration comes here
