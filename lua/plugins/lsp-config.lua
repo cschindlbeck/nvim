@@ -34,7 +34,7 @@ return {
       -- Bash
       vim.lsp.config.bashls = {
         capabilities = capabilities,
-        filetypes = { "sh", "bash" },
+        filetypes = { "sh", "zsh", "bash" },
       }
       vim.lsp.enable("bashls")
 
