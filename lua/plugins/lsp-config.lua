@@ -16,6 +16,9 @@ return {
     },
   },
   {
+    "b0o/schemastore.nvim",
+  },
+  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
@@ -129,30 +132,34 @@ return {
 
       -- Yaml
       vim.lsp.config.yamlls = {
+        cmd = { "yaml-language-server", "--stdio" },
+        filetypes = { "yaml" },
         settings = {
           yaml = {
-            format = {
-              enable = false,
-            },
-            schemas = {
-              kubernetes = "k8s-*.yaml",
-              ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
-              ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
-              ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-              ["http://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
-              ["https://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-              ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-              ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-              ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-              ["https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml"] = "tf-controller.crds.yaml",
-              ["https://github.com/fluxcd/kustomize-controller/releases/download/v1.3.0/kustomize-controller.crds.yaml"] = "kustomize-controller.crds.yaml",
-              ["https://github.com/fluxcd/source-controller/releases/download/v1.3.0/source-controller.crds.yaml"] = "source-controller.crds.yaml",
-              ["https://json.schemastore.org/dependabot-2.0"] = ".github/dependabot.{yml,yaml}",
-              ["https://json.schemastore.org/drone"] = ".drone.{yml,yaml}",
-              ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-              ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
-              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
-            },
+            validate = true,
+            schemaStore = { enable = false, url = "" },
+            schemas = require("schemastore").yaml.schemas({
+              extra = {
+                {
+                  description = "Flux Tofu Controller CRDs",
+                  fileMatch = { "tf-controller.crds.yaml" },
+                  name = "tf-controller.crds.yaml",
+                  url = "https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml",
+                },
+                {
+                  description = "Flux Kustomize Controller CRDs",
+                  fileMatch = { "kustomize-controller.crds.yaml" },
+                  name = "kustomize-controller.crds.yaml",
+                  url = "https://github.com/fluxcd/kustomize-controller/releases/download/v1.7.2/kustomize-controller.crds.yaml",
+                },
+                {
+                  description = "Flux Source Controller CRDs",
+                  fileMatch = { "source-controller.crds.yaml" },
+                  name = "source-controller.crds.yaml",
+                  url = "https://github.com/fluxcd/source-controller/releases/download/v1.7.3/source-controller.crds.yaml",
+                },
+              },
+            }),
           },
         },
       }
