@@ -13,28 +13,28 @@ local catppuccin = {
 
 -- Nord
 -- theme
-local nord = {
-  "shaunsingh/nord.nvim",
-  config = function()
-    require("nord").set()
-    -- local fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg
-    -- vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = fg })
-    -- vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { fg = fg })
-  end,
-}
-
 -- local nord = {
---   "gbprod/nord.nvim",
---   lazy = false,
---   priority = 1000,
+--   "shaunsingh/nord.nvim",
 --   config = function()
---     require("nord").setup({})
---     vim.cmd.colorscheme("nord")
---     local fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg
---     vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = fg })
---     vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { fg = fg })
+--     require("nord").set()
+--     -- local fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg
+--     -- vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = fg })
+--     -- vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { fg = fg })
 --   end,
 -- }
+
+local nord = {
+  "gbprod/nord.nvim",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    require("nord").setup({})
+    vim.cmd.colorscheme("nord")
+    local fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg
+    vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = fg })
+    vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { fg = fg })
+  end,
+}
 
 -- Dracula theme
 local dracula = {
