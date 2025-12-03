@@ -11,11 +11,17 @@ local catppuccin = {
   end,
 }
 
--- Nord theme
+-- Nord
 local nord = {
-  "shaunsingh/nord.nvim",
+  "gbprod/nord.nvim",
+  lazy = false,
+  priority = 1000,
   config = function()
-    require("nord").set()
+    require("nord").setup({})
+    vim.cmd.colorscheme("nord")
+    local fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg
+    vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { fg = fg })
+    vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { fg = fg })
   end,
 }
 
