@@ -96,11 +96,11 @@ return {
           -- note the exact key: 'helm-ls'
           ["helm-ls"] = {
             -- point to your yaml-language-server executable if you want helm-ls to use it
-            yamlls = {
-              path = "yaml-language-server",
-              enabled = true,
-              enabledForFilesGlob = "*.{yaml,yml}",
-            },
+            -- yamlls = {
+            --   path = "yaml-language-server",
+            --   enabled = true,
+            --   enabledForFilesGlob = "*.{yaml,yml}",
+            -- },
             -- optional useful defaults
             valuesFiles = {
               mainValuesFile = "values.yaml",
