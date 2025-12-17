@@ -49,6 +49,7 @@ return {
         --   end,
         -- }),
         null_ls.builtins.diagnostics.yamllint.with({
+          filetypes = { "yaml", "yml" }, -- remove helm here
           extra_args = {
             "-d",
             "{extends: default, rules: {"
