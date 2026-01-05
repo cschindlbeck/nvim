@@ -10,16 +10,12 @@ return {
         ----------------
         -- formatting --
         ----------------
-        null_ls.builtins.formatting.black.with({
-          extra_args = {
-            "--line-length=160",
-            "--skip-string-normalization",
-          },
-        }),
-        null_ls.builtins.formatting.isort,
         null_ls.builtins.formatting.markdownlint.with({
           extra_args = { "--max-line-length=120" },
         }),
+        -- null_ls.builtins.formatting.ruff.with({
+        --   extra_args = { "--fix", "--line-length=120" },
+        -- }),
         null_ls.builtins.formatting.stylua.with({
           extra_args = { "--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120" },
         }),
@@ -43,11 +39,7 @@ return {
           extra_args = { "--max-line-length=120" },
         }),
         -- null_ls.builtins.diagnostics.selene, -- lua needs glibc2.33 not available on ubuntu2004
-        -- null_ls.builtins.diagnostics.pylint.with({
-        --   diagnostics_postprocess = function(diagnostic)
-        --     diagnostic.code = diagnostic.message_id
-        --   end,
-        -- }),
+        -- null_ls.builtins.diagnostics.ruff.with({}),
         null_ls.builtins.diagnostics.yamllint.with({
           extra_args = {
             "-d",

@@ -105,17 +105,37 @@ return {
       vim.lsp.config.pyright = {
         capabilities = capabilities,
         settings = {
+          pyright = {
+            -- Using Ruff's import organizer
+            disableOrganizeImports = true,
+          },
           python = {
             analysis = {
-              typeCheckingMode = "off",
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-              diagnosticMode = "workspace",
+              -- typeCheckingMode = "off",
+              -- autoSearchPaths = true,
+              -- useLibraryCodeForTypes = true,
+              -- diagnosticMode = "workspace",
+              -- Ignore all files for analysis to exclusively use Ruff for linting
+              ignore = { "*" },
             },
           },
         },
       }
       vim.lsp.enable("pyright")
+
+      -- Ruff
+      vim.lsp.config.ruff = {
+        cmd = { "ruff", "server" },
+        filetypes = { "python" },
+        root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml" },
+        init_options = {
+          settings = {
+            logLevel = "info",
+          },
+        },
+        capabilities = capabilities,
+      }
+      vim.lsp.enable("ruff")
 
       -- Terraform
       vim.lsp.config.terraformls = {
@@ -195,6 +215,30 @@ return {
       vim.keymap.set("n", "<space>f", function()
         vim.lsp.buf.format({ async = true })
       end, opts)
+
+      -- Format on save using Ruff for Python files
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.py",
+        callback = function(args)
+          vim.lsp.buf.format({
+            async = false,
+            bufnr = args.buf,
+            filter = function(client)
+              return client.name == "ruff"
+            end,
+          })
+        end,
+      })
+
+      -- Manual format keybinding
+      vim.keymap.set("n", "<space>f", function()
+        vim.lsp.buf.format({
+          async = true,
+          filter = function(client)
+            return client.name == "ruff"
+          end,
+        })
+      end, { desc = "Format with Ruff" })
     end,
   },
   {
@@ -205,17 +249,14 @@ return {
         "ansible-lint", -- 24.2.0 on arch
         -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
         "bashls",
-        "black",
         "docker-compose-language-service",
         "dockerls",
         "gopls",
         "hadolint",
-        "isort",
         "lua_ls",
         "markdownlint",
-        "pylama",
-        "pylint",
         "pyright",
+        "ruff",
         "selene",
         "shellcheck",
         -- "shellharden", -- needs cargo
