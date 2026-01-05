@@ -19,6 +19,10 @@ return {
     "b0o/schemastore.nvim",
   },
   {
+    "towolf/vim-helm",
+    ft = "helm",
+  },
+  {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
@@ -80,6 +84,33 @@ return {
         },
       }
       vim.lsp.enable("gopls")
+
+      -- Helm (using helm_ls)
+      vim.lsp.config.helm_ls = {
+        -- helm_ls needs the "serve" argument
+        cmd = { "helm_ls", "serve" },
+        -- helm-ls provides completions for Helm charts and Helmfile etc.
+        filetypes = { "helm", "helmfile", "yaml", "yml" },
+        capabilities = capabilities, -- reuse your capabilities var
+        settings = {
+          -- note the exact key: 'helm-ls'
+          ["helm-ls"] = {
+            -- point to your yaml-language-server executable if you want helm-ls to use it
+            -- yamlls = {
+            --   path = "yaml-language-server",
+            --   enabled = true,
+            --   enabledForFilesGlob = "*.{yaml,yml}",
+            -- },
+            -- optional useful defaults
+            valuesFiles = {
+              mainValuesFile = "values.yaml",
+              additionalValuesFilesGlobPattern = "values*.yaml",
+            },
+            helmLint = { enabled = true },
+          },
+        },
+      }
+      vim.lsp.enable("helm_ls")
 
       -- Lua
       vim.lsp.config.lua_ls = {
@@ -210,6 +241,7 @@ return {
         "dockerls",
         "gopls",
         "hadolint",
+        "helm_ls",
         "isort",
         "lua_ls",
         "markdownlint",
