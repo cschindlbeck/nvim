@@ -12,8 +12,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- do not sort alphabetically, keep the order of your plugins
+require("config/general")
 require("config/autocmds")
 require("config/keymaps")
-require("config/general")
 require("config/diagnostics")
 require("lazy").setup("plugins")
