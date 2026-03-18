@@ -34,14 +34,14 @@ repos:
   # Spellcheck in comments and docs
   # skipping of *.svg files is not working...
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.2
     hooks:
       - id: codespell
         args: ["--write-changes"]
         exclude: CHANGELOG\.rst|\.(svg|pyc|drawio|dcf|eds)$|lazy-lock.json|example.lua
   # Format lua
   - repo: https://github.com/JohnnyMorganz/StyLua
-    rev: v2.3.1
+    rev: v2.4.0
     hooks:
       - id: stylua
         args: ["--indent-width", "2", "--indent-type", "Spaces", "--column-width", "120"]
@@ -54,11 +54,11 @@ repos:
         #   "120"]
   # Format yaml
   - repo: https://github.com/google/yamlfmt
-    rev: v0.20.0
+    rev: v0.21.0
     hooks:
       - id: yamlfmt
   # Lint markdown
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.47.0
+    rev: v0.48.0
     hooks:
       - id: markdownlint
