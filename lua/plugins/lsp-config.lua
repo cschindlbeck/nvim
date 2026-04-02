@@ -90,7 +90,7 @@ return {
         -- helm_ls needs the "serve" argument
         cmd = { "helm_ls", "serve" },
         -- helm-ls provides completions for Helm charts and Helmfile etc.
-        filetypes = { "helm", "helmfile", "yaml", "yml" },
+        filetypes = { "helm", "helmfile" },
         capabilities = capabilities, -- reuse your capabilities var
         settings = {
           -- note the exact key: 'helm-ls'
@@ -181,13 +181,15 @@ return {
                   description = "Flux Kustomize Controller CRDs",
                   fileMatch = { "kustomize-controller.crds.yaml" },
                   name = "kustomize-controller.crds.yaml",
-                  url = "https://github.com/fluxcd/kustomize-controller/releases/download/v1.7.2/kustomize-controller.crds.yaml",
+                  url =
+                  "https://github.com/fluxcd/kustomize-controller/releases/download/v1.7.2/kustomize-controller.crds.yaml",
                 },
                 {
                   description = "Flux Source Controller CRDs",
                   fileMatch = { "source-controller.crds.yaml" },
                   name = "source-controller.crds.yaml",
-                  url = "https://github.com/fluxcd/source-controller/releases/download/v1.7.3/source-controller.crds.yaml",
+                  url =
+                  "https://github.com/fluxcd/source-controller/releases/download/v1.7.3/source-controller.crds.yaml",
                 },
               },
             }),
