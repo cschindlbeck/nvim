@@ -149,9 +149,24 @@ return {
       vim.lsp.enable("pyright")
 
       -- Terraform
+      -- vim.lsp.config.terraformls = {
+      --   capabilities = capabilities,
+      --   filetypes = { "tf", "terraform", "hcl" },
+      -- }
+
+      local util = require("lspconfig.util")
       vim.lsp.config.terraformls = {
         capabilities = capabilities,
         filetypes = { "tf", "terraform", "hcl" },
+        root_dir = util.root_pattern(".git"),
+        settings = {
+          terraform = {
+            ignorePaths = {
+              ".terraform",
+              ".terraform/*",
+            },
+          },
+        },
       }
       vim.lsp.enable("terraformls")
 
@@ -181,15 +196,13 @@ return {
                   description = "Flux Kustomize Controller CRDs",
                   fileMatch = { "kustomize-controller.crds.yaml" },
                   name = "kustomize-controller.crds.yaml",
-                  url =
-                  "https://github.com/fluxcd/kustomize-controller/releases/download/v1.7.2/kustomize-controller.crds.yaml",
+                  url = "https://github.com/fluxcd/kustomize-controller/releases/download/v1.7.2/kustomize-controller.crds.yaml",
                 },
                 {
                   description = "Flux Source Controller CRDs",
                   fileMatch = { "source-controller.crds.yaml" },
                   name = "source-controller.crds.yaml",
-                  url =
-                  "https://github.com/fluxcd/source-controller/releases/download/v1.7.3/source-controller.crds.yaml",
+                  url = "https://github.com/fluxcd/source-controller/releases/download/v1.7.3/source-controller.crds.yaml",
                 },
               },
             }),
