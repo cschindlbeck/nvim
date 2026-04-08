@@ -1,18 +1,46 @@
 return {
   {
     "williamboman/mason.nvim",
-    opts = {},
+    opts = {
+      ensure_installed = {
+        "ansiblels",
+        "ansible-lint", -- 24.2.0 on arch
+        -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
+        "bash-language-server",
+        "bashls",
+        "black",
+        "docker-compose-language-service",
+        "dockerls",
+        "gopls",
+        "hadolint",
+        "helm_ls",
+        "isort",
+        "lua-language-server",
+        "lua_ls",
+        "markdownlint",
+        "pylama",
+        "pylint",
+        "pyright",
+        "selene",
+        "shellcheck",
+        -- "shellharden", -- needs cargo
+        "shfmt",
+        "stylua",
+        "terraformls",
+        "tflint",
+        "tfsec",
+        "yaml-language-server",
+        "yamlfmt",
+        "yamllint",
+      },
+      auto_update = true,
+      run_on_start = true,
+    },
   },
   {
     "williamboman/mason-lspconfig.nvim",
     opts = {
-      auto_install = true,
-      automatic_enable = false,
-      ensure_installed = {
-        -- Only list if you not use setup_handlers below
-        "bashls",
-        "docker_compose_language_service",
-      },
+      automatic_installation = true,
     },
   },
   {
@@ -242,41 +270,5 @@ return {
         vim.lsp.buf.format({ async = true })
       end, opts)
     end,
-  },
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "ansiblels",
-        "ansible-lint", -- 24.2.0 on arch
-        -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
-        "bashls",
-        "black",
-        "docker-compose-language-service",
-        "dockerls",
-        "gopls",
-        "hadolint",
-        "helm_ls",
-        "isort",
-        "lua_ls",
-        "markdownlint",
-        "pylama",
-        "pylint",
-        "pyright",
-        "selene",
-        "shellcheck",
-        -- "shellharden", -- needs cargo
-        "shfmt",
-        "stylua",
-        "terraformls",
-        "tflint",
-        "tfsec",
-        "yaml-language-server",
-        "yamlfmt",
-        "yamllint",
-      },
-      auto_update = true,
-      run_on_start = true,
-    },
   },
 }
