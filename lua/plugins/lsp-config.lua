@@ -244,7 +244,7 @@ return {
     end,
   },
   {
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
         "ansiblels",
