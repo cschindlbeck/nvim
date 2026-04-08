@@ -18,3 +18,5 @@ require("config/autocmds")
 require("config/keymaps")
 require("config/diagnostics")
 require("lazy").setup("plugins")
+
+require("vim._core.ui2").enable({})
