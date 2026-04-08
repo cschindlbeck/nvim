@@ -22,7 +22,7 @@ git clone https://github.com/cschindlbeck/nvim.git ~/.config/nvim
 
 ## Requirements/Dependencies
 
-This is tested against latest stable (currently NVIM v0.11.2)
+This is tested against latest stable (currently NVIM v0.12)
 
 For the plugins you will need to install: xclip, npm, luachecks, pyright, NerdFont
 
