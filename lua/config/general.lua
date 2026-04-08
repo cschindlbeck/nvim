@@ -20,7 +20,9 @@ local options = {
   ignorecase = true, -- case insensitive searching
   number = true, -- show line numbers
   relativenumber = false, -- relative numbers
+  scrollback = 1000000,
   scrolloff = 15, -- stop scrolling at the top and bottom until the end
+  shelltemp = false,
   shiftwidth = 2, -- number of spaces in indentation
   sidescrolloff = 8, -- same for the sides
   smartindent = true, --
@@ -38,3 +40,6 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+vim.o.autocomplete = true
+vim.o.completeopt = "menu,menuone,noselect"
