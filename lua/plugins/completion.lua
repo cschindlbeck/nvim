@@ -1,12 +1,14 @@
 return {
   {
     "hrsh7th/cmp-nvim-lsp",
-    lazy = false,
+    lazy = true,
+    event = "InsertEnter",
     config = true,
   },
   {
     "L3MON4D3/LuaSnip",
-    lazy = false,
+    lazy = true,
+    event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
@@ -21,7 +23,8 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
-    lazy = false,
+    lazy = true,
+    event = "InsertEnter",
     config = function()
       local cmp = require("cmp")
       local lspkind = require("lspkind")

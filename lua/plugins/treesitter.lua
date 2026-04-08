@@ -1,6 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   branch = "main",
+  event = { "BufRead", "BufNewFile" },
   build = ":TSUpdate",
   init = function()
     -- Ensure parsers and configure highlighting/indentation
