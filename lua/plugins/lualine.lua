@@ -5,6 +5,10 @@ return {
   opts = {
     options = {
       theme = "nord",
+      sections = {
+        lualine_b = { "diagnostics" },
+        lualine_c = { "vim.lsp.status" },
+      },
     },
   },
 }
