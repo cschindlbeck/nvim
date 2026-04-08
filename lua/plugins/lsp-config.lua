@@ -149,9 +149,24 @@ return {
       vim.lsp.enable("pyright")
 
       -- Terraform
+      -- vim.lsp.config.terraformls = {
+      --   capabilities = capabilities,
+      --   filetypes = { "tf", "terraform", "hcl" },
+      -- }
+
+      local util = require("lspconfig.util")
       vim.lsp.config.terraformls = {
         capabilities = capabilities,
         filetypes = { "tf", "terraform", "hcl" },
+        root_dir = util.root_pattern(".git"),
+        settings = {
+          terraform = {
+            ignorePaths = {
+              ".terraform",
+              ".terraform/*",
+            },
+          },
+        },
       }
       vim.lsp.enable("terraformls")
 
