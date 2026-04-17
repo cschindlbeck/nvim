@@ -1,29 +1,3 @@
--- return {
---   "nvim-treesitter/nvim-treesitter",
---   branch = "main",
---   event = { "BufRead", "BufNewFile" },
---   build = ":TSUpdate",
---   init = function()
---     -- Ensure parsers and configure highlighting/indentation
---     local ensureInstalled = { "lua", "python", "typescript" }
---     local alreadyInstalled = require("nvim-treesitter.config").get_installed()
---     local parsersToInstall = vim
---         .iter(ensureInstalled)
---         :filter(function(parser)
---           return not vim.tbl_contains(alreadyInstalled, parser)
---         end)
---         :totable()
---     require("nvim-treesitter").install(parsersToInstall)
---
---     vim.api.nvim_create_autocmd("FileType", {
---       callback = function()
---         pcall(vim.treesitter.start)
---         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
---       end,
---     })
---   end,
--- }
-
 if vim.g.treesitter_branch ~= "main" then
 	return {}
 end
@@ -52,15 +26,18 @@ vim.api.nvim_create_autocmd({ "Filetype" }, {
 
 		local ft = vim.bo[event.buf].ft
 		local lang = vim.treesitter.language.get_lang(ft)
+		if not lang then
+			return
+		end
 		nvim_treesitter.install({ lang }):await(function(err)
 			if err then
 				vim.notify("Treesitter install error for ft: " .. ft .. " err: " .. err)
 				return
 			end
-
 			pcall(vim.treesitter.start, event.buf)
-			vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			vim.bo[event.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 			vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+			vim.wo.foldmethod = "expr"
 		end)
 	end,
 })
@@ -93,7 +70,6 @@ return {
 			local ensure_installed = {
 				"bash",
 				"c",
-				"css",
 				"diff",
 				"gitcommit",
 				"html",
@@ -225,6 +201,3 @@ return {
 --       },
 --     },
 --   },
---
--- -- vim: ts=2 sts=2 sw=2 et
---
