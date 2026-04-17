@@ -37,7 +37,7 @@ local avante = {
     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
     "stevearc/dressing.nvim", -- for input provider dressing
     "folke/snacks.nvim", -- for input provider snacks
-    "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+    "nvim-mini/mini.nvim", -- replaces "nvim-tree/nvim-web-devicons"
     "zbirenbaum/copilot.lua", -- for providers='copilot'
 
     -- {

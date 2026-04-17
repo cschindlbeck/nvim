@@ -1,7 +1,7 @@
 return {
   "akinsho/bufferline.nvim",
   version = "*",
-  dependencies = "nvim-tree/nvim-web-devicons",
+  dependencies = { "nvim-mini/mini.nvim" }, -- replaces "nvim-tree/nvim-web-devicons"
   opts = {},
   config = function()
     require("bufferline").setup({
