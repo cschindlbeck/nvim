@@ -111,7 +111,9 @@ return {
 --     keys = {
 --       {
 --         '[f',
---         function() require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects') end,
+--         function()
+--           require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects')
+--         end,
 --         desc = 'prev function',
 --         mode = { 'n', 'x', 'o' },
 --       },
@@ -123,7 +125,9 @@ return {
 --       },
 --       {
 --         '[F',
---         function() require('nvim-treesitter-textobjects.move').goto_previous_end('@function.outer', 'textobjects') end,
+--         function()
+--           require('nvim-treesitter-textobjects.move').goto_previous_end('@function.outer', 'textobjects')
+--         end,
 --         desc = 'prev function end',
 --         mode = { 'n', 'x', 'o' },
 --       },
@@ -135,19 +139,25 @@ return {
 --       },
 --       {
 --         '[a',
---         function() require('nvim-treesitter-textobjects.move').goto_previous_start('@parameter.outer', 'textobjects') end,
+--         function()
+--           require('nvim-treesitter-textobjects.move').goto_previous_start('@parameter.outer', 'textobjects')
+--         end,
 --         desc = 'prev argument',
 --         mode = { 'n', 'x', 'o' },
 --       },
 --       {
 --         ']a',
---         function() require('nvim-treesitter-textobjects.move').goto_next_start('@parameter.outer', 'textobjects') end,
+--         function()
+--           require('nvim-treesitter-textobjects.move').goto_next_start('@parameter.outer', 'textobjects')
+--         end,
 --         desc = 'next argument',
 --         mode = { 'n', 'x', 'o' },
 --       },
 --       {
 --         '[A',
---         function() require('nvim-treesitter-textobjects.move').goto_previous_end('@parameter.outer', 'textobjects') end,
+--         function()
+--           require('nvim-treesitter-textobjects.move').goto_previous_end('@parameter.outer', 'textobjects')
+--         end,
 --         desc = 'prev argument end',
 --         mode = { 'n', 'x', 'o' },
 --       },
@@ -159,7 +169,9 @@ return {
 --       },
 --       {
 --         '[s',
---         function() require('nvim-treesitter-textobjects.move').goto_previous_start('@block.outer', 'textobjects') end,
+--         function()
+--           require('nvim-treesitter-textobjects.move').goto_previous_start('@block.outer', 'textobjects')
+--         end,
 --         desc = 'prev block',
 --         mode = { 'n', 'x', 'o' },
 --       },
