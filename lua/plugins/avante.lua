@@ -4,6 +4,7 @@ local avante = {
   lazy = true,
   version = false, -- Never set this value to "*"! Never!
   ---@module 'avante'
+  ---@class avante.Config
   ---@type avante.Config
   opts = {
     provider = "copilot", -- Set the provider to "copilot", "claude"

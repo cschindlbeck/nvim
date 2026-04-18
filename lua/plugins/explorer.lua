@@ -1,3 +1,4 @@
+---@diagnostic disable-next-line:undefined-global
 -- luacheck: globals Snacks
 return {
   "folke/snacks.nvim",
@@ -25,6 +26,7 @@ return {
     {
       "<leader>e",
       function()
+        ---@diagnostic disable-next-line:undefined-global
         Snacks.picker.explorer()
       end,
       desc = "Toggle Explorer",

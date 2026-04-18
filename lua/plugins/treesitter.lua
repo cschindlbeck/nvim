@@ -44,6 +44,7 @@ vim.api.nvim_create_autocmd({ "Filetype" }, {
 
 return {
   ---@module 'lazy'
+  ---@class LazySpec
   ---@type LazySpec
   { -- Highlight, edit, and navigate code
     "nvim-treesitter/nvim-treesitter",
@@ -61,6 +62,7 @@ return {
     end,
 
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+    ---@class TSConfig
     ---@module 'nvim-treesitter'
     ---@type TSConfig
     ---@diagnostic disable-next-line: missing-fields
