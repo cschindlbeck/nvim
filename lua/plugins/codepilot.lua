@@ -68,7 +68,8 @@ local githubcopilot = {
     end,
   },
   {
-    "zbirenbaum/copilot-cmp",
+    -- "zbirenbaum/copilot-cmp", is not maintained, i need an alternative for GH inline completion
+    "jvune0/copilot-cmp",
     config = function()
       require("copilot_cmp").setup()
     end,

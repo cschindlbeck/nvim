@@ -14,7 +14,8 @@ local catppuccin = {
 -- Nord
 local nord = {
   "gbprod/nord.nvim",
-  lazy = false,
+  lazy = true,
+  event = { "BufWinEnter", "BufReadPre" },
   priority = 1000,
   config = function()
     vim.cmd.colorscheme("nord")
