@@ -1,41 +1,7 @@
 return {
   {
     "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "ansiblels",
-        "ansible-lint", -- 24.2.0 on arch
-        -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
-        "bash-language-server",
-        "bashls",
-        "black",
-        "docker-compose-language-service",
-        "dockerls",
-        "gopls",
-        "hadolint",
-        "helm_ls",
-        "isort",
-        "lua-language-server",
-        "lua_ls",
-        "markdownlint",
-        "pylama",
-        "pylint",
-        "pyright",
-        "selene",
-        "shellcheck",
-        -- "shellharden", -- needs cargo
-        "shfmt",
-        "stylua",
-        "terraformls",
-        "tflint",
-        "tfsec",
-        "yaml-language-server",
-        "yamlfmt",
-        "yamllint",
-      },
-      auto_update = true,
-      run_on_start = true,
-    },
+    opts = {},
   },
   {
     "williamboman/mason-lspconfig.nvim",
@@ -177,13 +143,25 @@ return {
       vim.lsp.enable("pyright")
 
       -- Terraform
+      -- local util = require("lspconfig.util")
       -- vim.lsp.config.terraformls = {
       --   capabilities = capabilities,
       --   filetypes = { "tf", "terraform", "hcl" },
+      --   root_dir = util.root_pattern(".git"),
+      --   settings = {
+      --     terraform = {
+      --       ignorePaths = {
+      --         ".terraform",
+      --         ".terraform/*",
+      --       },
+      --     },
+      --   },
       -- }
+      -- vim.lsp.enable("terraformls")
 
+      -- Opentofu
       local util = require("lspconfig.util")
-      vim.lsp.config.terraformls = {
+      vim.lsp.config.tofuls = {
         capabilities = capabilities,
         filetypes = { "tf", "terraform", "hcl" },
         root_dir = util.root_pattern(".git"),
@@ -196,7 +174,7 @@ return {
           },
         },
       }
-      vim.lsp.enable("terraformls")
+      vim.lsp.enable("tofuls")
 
       -- Texlab
       vim.lsp.config.texlab = {
@@ -236,6 +214,10 @@ return {
                 },
               },
             }),
+            format = {
+              enabled = true,
+              flags = { "--line-length", "120", "--indent", "2" },
+            },
           },
         },
       }
@@ -272,5 +254,43 @@ return {
         vim.lsp.buf.format({ async = true })
       end, opts)
     end,
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    opts = {
+      ensure_installed = {
+        "ansiblels",
+        "ansible-lint",
+        "bash-language-server",
+        "bashls",
+        "black",
+        "docker-compose-language-service",
+        "dockerls",
+        "gopls",
+        "hadolint",
+        "helm_ls",
+        "isort",
+        "lua-language-server",
+        "lua_ls",
+        "markdownlint",
+        "tofu_ls",
+        "pylama",
+        "pylint",
+        "pyright",
+        "selene",
+        "shellcheck",
+        -- "shellharden", -- needs cargo
+        "shfmt",
+        "stylua",
+        -- "terraformls", -- i migrate to opentofu
+        "tflint",
+        "tfsec",
+        "yaml-language-server",
+        "yamlfmt",
+        "yamllint",
+      },
+      auto_update = true,
+      run_on_start = true,
+    },
   },
 }
