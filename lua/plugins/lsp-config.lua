@@ -183,19 +183,29 @@ return {
       vim.lsp.enable("texlab")
 
       -- Copilot Language Server
-      vim.lsp.config.copilot_ls = {
-        cmd = { "copilot-language-server", "--stdio" },
-        filetypes = { "*" },
-        root_markers = { ".git" },
-        init_options = {
-          editorInfo = {
-            name = "Neovim",
-            version = vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch,
-          },
-          editorPluginInfo = { name = "copilot-lsp", version = "0" },
-        },
-      }
-      vim.lsp.enable("copilot_ls")
+      -- Attaches to all buffers via BufReadPre (vim.lsp.config filetypes does not support wildcards)
+      local v = vim.version()
+      vim.api.nvim_create_autocmd("BufReadPre", {
+        pattern = "*",
+        callback = function()
+          vim.lsp.start({
+            name = "copilot_ls",
+            cmd = { "copilot-language-server", "--stdio" },
+            capabilities = capabilities,
+            root_dir = vim.fs.root(0, { ".git" }) or vim.fn.getcwd(),
+            init_options = {
+              editorInfo = {
+                name = "Neovim",
+                version = v.major .. "." .. v.minor .. "." .. v.patch,
+              },
+              editorPluginInfo = {
+                name = "copilot-lsp",
+                version = "0",
+              },
+            },
+          })
+        end,
+      })
 
       -- Yaml
       vim.lsp.config.yamlls = {
