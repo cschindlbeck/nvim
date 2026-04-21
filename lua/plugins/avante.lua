@@ -35,11 +35,11 @@ local avante = {
     "MunifTanjim/nui.nvim",
     --- The below dependencies are optional,
     -- "nvim-mini/mini.pick",         -- for file_selector provider mini.pick
-    "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+    "saghen/blink.cmp", -- autocompletion for avante commands and mentions
     "stevearc/dressing.nvim", -- for input provider dressing
     "folke/snacks.nvim", -- for input provider snacks
     "nvim-mini/mini.nvim", -- replaces "nvim-tree/nvim-web-devicons"
-    "zbirenbaum/copilot.lua", -- for providers='copilot'
+    -- copilot provider handled via copilot-language-server LSP
 
     -- {
     --   -- support for image pasting

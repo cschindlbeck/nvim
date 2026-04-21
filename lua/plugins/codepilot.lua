@@ -126,5 +126,5 @@ local codeium = {
   end,
 }
 
-return { githubcopilot }
--- return {}
+-- return { githubcopilot }
+return {}

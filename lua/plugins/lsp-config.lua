@@ -20,7 +20,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
       -- Ansible
       -- vim.lsp.config.ansiblels = {
       --   capabilities = capabilities,
@@ -182,6 +182,32 @@ return {
       }
       vim.lsp.enable("texlab")
 
+      -- Copilot Language Server
+      -- Attaches to all buffers via BufReadPre (vim.lsp.config filetypes does not support wildcards)
+      local v = vim.version()
+      vim.api.nvim_create_autocmd("BufReadPre", {
+        group = vim.api.nvim_create_augroup("copilot_ls_start", { clear = true }),
+        pattern = "*",
+        callback = function()
+          vim.lsp.start({
+            name = "copilot_ls",
+            cmd = { "copilot-language-server", "--stdio" },
+            capabilities = capabilities,
+            root_dir = vim.fs.root(0, { ".git" }) or vim.fn.getcwd(),
+            init_options = {
+              editorInfo = {
+                name = "Neovim",
+                version = v.major .. "." .. v.minor .. "." .. v.patch,
+              },
+              editorPluginInfo = {
+                name = "copilot-lsp",
+                version = "0",
+              },
+            },
+          })
+        end,
+      })
+
       -- Yaml
       vim.lsp.config.yamlls = {
         cmd = { "yaml-language-server", "--stdio" },
@@ -267,6 +293,7 @@ return {
         "docker-compose-language-service",
         "dockerls",
         "gopls",
+        "copilot-language-server",
         "hadolint",
         "helm_ls",
         "isort",
