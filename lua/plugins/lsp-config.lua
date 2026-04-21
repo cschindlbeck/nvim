@@ -216,7 +216,7 @@ return {
             }),
             format = {
               enabled = true,
-              flags = { "--line-length", "120", "--indent", "2" },
+              printWidth = 220, -- unrealistically high for now
             },
           },
         },
