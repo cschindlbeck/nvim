@@ -186,6 +186,7 @@ return {
       -- Attaches to all buffers via BufReadPre (vim.lsp.config filetypes does not support wildcards)
       local v = vim.version()
       vim.api.nvim_create_autocmd("BufReadPre", {
+        group = vim.api.nvim_create_augroup("copilot_ls_start", { clear = true }),
         pattern = "*",
         callback = function()
           vim.lsp.start({
