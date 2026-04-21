@@ -1,7 +1,8 @@
 return {
   "folke/snacks.nvim",
   -- priority=1000,
-  lazy = false,
+  lazy = true,
+  event = { "VimEnter" },
   opts = {
     dashboard = {
       enabled = true,

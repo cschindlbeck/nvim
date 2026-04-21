@@ -1,8 +1,20 @@
 vim.diagnostic.config({
   virtual_text = true,
-  signs = true,
   underline = true,
+  severity_sort = true,
   update_in_insert = false,
+  float = {
+    border = "rounded",
+    source = true,
+  },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "✗",
+      [vim.diagnostic.severity.WARN] = "⚠",
+      [vim.diagnostic.severity.INFO] = "ℹ",
+      [vim.diagnostic.severity.HINT] = "➤",
+    },
+  },
 })
 
 -- Floating window for diagnostics on cursor hold
