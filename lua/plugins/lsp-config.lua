@@ -20,7 +20,7 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
       -- Ansible
       -- vim.lsp.config.ansiblels = {
       --   capabilities = capabilities,
@@ -182,6 +182,21 @@ return {
       }
       vim.lsp.enable("texlab")
 
+      -- Copilot Language Server
+      vim.lsp.config.copilot_ls = {
+        cmd = { "copilot-language-server", "--stdio" },
+        filetypes = { "*" },
+        root_markers = { ".git" },
+        init_options = {
+          editorInfo = {
+            name = "Neovim",
+            version = vim.version().major .. "." .. vim.version().minor .. "." .. vim.version().patch,
+          },
+          editorPluginInfo = { name = "copilot-lsp", version = "0" },
+        },
+      }
+      vim.lsp.enable("copilot_ls")
+
       -- Yaml
       vim.lsp.config.yamlls = {
         cmd = { "yaml-language-server", "--stdio" },
@@ -267,6 +282,7 @@ return {
         "docker-compose-language-service",
         "dockerls",
         "gopls",
+        "copilot-language-server",
         "hadolint",
         "helm_ls",
         "isort",
