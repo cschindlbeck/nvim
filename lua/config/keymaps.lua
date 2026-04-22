@@ -82,3 +82,11 @@ vim.keymap.set("n", "<leader>bd", [[:bdelete<CR>]], { silent = true, noremap = t
 -- Insert empty line above/below (m keeps cursor in place)
 vim.keymap.set("n", "<CR>", "m`o<Esc>``", silencio)
 vim.keymap.set("n", "<S-CR>", "m`O<Esc>``", silencio)
+
+--
+-- COPILOT NES
+--
+-- Clear NES suggestion with Esc in normal mode; no-op if no suggestion is active
+vim.keymap.set("n", "<esc>", function()
+  require("copilot-lsp.nes").clear()
+end, { desc = "Clear Copilot NES suggestion", silent = true })
