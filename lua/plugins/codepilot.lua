@@ -26,12 +26,20 @@ local chatgpt = {
 --   "github/copilot.vim",
 -- }
 
--- Github copilot zbirenbaum variant
+-- Github copilot zbirenbaum variant with NES (Next Edit Suggestion)
 local githubcopilot = {
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
+    dependencies = {
+      {
+        "copilotlsp-nvim/copilot-lsp",
+        init = function()
+          vim.g.copilot_nes_debounce = 500
+        end,
+      },
+    },
     config = function()
       require("copilot").setup({
         server_opts_overrides = {
@@ -42,17 +50,12 @@ local githubcopilot = {
           },
         },
         suggestion = {
-          enabled = false, -- disable the inline suggestion ghosttext, it is annoying
-          auto_trigger = true,
-          debounce = 75,
-          keymap = {
-            accept = "<C-g>",
-            next = "<C-n>",
-            prev = "<C-p>",
-            dismiss = "<C-e>",
-          },
+          enabled = false,
         },
         panel = { enabled = true },
+        nes = {
+          enabled = true,
+        },
         filetypes = {
           yaml = true,
           markdown = false,
@@ -65,13 +68,6 @@ local githubcopilot = {
           ["."] = false,
         },
       })
-    end,
-  },
-  {
-    -- "zbirenbaum/copilot-cmp", is not maintained, i need an alternative for GH inline completion
-    "jvune0/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
     end,
   },
 }
@@ -126,5 +122,4 @@ local codeium = {
   end,
 }
 
--- return { githubcopilot }
-return {}
+return { githubcopilot }
