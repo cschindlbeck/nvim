@@ -31,7 +31,7 @@ local githubcopilot = {
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "InsertEnter",
+    event = { "BufEnter" },
     config = function()
       require("copilot").setup({
         server_opts_overrides = {
@@ -68,7 +68,6 @@ local githubcopilot = {
     end,
   },
   {
-    -- "zbirenbaum/copilot-cmp", is not maintained, i need an alternative for GH inline completion
     "jvune0/copilot-cmp",
     config = function()
       require("copilot_cmp").setup()
