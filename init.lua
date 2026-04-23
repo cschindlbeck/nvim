@@ -12,9 +12,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- do not sort alphabetically, keep the order of your plugins
-require("config/general")
-require("config/autocmds")
-require("config/keymaps")
-require("config/diagnostics")
+require("config")
 require("lazy").setup("plugins")
+require("mini.icons").setup() -- is this the best place to put this?
+
+require("vim._core.ui2").enable({})

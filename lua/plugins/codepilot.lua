@@ -31,9 +31,16 @@ local githubcopilot = {
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "InsertEnter",
+    event = { "BufEnter" },
     config = function()
       require("copilot").setup({
+        server_opts_overrides = {
+          settings = {
+            telemetry = {
+              telemetryLevel = "off",
+            },
+          },
+        },
         suggestion = {
           enabled = false, -- disable the inline suggestion ghosttext, it is annoying
           auto_trigger = true,
@@ -61,7 +68,7 @@ local githubcopilot = {
     end,
   },
   {
-    "zbirenbaum/copilot-cmp",
+    "jvune0/copilot-cmp",
     config = function()
       require("copilot_cmp").setup()
     end,

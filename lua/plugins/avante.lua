@@ -1,9 +1,13 @@
 local avante = {
   "yetone/avante.nvim",
   event = "VeryLazy",
-  lazy = false,
+  lazy = true,
+  version = false, -- Never set this value to "*"! Never!
+  ---@module 'avante'
+  ---@class avante.Config
+  ---@type avante.Config
   opts = {
-    provider = "copilot", -- Set the provider to "copilot"
+    provider = "copilot", -- Set the provider to "copilot", "claude"
     mappings = {
       --- @class AvanteConflictMappings
       diff = {
@@ -27,12 +31,16 @@ local avante = {
   },
   build = ":AvanteBuild", -- This is optional, recommended tho.
   dependencies = {
-    "stevearc/dressing.nvim",
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
     --- The below dependencies are optional,
-    "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+    -- "nvim-mini/mini.pick",         -- for file_selector provider mini.pick
+    "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+    "stevearc/dressing.nvim", -- for input provider dressing
+    "folke/snacks.nvim", -- for input provider snacks
+    "nvim-mini/mini.nvim", -- replaces "nvim-tree/nvim-web-devicons"
     "zbirenbaum/copilot.lua", -- for providers='copilot'
+
     -- {
     --   -- support for image pasting
     --   "HakonHarnes/img-clip.nvim",
@@ -61,4 +69,5 @@ local avante = {
   },
 }
 
-return {}
+-- return {}
+return avante

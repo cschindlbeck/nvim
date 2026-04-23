@@ -6,14 +6,15 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     opts = {
-      auto_install = true,
-      automatic_enable = false,
-      ensure_installed = {
-        -- Only list if you not use setup_handlers below
-        "bashls",
-        "docker_compose_language_service",
-      },
+      automatic_installation = true,
     },
+  },
+  {
+    "b0o/schemastore.nvim",
+  },
+  {
+    "towolf/vim-helm",
+    ft = "helm",
   },
   {
     "neovim/nvim-lspconfig",
@@ -31,7 +32,7 @@ return {
       -- Bash
       vim.lsp.config.bashls = {
         capabilities = capabilities,
-        filetypes = { "sh", "bash" },
+        filetypes = { "sh", "zsh", "bash" },
       }
       vim.lsp.enable("bashls")
 
@@ -78,6 +79,33 @@ return {
       }
       vim.lsp.enable("gopls")
 
+      -- Helm (using helm_ls)
+      vim.lsp.config.helm_ls = {
+        -- helm_ls needs the "serve" argument
+        cmd = { "helm_ls", "serve" },
+        -- helm-ls provides completions for Helm charts and Helmfile etc.
+        filetypes = { "helm", "helmfile" },
+        capabilities = capabilities, -- reuse your capabilities var
+        settings = {
+          -- note the exact key: 'helm-ls'
+          ["helm-ls"] = {
+            -- point to your yaml-language-server executable if you want helm-ls to use it
+            -- yamlls = {
+            --   path = "yaml-language-server",
+            --   enabled = true,
+            --   enabledForFilesGlob = "*.{yaml,yml}",
+            -- },
+            -- optional useful defaults
+            valuesFiles = {
+              mainValuesFile = "values.yaml",
+              additionalValuesFilesGlobPattern = "values*.yaml",
+            },
+            helmLint = { enabled = true },
+          },
+        },
+      }
+      vim.lsp.enable("helm_ls")
+
       -- Lua
       vim.lsp.config.lua_ls = {
         cmd = { "lua-language-server" },
@@ -115,11 +143,45 @@ return {
       vim.lsp.enable("pyright")
 
       -- Terraform
+      local util = require("lspconfig.util")
       vim.lsp.config.terraformls = {
         capabilities = capabilities,
         filetypes = { "tf", "terraform", "hcl" },
+        root_dir = util.root_pattern(".git"),
+        settings = {
+          terraform = {
+            ignorePaths = {
+              ".terraform",
+              ".terraform/*",
+            },
+          },
+        },
       }
       vim.lsp.enable("terraformls")
+
+      -- There is a bug in tofu ls as of now, once it is resolved we can go back
+      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
+      -- -- Opentofu
+      -- vim.lsp.config.tofu_ls = {
+      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
+      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
+      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
+      --   capabilities = capabilities,
+      --   settings = {
+      --     terraform = {
+      --       languageServer = {
+      --         indexing = {
+      --           ignorePaths = {
+      --             "**/.terraform",
+      --             "**/.terraform/**",
+      --           },
+      --           ignoreDirectoryNames = { ".terraform" },
+      --         },
+      --       },
+      --     },
+      --   },
+      -- }
+      -- vim.lsp.enable("tofu_ls")
 
       -- Texlab
       vim.lsp.config.texlab = {
@@ -129,27 +191,39 @@ return {
 
       -- Yaml
       vim.lsp.config.yamlls = {
+        cmd = { "yaml-language-server", "--stdio" },
+        filetypes = { "yaml" },
         settings = {
           yaml = {
-            format = { enable = false }, -- will be done by none-ls
-            schemas = {
-              kubernetes = "k8s-*.yaml",
-              ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
-              ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
-              ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-              ["http://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
-              ["https://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-              ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-              ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-              ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-              ["https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml"] = "tf-controller.crds.yaml",
-              ["https://github.com/fluxcd/kustomize-controller/releases/download/v1.3.0/kustomize-controller.crds.yaml"] = "kustomize-controller.crds.yaml",
-              ["https://github.com/fluxcd/source-controller/releases/download/v1.3.0/source-controller.crds.yaml"] = "source-controller.crds.yaml",
-              ["https://json.schemastore.org/dependabot-2.0"] = ".github/dependabot.{yml,yaml}",
-              ["https://json.schemastore.org/drone"] = ".drone.{yml,yaml}",
-              ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-              ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
-              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
+            validate = true,
+            schemaStore = { enable = false, url = "" },
+            schemas = require("schemastore").yaml.schemas({
+              extra = {
+                {
+                  description = "Flux Tofu Controller CRDs",
+                  fileMatch = { "tf-controller.crds.yaml" },
+                  name = "tf-controller.crds.yaml",
+                  url = "https://github.com/flux-iac/tofu-controller/releases/download/v0.15.1/tf-controller.crds.yaml",
+                },
+                {
+                  description = "Flux Kustomize Controller CRDs",
+                  fileMatch = { "kustomize-controller.crds.yaml" },
+                  name = "kustomize-controller.crds.yaml",
+                  url = "https://github.com/fluxcd/kustomize-controller/releases/"
+                    .. "download/v1.7.2/kustomize-controller.crds.yaml",
+                },
+                {
+                  description = "Flux Source Controller CRDs",
+                  fileMatch = { "source-controller.crds.yaml" },
+                  name = "source-controller.crds.yaml",
+                  url = "https://github.com/fluxcd/source-controller/releases/"
+                    .. "download/v1.7.3/source-controller.crds.yaml",
+                },
+              },
+            }),
+            format = {
+              enabled = false, -- done by conform
+              printWidth = 220, -- unrealistically high for now
             },
           },
         },
@@ -193,17 +267,20 @@ return {
     opts = {
       ensure_installed = {
         "ansiblels",
-        "ansible-lint", -- 24.2.0 on arch
-        -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
+        "ansible-lint",
+        "bash-language-server",
         "bashls",
         "black",
         "docker-compose-language-service",
         "dockerls",
         "gopls",
         "hadolint",
+        "helm_ls",
         "isort",
+        "lua-language-server",
         "lua_ls",
         "markdownlint",
+        -- "tofu_ls",  -- buggy
         "pylama",
         "pylint",
         "pyright",
@@ -212,7 +289,7 @@ return {
         -- "shellharden", -- needs cargo
         "shfmt",
         "stylua",
-        "terraformls",
+        "terraformls", -- i migrate to opentofu
         "tflint",
         "tfsec",
         "yaml-language-server",
