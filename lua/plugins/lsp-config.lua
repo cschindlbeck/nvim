@@ -21,6 +21,17 @@ return {
     event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- Workaround: Neovim 0.12.2 assertion failure in vim/lsp/sync.lua:136
+      -- compute_start_range asserts prev_lines[firstline] != nil, which fails
+      -- under certain edit patterns with incremental sync.
+      -- Force full document sync to bypass the incremental diff path entirely.
+      vim.lsp.config["*"] = {
+        on_init = function(client)
+          client.server_capabilities.textDocumentSync = vim.lsp.protocol.TextDocumentSyncKind.Full
+        end,
+      }
+
       -- Ansible
       -- vim.lsp.config.ansiblels = {
       --   capabilities = capabilities,
