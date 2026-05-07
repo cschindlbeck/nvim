@@ -142,46 +142,46 @@ return {
       }
       vim.lsp.enable("pyright")
 
-      -- Terraform
-      local util = require("lspconfig.util")
-      vim.lsp.config.terraformls = {
-        capabilities = capabilities,
-        filetypes = { "tf", "terraform", "hcl" },
-        root_dir = util.root_pattern(".git"),
-        settings = {
-          terraform = {
-            ignorePaths = {
-              ".terraform",
-              ".terraform/*",
-            },
-          },
-        },
-      }
-      vim.lsp.enable("terraformls")
-
-      -- There is a bug in tofu ls as of now, once it is resolved we can go back
-      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
-      -- -- Opentofu
-      -- vim.lsp.config.tofu_ls = {
-      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
-      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
-      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
+      -- -- Terraform
+      -- local util = require("lspconfig.util")
+      -- vim.lsp.config.terraformls = {
       --   capabilities = capabilities,
+      --   filetypes = { "tf", "terraform", "hcl" },
+      --   root_dir = util.root_pattern(".git"),
       --   settings = {
       --     terraform = {
-      --       languageServer = {
-      --         indexing = {
-      --           ignorePaths = {
-      --             "**/.terraform",
-      --             "**/.terraform/**",
-      --           },
-      --           ignoreDirectoryNames = { ".terraform" },
-      --         },
+      --       ignorePaths = {
+      --         ".terraform",
+      --         ".terraform/*",
       --       },
       --     },
       --   },
       -- }
-      -- vim.lsp.enable("tofu_ls")
+      -- vim.lsp.enable("terraformls")
+
+      -- There is a bug in tofu ls as of now, once it is resolved we can go back
+      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
+      -- Opentofu
+      vim.lsp.config.tofu_ls = {
+        cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
+        filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
+        root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
+        capabilities = capabilities,
+        settings = {
+          terraform = {
+            languageServer = {
+              indexing = {
+                ignorePaths = {
+                  "**/.terraform",
+                  "**/.terraform/**",
+                },
+                ignoreDirectoryNames = { ".terraform" },
+              },
+            },
+          },
+        },
+      }
+      vim.lsp.enable("tofu_ls")
 
       -- Texlab
       vim.lsp.config.texlab = {
@@ -280,7 +280,7 @@ return {
         "lua-language-server",
         "lua_ls",
         "markdownlint",
-        -- "tofu_ls",  -- buggy
+        "tofu_ls", -- buggy
         "pylama",
         "pylint",
         "pyright",
@@ -289,7 +289,7 @@ return {
         -- "shellharden", -- needs cargo
         "shfmt",
         "stylua",
-        "terraformls", -- i migrate to opentofu
+        -- "terraformls", -- i migrate to opentofu
         "tflint",
         "tfsec",
         "yaml-language-server",
