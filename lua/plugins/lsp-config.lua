@@ -22,16 +22,6 @@ return {
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- Workaround: Neovim 0.12.2 assertion failure in vim/lsp/sync.lua:136
-      -- compute_start_range asserts prev_lines[firstline] != nil, which fails
-      -- under certain edit patterns with incremental sync.
-      -- Force full document sync to bypass the incremental diff path entirely.
-      vim.lsp.config["*"] = {
-        on_init = function(client)
-          client.server_capabilities.textDocumentSync = vim.lsp.protocol.TextDocumentSyncKind.Full
-        end,
-      }
-
       -- Ansible
       -- vim.lsp.config.ansiblels = {
       --   capabilities = capabilities,
@@ -178,6 +168,13 @@ return {
         filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
         root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
         capabilities = capabilities,
+        -- Workaround: Neovim incremental sync assertion failure in vim/lsp/sync.lua
+        -- tofu_ls uses incremental sync which triggers a bug in compute_end_range on delete.
+        -- flags.allow_incremental_sync = false forces full document sync via the
+        -- supported code path in _changetracking.lua:get_group().
+        flags = {
+          allow_incremental_sync = false,
+        },
         settings = {
           terraform = {
             languageServer = {
