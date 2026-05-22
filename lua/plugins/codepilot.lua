@@ -35,6 +35,9 @@ local githubcopilot = {
     config = function()
       require("copilot").setup({
         server_opts_overrides = {
+          flags = {
+            allow_incremental_sync = false,
+          },
           settings = {
             telemetry = {
               telemetryLevel = "off",
