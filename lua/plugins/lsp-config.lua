@@ -191,6 +191,30 @@ return {
       }
       vim.lsp.enable("tofu_ls")
 
+      -- There is a bug in tofu ls as of now, once it is resolved we can go back
+      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
+      -- -- Opentofu
+      -- vim.lsp.config.tofu_ls = {
+      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
+      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
+      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
+      --   capabilities = capabilities,
+      --   settings = {
+      --     terraform = {
+      --       languageServer = {
+      --         indexing = {
+      --           ignorePaths = {
+      --             "**/.terraform",
+      --             "**/.terraform/**",
+      --           },
+      --           ignoreDirectoryNames = { ".terraform" },
+      --         },
+      --       },
+      --     },
+      --   },
+      -- }
+      -- vim.lsp.enable("tofu_ls")
+
       -- Texlab
       vim.lsp.config.texlab = {
         capabilities = capabilities,
@@ -288,7 +312,7 @@ return {
         "lua-language-server",
         "lua_ls",
         "markdownlint",
-        "tofu_ls", -- buggy
+        "tofu_ls",
         "pylama",
         "pylint",
         "pyright",
