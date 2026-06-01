@@ -44,6 +44,7 @@ local githubcopilot = {
             },
           },
         },
+        -- copilot_model = "", -- empty string "" for auto
         suggestion = {
           enabled = false, -- disable the inline suggestion ghosttext, it is annoying
           auto_trigger = true,
