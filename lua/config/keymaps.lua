@@ -79,6 +79,10 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- Buffer delete
 vim.keymap.set("n", "<leader>bd", [[:bdelete<CR>]], { silent = true, noremap = true })
 
+-- Vertical and horizontal splits
+vim.keymap.set("n", "<leader>hs", "<C-w>s")
+vim.keymap.set("n", "<leader>vs", "<C-w>v")
+
 -- Insert empty line above/below (m keeps cursor in place)
 vim.keymap.set("n", "<CR>", "m`o<Esc>``", silencio)
 vim.keymap.set("n", "<S-CR>", "m`O<Esc>``", silencio)
