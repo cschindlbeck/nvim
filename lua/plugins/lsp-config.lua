@@ -1,41 +1,7 @@
 return {
   {
     "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "ansiblels",
-        "ansible-lint", -- 24.2.0 on arch
-        -- { "ansible-lint", version = "6.10.0", auto_update = false }, -- ubuntu 20.04
-        "bash-language-server",
-        "bashls",
-        "black",
-        "docker-compose-language-service",
-        "dockerls",
-        "gopls",
-        "hadolint",
-        "helm_ls",
-        "isort",
-        "lua-language-server",
-        "lua_ls",
-        "markdownlint",
-        "pylama",
-        "pylint",
-        "pyright",
-        "selene",
-        "shellcheck",
-        -- "shellharden", -- needs cargo
-        "shfmt",
-        "stylua",
-        "terraformls",
-        "tflint",
-        "tfsec",
-        "yaml-language-server",
-        "yamlfmt",
-        "yamllint",
-      },
-      auto_update = true,
-      run_on_start = true,
-    },
+    opts = {},
   },
   {
     "williamboman/mason-lspconfig.nvim",
@@ -55,6 +21,7 @@ return {
     event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
       -- Ansible
       -- vim.lsp.config.ansiblels = {
       --   capabilities = capabilities,
@@ -176,27 +143,101 @@ return {
       }
       vim.lsp.enable("pyright")
 
-      -- Terraform
+      -- -- Terraform
+      -- local util = require("lspconfig.util")
       -- vim.lsp.config.terraformls = {
       --   capabilities = capabilities,
       --   filetypes = { "tf", "terraform", "hcl" },
+      --   root_dir = util.root_pattern(".git"),
+      --   settings = {
+      --     terraform = {
+      --       ignorePaths = {
+      --         ".terraform",
+      --         ".terraform/*",
+      --       },
+      --     },
+      --   },
       -- }
+      -- vim.lsp.enable("terraformls")
 
-      local util = require("lspconfig.util")
-      vim.lsp.config.terraformls = {
+      -- There is a bug in tofu ls as of now, once it is resolved we can go back
+      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
+      -- Opentofu
+      vim.lsp.config.tofu_ls = {
+        cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
+        filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
+        root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
         capabilities = capabilities,
-        filetypes = { "tf", "terraform", "hcl" },
-        root_dir = util.root_pattern(".git"),
+        -- Workaround: Neovim incremental sync assertion failure in vim/lsp/sync.lua
+        -- tofu_ls uses incremental sync which triggers a bug in compute_end_range on delete.
+        -- flags.allow_incremental_sync = false forces full document sync via the
+        -- supported code path in _changetracking.lua:get_group().
+        flags = {
+          allow_incremental_sync = false,
+        },
         settings = {
           terraform = {
-            ignorePaths = {
-              ".terraform",
-              ".terraform/*",
+            languageServer = {
+              indexing = {
+                ignorePaths = {
+                  "**/.terraform",
+                  "**/.terraform/**",
+                },
+                ignoreDirectoryNames = { ".terraform" },
+              },
             },
           },
         },
       }
-      vim.lsp.enable("terraformls")
+      vim.lsp.enable("tofu_ls")
+
+      -- There is a bug in tofu ls as of now, once it is resolved we can go back
+      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
+      -- -- Opentofu
+      -- vim.lsp.config.tofu_ls = {
+      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
+      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
+      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
+      --   capabilities = capabilities,
+      --   settings = {
+      --     terraform = {
+      --       languageServer = {
+      --         indexing = {
+      --           ignorePaths = {
+      --             "**/.terraform",
+      --             "**/.terraform/**",
+      --           },
+      --           ignoreDirectoryNames = { ".terraform" },
+      --         },
+      --       },
+      --     },
+      --   },
+      -- }
+      -- vim.lsp.enable("tofu_ls")
+
+      -- There is a bug in tofu ls as of now, once it is resolved we can go back
+      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
+      -- -- Opentofu
+      -- vim.lsp.config.tofu_ls = {
+      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
+      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
+      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
+      --   capabilities = capabilities,
+      --   settings = {
+      --     terraform = {
+      --       languageServer = {
+      --         indexing = {
+      --           ignorePaths = {
+      --             "**/.terraform",
+      --             "**/.terraform/**",
+      --           },
+      --           ignoreDirectoryNames = { ".terraform" },
+      --         },
+      --       },
+      --     },
+      --   },
+      -- }
+      -- vim.lsp.enable("tofu_ls")
 
       -- Texlab
       vim.lsp.config.texlab = {
@@ -236,6 +277,10 @@ return {
                 },
               },
             }),
+            format = {
+              enabled = true,
+              printWidth = 220, -- unrealistically high for now
+            },
           },
         },
       }
@@ -272,5 +317,43 @@ return {
         vim.lsp.buf.format({ async = true })
       end, opts)
     end,
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    opts = {
+      ensure_installed = {
+        "ansiblels",
+        "ansible-lint",
+        "bash-language-server",
+        "bashls",
+        "black",
+        "docker-compose-language-service",
+        "dockerls",
+        "gopls",
+        "hadolint",
+        "helm_ls",
+        "isort",
+        "lua-language-server",
+        "lua_ls",
+        "markdownlint",
+        "tofu_ls",
+        "pylama",
+        "pylint",
+        "pyright",
+        "selene",
+        "shellcheck",
+        -- "shellharden", -- needs cargo
+        "shfmt",
+        "stylua",
+        -- "terraformls", -- i migrate to opentofu
+        "tflint",
+        "tfsec",
+        "yaml-language-server",
+        "yamlfmt",
+        "yamllint",
+      },
+      auto_update = true,
+      run_on_start = true,
+    },
   },
 }

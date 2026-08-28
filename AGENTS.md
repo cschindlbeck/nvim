@@ -169,5 +169,6 @@ git-conflict), not by plugin name.
   terraformls, texlab, yamlls
 - **Formatters via none-ls**: black, isort, stylua, shfmt, terraform_fmt,
   markdownlint, hadolint, yamllint
-- **AI assistants**: Copilot (active) + Avante.nvim
+- **AI assistants**: Copilot (active). Avante.nvim is disabled (`lua/plugins/avante.lua`
+  returns `{}`) — not in use
 - **`lazy-lock.json`** is gitignored — do not commit it

@@ -31,16 +31,20 @@ local githubcopilot = {
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "InsertEnter",
+    event = { "BufEnter" },
     config = function()
       require("copilot").setup({
         server_opts_overrides = {
+          flags = {
+            allow_incremental_sync = false,
+          },
           settings = {
             telemetry = {
               telemetryLevel = "off",
             },
           },
         },
+        -- copilot_model = "", -- empty string "" for auto
         suggestion = {
           enabled = false, -- disable the inline suggestion ghosttext, it is annoying
           auto_trigger = true,
@@ -68,7 +72,6 @@ local githubcopilot = {
     end,
   },
   {
-    -- "zbirenbaum/copilot-cmp", is not maintained, i need an alternative for GH inline completion
     "jvune0/copilot-cmp",
     config = function()
       require("copilot_cmp").setup()
