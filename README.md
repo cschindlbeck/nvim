@@ -30,7 +30,7 @@ lua/
     keymaps.lua           Global keybindings
     diagnostics.lua       Diagnostic display configuration
   plugins/
-    avante.lua            Avante.nvim AI chat sidebar
+    avante.lua            Avante.nvim AI chat sidebar (disabled, not in use)
     bufferline.lua        Buffer tab bar (bufferline.nvim)
     codepilot.lua         AI inline completion (Copilot active; ChatGPT, Codeium, llm.nvim selectable)
     colorscheme.lua       Colorscheme (Nord active; Catppuccin, Dracula, VSCode selectable)
@@ -69,7 +69,7 @@ Selectable in `lua/plugins/codepilot.lua`:
 | Tool | Plugin | Notes |
 | --- | --- | --- |
 | **GitHub Copilot** *(active)* | `zbirenbaum/copilot.lua` + `jvune0/copilot-cmp` | Inline completion via nvim-cmp |
-| **Avante.nvim** *(active)* | `yetone/avante.nvim` | AI chat sidebar, powered by Copilot |
+| Avante.nvim | `yetone/avante.nvim` | AI chat sidebar; disabled, no longer in use |
 | ChatGPT | `jackMort/ChatGPT.nvim` | Requires `OPENAI_API_KEY` |
 | Codeium | `Exafunction/codeium.vim` | Free alternative |
 | llm.nvim | `huggingface/llm.nvim` | Open-source, requires glibc ≥ 2.32 |
