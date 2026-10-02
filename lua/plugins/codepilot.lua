@@ -19,66 +19,6 @@ local chatgpt = {
   end,
 }
 
--- Github copilot
--- First time enter Copilot setup and then press enter again (bug in notification plugin)
--- Then the browser pops up and asks for a code, the code is in the clipboard so just middle mouse button
--- local github = {
---   "github/copilot.vim",
--- }
-
--- Github copilot zbirenbaum variant
-local githubcopilot = {
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = { "BufEnter" },
-    config = function()
-      require("copilot").setup({
-        server_opts_overrides = {
-          flags = {
-            allow_incremental_sync = false,
-          },
-          settings = {
-            telemetry = {
-              telemetryLevel = "off",
-            },
-          },
-        },
-        -- copilot_model = "", -- empty string "" for auto
-        suggestion = {
-          enabled = false, -- disable the inline suggestion ghosttext, it is annoying
-          auto_trigger = true,
-          debounce = 75,
-          keymap = {
-            accept = "<C-g>",
-            next = "<C-n>",
-            prev = "<C-p>",
-            dismiss = "<C-e>",
-          },
-        },
-        panel = { enabled = true },
-        filetypes = {
-          yaml = true,
-          markdown = false,
-          help = false,
-          gitcommit = true,
-          gitrebase = false,
-          hgcommit = false,
-          svn = false,
-          cvs = false,
-          ["."] = false,
-        },
-      })
-    end,
-  },
-  {
-    "jvune0/copilot-cmp",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
-}
-
 -- LLM nvim open-source copilot clone with ghost text completion
 -- LLM_NVIM_API_TOKEN must be set via e.g.
 -- export LLM_NVIM_API_TOKEN=<my-token>
@@ -129,5 +69,5 @@ local codeium = {
   end,
 }
 
-return { githubcopilot }
--- return {}
+-- Currently no AI assistant is active
+return {}

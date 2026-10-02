@@ -169,6 +169,7 @@ git-conflict), not by plugin name.
   terraformls, texlab, yamlls
 - **Formatters via none-ls**: black, isort, stylua, shfmt, terraform_fmt,
   markdownlint, hadolint, yamllint
-- **AI assistants**: Copilot (active). Avante.nvim is disabled (`lua/plugins/avante.lua`
-  returns `{}`) — not in use
+- **AI assistants**: none active. Avante.nvim is disabled (`lua/plugins/avante.lua`
+  returns `{}`) and `lua/plugins/codepilot.lua` returns `{}`. The GitHub Copilot
+  subscription ended and all Copilot config was removed
 - **`lazy-lock.json`** is gitignored — do not commit it

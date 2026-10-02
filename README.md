@@ -14,7 +14,7 @@ git clone https://github.com/cschindlbeck/nvim.git ~/.config/nvim
 
 - **Neovim** ≥ 0.10 (tested against latest stable, currently NVIM v0.12)
 - **Git**, **curl** (for lazy.nvim bootstrap)
-- **Node.js / npm** (LSP servers, Copilot)
+- **Node.js / npm** (LSP servers)
 - **A [Nerd Font](https://www.nerdfonts.com/)** (icons in UI)
 - **xclip** or **xsel** (clipboard integration on Linux)
 - Mason will automatically install all LSP servers, formatters and linters on first launch.
@@ -32,7 +32,7 @@ lua/
   plugins/
     avante.lua            Avante.nvim AI chat sidebar (disabled, not in use)
     bufferline.lua        Buffer tab bar (bufferline.nvim)
-    codepilot.lua         AI inline completion (Copilot active; ChatGPT, Codeium, llm.nvim selectable)
+    codepilot.lua         AI inline completion (none active; ChatGPT, Codeium, llm.nvim selectable)
     colorscheme.lua       Colorscheme (Nord active; Catppuccin, Dracula, VSCode selectable)
     completion.lua        Autocompletion (nvim-cmp + LuaSnip)
     dashboard.lua         Start screen (snacks.nvim dashboard)
@@ -68,7 +68,6 @@ Selectable in `lua/plugins/codepilot.lua`:
 
 | Tool | Plugin | Notes |
 | --- | --- | --- |
-| **GitHub Copilot** *(active)* | `zbirenbaum/copilot.lua` + `jvune0/copilot-cmp` | Inline completion via nvim-cmp |
 | Avante.nvim | `yetone/avante.nvim` | AI chat sidebar; disabled, no longer in use |
 | ChatGPT | `jackMort/ChatGPT.nvim` | Requires `OPENAI_API_KEY` |
 | Codeium | `Exafunction/codeium.vim` | Free alternative |
