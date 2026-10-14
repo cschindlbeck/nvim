@@ -9,7 +9,8 @@ and code style guidelines (formatting, naming, module patterns, keymaps, comment
 ## Notes not covered in AGENTS.md
 
 - Avante.nvim (`lua/plugins/avante.lua`) is disabled — it ends with `return {}` (the real spec is
-  commented out as `-- return avante`). Copilot is the only active AI assistant. Don't re-enable
+  commented out as `-- return avante`).
+  No AI assistant plugin is active (the Copilot subscription ended and its config was removed). Don't re-enable
   Avante unless asked to.
 
 - This is the user's personal editor config, installed at `~/.config/nvim` — changes take effect

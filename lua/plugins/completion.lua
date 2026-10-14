@@ -51,7 +51,6 @@ return {
           ["<CR>"] = cmp.mapping.confirm({ select = true }),
         }),
         sources = cmp.config.sources({
-          { name = "copilot", group_index = 1 },
           { name = "buffer", group_index = 2 },
           { name = "luasnip", group_index = 2 },
           { name = "nvim_lsp", group_index = 2 },
@@ -78,7 +77,6 @@ return {
             -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
             ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char
             -- instead (must define maxwidth first)
-            symbol_map = { Copilot = "" },
           }),
         },
       })
