@@ -6,7 +6,9 @@
 local catalog_url = "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main"
 local core_url = "https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone-strict"
 
--- API groups that belong to core Kubernetes (no group means the core v1 group)
+-- API groups that belong to core Kubernetes (no group means the core v1 group).
+-- Keep this list explicit: some *.k8s.io groups are CRDs (gateway.networking.k8s.io, snapshot.storage.k8s.io)
+-- and their schemas exist only in the CRDs-catalog.
 local core_groups = {
   ["apps"] = true,
   ["batch"] = true,
@@ -18,9 +20,18 @@ local core_groups = {
   ["apiextensions.k8s.io"] = true,
   ["admissionregistration.k8s.io"] = true,
   ["scheduling.k8s.io"] = true,
+  ["apiregistration.k8s.io"] = true,
+  ["certificates.k8s.io"] = true,
+  ["coordination.k8s.io"] = true,
+  ["discovery.k8s.io"] = true,
+  ["events.k8s.io"] = true,
+  ["flowcontrol.apiserver.k8s.io"] = true,
+  ["node.k8s.io"] = true,
+  ["resource.k8s.io"] = true,
 }
 
--- schema URL this module assigned, per buffer: { [bufnr] = { url = ... } }
+-- schema URL this module assigned, per client and buffer: { [client_id] = { [bufnr] = url } }
+-- Keyed by client, so a restarted yamlls or a second yamlls (other root_dir) gets its own state.
 local assigned = {}
 
 -- Returns the schema URL if every document in the buffer has the same apiVersion and kind, otherwise nil.
@@ -45,8 +56,9 @@ local function schema_url_for(bufnr)
     if line:match("^%-%-%-") then
       flush()
     else
-      api_version = line:match("^apiVersion:%s*([%w%.%-/]+)") or api_version
-      kind = line:match("^kind:%s*([%w]+)") or kind
+      -- values can be quoted: apiVersion: "apps/v1"
+      api_version = line:match([[^apiVersion:%s*["']?([%w%.%-/]+)]]) or api_version
+      kind = line:match([[^kind:%s*["']?(%w+)]]) or kind
     end
   end
   flush()
@@ -60,6 +72,10 @@ local function schema_url_for(bufnr)
   local kind_lower = resource.kind:lower()
 
   if not group then
+    -- kubeconfig files (~/.kube/config) use apiVersion v1 too, but there is no schema for them
+    if resource.kind == "Config" then
+      return nil
+    end
     return string.format("%s/%s-%s.json", core_url, kind_lower, resource.api_version)
   end
   if core_groups[group] then
@@ -83,22 +99,23 @@ end
 local function assign_schema(client, bufnr)
   local url = schema_url_for(bufnr)
   local uri = vim.uri_from_bufnr(bufnr)
-  local previous = assigned[bufnr]
+  local state = assigned[client.id] or {}
+  local previous = state[bufnr]
 
-  if (previous and previous.url) == url then
+  if previous == url then
     return
   end
 
   local schemas = client.settings.yaml.schemas
   if previous then
-    remove_uri(schemas, previous.url, uri)
-    assigned[bufnr] = nil
+    remove_uri(schemas, previous, uri)
   end
   if url then
     schemas[url] = schemas[url] or {}
     table.insert(schemas[url], uri)
-    assigned[bufnr] = { url = url }
   end
+  state[bufnr] = url
+  assigned[client.id] = next(state) and state or nil
   client:notify("workspace/didChangeConfiguration", { settings = client.settings })
 end
 
@@ -109,21 +126,36 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
     assign_schema(client, args.buf)
-    vim.api.nvim_create_autocmd("BufWritePost", {
-      buffer = args.buf,
-      callback = function()
-        assign_schema(client, args.buf)
-      end,
-    })
   end,
 })
 
-vim.api.nvim_create_autocmd("BufDelete", {
+-- Check the kind again on save. The clients are looked up on each save, so no autocmd holds an old client.
+vim.api.nvim_create_autocmd("BufWritePost", {
   callback = function(args)
-    local client = vim.lsp.get_clients({ name = "yamlls" })[1]
-    if client and assigned[args.buf] then
-      remove_uri(client.settings.yaml.schemas, assigned[args.buf].url, vim.uri_from_bufnr(args.buf))
+    for _, client in ipairs(vim.lsp.get_clients({ bufnr = args.buf, name = "yamlls" })) do
+      assign_schema(client, args.buf)
     end
-    assigned[args.buf] = nil
+  end,
+})
+
+-- LspDetach fires when the buffer is unloaded and when the client stops.
+-- Remove the URI from the client that owns the buffer, and tell the server if it still runs.
+vim.api.nvim_create_autocmd("LspDetach", {
+  callback = function(args)
+    local client_id = args.data.client_id
+    local url = assigned[client_id] and assigned[client_id][args.buf]
+    if not url then
+      return
+    end
+    assigned[client_id][args.buf] = nil
+    if next(assigned[client_id]) == nil then
+      assigned[client_id] = nil
+    end
+
+    local client = vim.lsp.get_client_by_id(client_id)
+    if client and not client:is_stopped() then
+      remove_uri(client.settings.yaml.schemas, url, vim.uri_from_bufnr(args.buf))
+      client:notify("workspace/didChangeConfiguration", { settings = client.settings })
+    end
   end,
 })

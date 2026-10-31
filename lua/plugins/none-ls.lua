@@ -8,6 +8,7 @@ return {
     -- kubeconform validates every document of a (multi-doc) Kubernetes YAML file on save.
     -- It covers files with mixed kinds, which yamlls cannot match to one schema (see config/k8s-schema.lua).
     -- Core resources use the default schemas, everything else uses the datreeio CRDs-catalog.
+    -- kubeconform is not in the Mason registry, it comes from PATH (brew install kubeconform).
     local kubeconform_cache = vim.fn.stdpath("cache") .. "/kubeconform"
     vim.fn.mkdir(kubeconform_cache, "p")
     local kubeconform = helpers.make_builtin({
@@ -33,12 +34,17 @@ return {
         format = "json",
         -- kubeconform exits with 1 when a resource is invalid, which is not a tool failure
         check_exit_code = { 0, 1 },
-        runtime_condition = helpers.cache.by_bufnr(function(params)
+        -- Only Kubernetes manifests: files with apiVersion but no kind (e.g. Helm Chart.yaml) are skipped.
+        -- No cache, because a new file starts empty. The check runs only on save, so it costs little.
+        runtime_condition = function(params)
           local lines = vim.api.nvim_buf_get_lines(params.bufnr, 0, -1, false)
-          return vim.iter(lines):any(function(line)
-            return line:match("^apiVersion:") ~= nil
-          end)
-        end),
+          local has_line = function(pattern)
+            return vim.iter(lines):any(function(line)
+              return line:match(pattern) ~= nil
+            end)
+          end
+          return has_line("^apiVersion:") and has_line("^kind:")
+        end,
         on_output = function(params)
           -- kubeconform reports no line numbers, so find the "kind:" line of the matching document
           local documents = {}
@@ -47,10 +53,10 @@ return {
             if line:match("^%-%-%-") then
               current = nil
             elseif line:match("^kind:") then
-              current = { row = index, kind = line:match("^kind:%s*(%S+)") }
+              current = { row = index, kind = line:match([[^kind:%s*["']?([^"'%s]+)]]) }
               table.insert(documents, current)
             elseif current and not current.name and line:match("^  name:") then
-              current.name = line:match("^  name:%s*(%S+)")
+              current.name = line:match([[^  name:%s*["']?([^"'%s]+)]])
             end
           end
 
@@ -151,7 +157,6 @@ return {
         }),
       },
     })
-
-    vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+    -- the format keymaps (<space>f, <leader>gf) live in lsp-config.lua, next to the format filter
   end,
 }

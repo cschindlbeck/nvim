@@ -2,6 +2,8 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
+    -- keys alone would lazy-load gitsigns on the first <leader>gp, so load it when a file opens
+    event = { "BufReadPre", "BufNewFile" },
     opts = {},
     keys = {
       { "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", desc = "Preview hunk" },
@@ -9,6 +11,8 @@ return {
   },
   {
     "tpope/vim-fugitive",
+    -- load at startup: :Git and the other commands must exist, and fugitive:// buffers need its autocmds
+    lazy = false,
     keys = {
       { "<leader>gb", "<cmd>Git blame<CR>", desc = "Git blame" },
     },

@@ -97,6 +97,14 @@ return {
       vim.lsp.enable("helm_ls")
 
       -- JSON
+      vim.lsp.config.jsonls = {
+        settings = {
+          json = {
+            validate = { enable = true },
+            schemas = require("schemastore").json.schemas(),
+          },
+        },
+      }
       vim.lsp.enable("jsonls")
 
       -- Lua
@@ -230,22 +238,33 @@ return {
       -- Autoformat
       -- If none-ls can format the buffer, only it formats. Otherwise all LSP clients with formatting may run.
       -- This avoids two clients (e.g. lua_ls and none-ls/stylua) formatting the same buffer.
-      local format_filter = function(client)
-        local null_ls_clients = vim.lsp.get_clients({ bufnr = 0, name = "null-ls", method = "textDocument/formatting" })
-        if #null_ls_clients > 0 then
-          return client.name == "null-ls"
+      -- The filter is built per buffer, because :wa also formats buffers that are not the current one.
+      local format_filter_for = function(bufnr)
+        return function(client)
+          local null_ls_clients =
+            vim.lsp.get_clients({ bufnr = bufnr, name = "null-ls", method = "textDocument/formatting" })
+          if #null_ls_clients > 0 then
+            return client.name == "null-ls"
+          end
+          return true
         end
-        return true
       end
       vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function(args)
           local clients = vim.lsp.get_clients({ bufnr = args.buf })
           if #clients > 0 then
-            -- Go: organize imports via gopls (synchronous, so the format below sees the result)
+            -- Go: organize imports via gopls (synchronous, so the format below sees the result).
+            -- The params come from args.buf, not from the current window, because :wa also saves hidden buffers.
             local gopls = vim.lsp.get_clients({ bufnr = args.buf, name = "gopls" })[1]
             if gopls then
-              local params = vim.lsp.util.make_range_params(0, gopls.offset_encoding)
-              params.context = { only = { "source.organizeImports" }, diagnostics = {} }
+              local params = {
+                textDocument = vim.lsp.util.make_text_document_params(args.buf),
+                range = {
+                  start = { line = 0, character = 0 },
+                  ["end"] = { line = vim.api.nvim_buf_line_count(args.buf) - 1, character = 0 },
+                },
+                context = { only = { "source.organizeImports" }, diagnostics = {} },
+              }
               local result = vim.lsp.buf_request_sync(args.buf, "textDocument/codeAction", params, 1000)
               for _, response in pairs(result or {}) do
                 for _, action in pairs(response.result or {}) do
@@ -255,13 +274,16 @@ return {
                 end
               end
             end
-            vim.lsp.buf.format({ async = false, bufnr = args.buf, filter = format_filter })
+            vim.lsp.buf.format({ async = false, bufnr = args.buf, filter = format_filter_for(args.buf) })
           end
         end,
       })
       local opts = {}
       vim.keymap.set("n", "<space>f", function()
-        vim.lsp.buf.format({ async = true, filter = format_filter })
+        vim.lsp.buf.format({ async = true, filter = format_filter_for(vim.api.nvim_get_current_buf()) })
+      end, opts)
+      vim.keymap.set("n", "<leader>gf", function()
+        vim.lsp.buf.format({ filter = format_filter_for(vim.api.nvim_get_current_buf()) })
       end, opts)
     end,
   },
@@ -279,6 +301,7 @@ return {
         "hadolint",
         "helm_ls",
         "isort",
+        "json-lsp",
         "lua-language-server",
         "lua_ls",
         "markdownlint",
