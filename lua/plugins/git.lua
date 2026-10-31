@@ -2,17 +2,16 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    config = function()
-      require("gitsigns").setup()
-      vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", {})
-    end,
+    opts = {},
+    keys = {
+      { "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", desc = "Preview hunk" },
+    },
   },
   {
     "tpope/vim-fugitive",
-    config = function()
-      require("gitsigns").setup()
-      vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", {})
-    end,
+    keys = {
+      { "<leader>gb", "<cmd>Git blame<CR>", desc = "Git blame" },
+    },
   },
   { "akinsho/git-conflict.nvim", version = "*", config = true },
   {
@@ -24,11 +23,15 @@ return {
         enabled = true,
       },
     },
+    keys = {
+      {
+        "<leader>lg",
+        function()
+          ---@diagnostic disable-next-line:undefined-global
+          Snacks.lazygit.open()
+        end,
+        desc = "Lazygit",
+      },
+    },
   },
-  vim.api.nvim_set_keymap(
-    "n",
-    "<leader>lg",
-    ':lua require("snacks").lazygit.open()<CR>',
-    { noremap = true, silent = true }
-  ),
 }

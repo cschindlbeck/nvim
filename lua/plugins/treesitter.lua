@@ -1,7 +1,3 @@
-if vim.g.treesitter_branch ~= "main" then
-  return {}
-end
-
 -- on main branch, treesitter isn't started automatically
 vim.api.nvim_create_autocmd({ "Filetype" }, {
   callback = function(event)
@@ -81,6 +77,7 @@ return {
         "hcl",
         "helm",
         "html",
+        "java",
         "javascript",
         "jq",
         "json",
@@ -90,12 +87,15 @@ return {
         "markdown_inline",
         "python",
         "query",
+        "regex",
+        "scss",
         "terraform",
         "tmux",
+        "tsx",
         "typescript",
         "vim",
-        "vim",
         "vimdoc",
+        "yaml",
       }
 
       -- make sure nvim-treesitter can load

@@ -5,8 +5,8 @@ return {
     local null_ls = require("null-ls")
     null_ls.setup({
       -- make sure these are installed in mason via mason install tool from lsp-config lua
+      update_in_insert = false,
       sources = {
-        update_in_insert = false,
         ----------------
         -- formatting --
         ----------------

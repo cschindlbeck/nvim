@@ -33,7 +33,7 @@ local options = {
   termguicolors = true, --
   timeoutlen = 500, -- set timeout for leaderkey
   undofile = true, --
-  updatetime = 50, --
+  updatetime = 250, --
   wrap = true, -- wrap lines
 }
 

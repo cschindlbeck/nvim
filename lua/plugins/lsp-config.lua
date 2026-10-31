@@ -298,23 +298,36 @@ return {
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
 
       -- Diagnostics
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {})
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {})
+      vim.keymap.set("n", "[d", function()
+        vim.diagnostic.jump({ count = -1, float = true })
+      end, {})
+      vim.keymap.set("n", "]d", function()
+        vim.diagnostic.jump({ count = 1, float = true })
+      end, {})
       -- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})  -- set for open picker
       vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, {})
 
       -- Autoformat
+      -- If none-ls can format the buffer, only it formats. Otherwise all LSP clients with formatting may run.
+      -- This avoids two clients (e.g. lua_ls and none-ls/stylua) formatting the same buffer.
+      local format_filter = function(client)
+        local null_ls_clients = vim.lsp.get_clients({ bufnr = 0, name = "null-ls", method = "textDocument/formatting" })
+        if #null_ls_clients > 0 then
+          return client.name == "null-ls"
+        end
+        return true
+      end
       vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function(args)
           local clients = vim.lsp.get_clients({ bufnr = args.buf })
           if #clients > 0 then
-            vim.lsp.buf.format({ async = false, bufnr = args.buf })
+            vim.lsp.buf.format({ async = false, bufnr = args.buf, filter = format_filter })
           end
         end,
       })
       local opts = {}
       vim.keymap.set("n", "<space>f", function()
-        vim.lsp.buf.format({ async = true })
+        vim.lsp.buf.format({ async = true, filter = format_filter })
       end, opts)
     end,
   },
