@@ -1,12 +1,13 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {},
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     opts = {
-      automatic_installation = true,
+      -- servers are enabled explicitly below with vim.lsp.enable
+      automatic_enable = false,
     },
   },
   {
@@ -20,32 +21,29 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      -- completion capabilities for all servers (blink.cmp)
+      vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities() })
 
       -- Bash
       vim.lsp.config.bashls = {
-        capabilities = capabilities,
         filetypes = { "sh", "zsh", "bash" },
       }
       vim.lsp.enable("bashls")
 
       -- Docker
       vim.lsp.config.dockerls = {
-        capabilities = capabilities,
         filetypes = { "dockerfile" },
       }
       vim.lsp.enable("dockerls")
 
       -- Docker Compose
       vim.lsp.config.docker_compose_language_service = {
-        capabilities = capabilities,
         -- filetypes = { "yaml", "yml" },
       }
       vim.lsp.enable("docker_compose_language_service")
 
       -- Go
       vim.lsp.config.gopls = {
-        capabilities = capabilities,
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         settings = {
           gopls = {
@@ -78,7 +76,6 @@ return {
         cmd = { "helm_ls", "serve" },
         -- helm-ls provides completions for Helm charts and Helmfile etc.
         filetypes = { "helm", "helmfile" },
-        capabilities = capabilities, -- reuse your capabilities var
         settings = {
           -- note the exact key: 'helm-ls'
           ["helm-ls"] = {
@@ -99,11 +96,13 @@ return {
       }
       vim.lsp.enable("helm_ls")
 
+      -- JSON
+      vim.lsp.enable("jsonls")
+
       -- Lua
       vim.lsp.config.lua_ls = {
         cmd = { "lua-language-server" },
         filetypes = { "lua" },
-        capabilities = capabilities,
         settings = {
           Lua = {
             format = {
@@ -121,7 +120,6 @@ return {
 
       -- Pyright
       vim.lsp.config.pyright = {
-        capabilities = capabilities,
         settings = {
           python = {
             analysis = {
@@ -159,7 +157,6 @@ return {
         cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
         filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
         root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
-        capabilities = capabilities,
         -- Workaround: Neovim incremental sync assertion failure in vim/lsp/sync.lua
         -- tofu_ls uses incremental sync which triggers a bug in compute_end_range on delete.
         -- flags.allow_incremental_sync = false forces full document sync via the
@@ -272,16 +269,18 @@ return {
       }
       vim.lsp.enable("yamlls")
 
-      -- Navigation
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
-      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-      vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-
-      -- Refactor / actions
-      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+      -- Buffer-local keymaps, set when a server attaches.
+      -- The rest comes from Neovim defaults: grr references, gri implementation, grn rename, gra code action,
+      -- grt type definition, gO document symbols, K hover
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local buffer_opts = { buffer = args.buf }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, buffer_opts)
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, buffer_opts)
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, buffer_opts)
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, buffer_opts)
+        end,
+      })
 
       -- Diagnostics
       vim.keymap.set("n", "[d", function()
