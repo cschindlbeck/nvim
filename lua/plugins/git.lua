@@ -2,17 +2,20 @@
 return {
   {
     "lewis6991/gitsigns.nvim",
-    config = function()
-      require("gitsigns").setup()
-      vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", {})
-    end,
+    -- keys alone would lazy-load gitsigns on the first <leader>gp, so load it when a file opens
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+    keys = {
+      { "<leader>gp", "<cmd>Gitsigns preview_hunk<CR>", desc = "Preview hunk" },
+    },
   },
   {
     "tpope/vim-fugitive",
-    config = function()
-      require("gitsigns").setup()
-      vim.keymap.set("n", "<leader>gb", ":Git blame<CR>", {})
-    end,
+    -- load at startup: :Git and the other commands must exist, and fugitive:// buffers need its autocmds
+    lazy = false,
+    keys = {
+      { "<leader>gb", "<cmd>Git blame<CR>", desc = "Git blame" },
+    },
   },
   { "akinsho/git-conflict.nvim", version = "*", config = true },
   {
@@ -24,11 +27,15 @@ return {
         enabled = true,
       },
     },
+    keys = {
+      {
+        "<leader>lg",
+        function()
+          ---@diagnostic disable-next-line:undefined-global
+          Snacks.lazygit.open()
+        end,
+        desc = "Lazygit",
+      },
+    },
   },
-  vim.api.nvim_set_keymap(
-    "n",
-    "<leader>lg",
-    ':lua require("snacks").lazygit.open()<CR>',
-    { noremap = true, silent = true }
-  ),
 }

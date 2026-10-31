@@ -7,6 +7,6 @@ return {
     -- refer to the configuration section below
   },
   config = function()
-    vim.keymap.set("n", "<leader>tr", ":TroubleToggle<CR>", { silent = true, remap = false })
+    vim.keymap.set("n", "<leader>tr", "<cmd>Trouble diagnostics toggle<CR>", { silent = true, remap = false })
   end,
 }

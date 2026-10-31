@@ -59,10 +59,14 @@ lua/
     diagnostics.lua       Diagnostic display config
   plugins/
     <feature>.lua         One file per feature/concern, each returns a lazy.nvim spec
+after/
+  plugin/
+    k8s-schema.lua        Per-buffer Kubernetes JSON schema for yamlls (from apiVersion and kind)
 ```
 
 **Load order** (defined in `init.lua`):
-`config/general` → `config/autocmds` → `config/keymaps` → `config/diagnostics` → `lazy.setup("plugins")`
+`config/general` → `config/autocmds` → `config/keymaps` → `config/diagnostics` → `lazy.setup("plugins")`.
+`after/plugin/*` runs at startup after all plugins, before the first buffer is read.
 
 Plugin files are organized **by feature** (e.g., `git.lua` groups gitsigns, fugitive,
 git-conflict), not by plugin name.
@@ -149,6 +153,9 @@ git-conflict), not by plugin name.
 - Plugin globals (e.g., `Snacks`) are declared via luacheck directives per file
 - Warning 211 (unused locals) is globally ignored in `.luacheckrc`
 
+Format a Lua buffer in the editor with `<leader>gf` (via none-ls and StyLua).
+`.stylua.toml` sets `line_endings = "Unix"`.
+
 ## Tool Configuration Reference
 
 | Tool          | Config File          | Key Settings                              |
@@ -165,11 +172,12 @@ git-conflict), not by plugin name.
 - **Plugin manager**: lazy.nvim (bootstrapped in `init.lua`)
 - **Leader key**: Space
 - **Colorscheme**: Nord (alternatives defined but inactive in `colorscheme.lua`)
-- **LSP servers**: bashls, dockerls, docker_compose, gopls, lua_ls, pyright,
-  terraformls, texlab, yamlls
-- **Formatters via none-ls**: black, isort, stylua, shfmt, terraform_fmt,
-  markdownlint, hadolint, yamllint
-- **AI assistants**: none active. Avante.nvim is disabled (`lua/plugins/avante.lua`
-  returns `{}`) and `lua/plugins/codepilot.lua` returns `{}`. The GitHub Copilot
-  subscription ended and all Copilot config was removed
+- **LSP servers**: bashls, dockerls, docker_compose_language_service, gopls, helm_ls,
+  jsonls, lua_ls, pyright, tofu_ls, yamlls
+- **Formatters via none-ls**: black, isort, markdownlint, opentofu_fmt, shfmt,
+  stylua, yamlfmt
+- **Linters via none-ls**: golangci_lint, hadolint, kubeconform, markdownlint,
+  yamllint (golangci-lint and kubeconform come from brew, not Mason)
+- **AI assistants**: none active. The GitHub Copilot subscription ended and all
+  Copilot and Avante config was removed
 - **`lazy-lock.json`** is gitignored — do not commit it

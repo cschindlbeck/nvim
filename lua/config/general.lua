@@ -15,6 +15,7 @@ local options = {
   expandtab = true, -- enable the use of space in tab
   -- foldenable = true, -- enable fold
   -- foldmethod = "manual", -- manual fold
+  foldlevelstart = 99, -- open files with all folds expanded (treesitter foldexpr is set in treesitter.lua)
   hlsearch = true, --
   incsearch = true, --
   ignorecase = true, -- case insensitive searching
@@ -33,13 +34,16 @@ local options = {
   termguicolors = true, --
   timeoutlen = 500, -- set timeout for leaderkey
   undofile = true, --
-  updatetime = 50, --
+  updatetime = 250, --
   wrap = true, -- wrap lines
 }
 
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+-- experimental UI2 (private Neovim API, can break on updates)
+require("vim._core.ui2").enable({})
 
 -- vim.o.autocomplete = true
 -- vim.o.completeopt = "menu,menuone,noselect"

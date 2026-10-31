@@ -1,12 +1,13 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {},
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     opts = {
-      automatic_installation = true,
+      -- servers are enabled explicitly below with vim.lsp.enable
+      automatic_enable = false,
     },
   },
   {
@@ -20,40 +21,29 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" }, -- lazy = false,
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-      -- Ansible
-      -- vim.lsp.config.ansiblels = {
-      --   capabilities = capabilities,
-      --   filetypes = { "yaml", "yml", "ansible" },
-      --   -- root_dir = lspconfig.util.root_pattern("roles", "playbooks")
-      -- }
-      -- vim.lsp.enable("ansiblels")
+      -- completion capabilities for all servers (blink.cmp)
+      vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities() })
 
       -- Bash
       vim.lsp.config.bashls = {
-        capabilities = capabilities,
         filetypes = { "sh", "zsh", "bash" },
       }
       vim.lsp.enable("bashls")
 
       -- Docker
       vim.lsp.config.dockerls = {
-        capabilities = capabilities,
         filetypes = { "dockerfile" },
       }
       vim.lsp.enable("dockerls")
 
       -- Docker Compose
       vim.lsp.config.docker_compose_language_service = {
-        capabilities = capabilities,
         -- filetypes = { "yaml", "yml" },
       }
       vim.lsp.enable("docker_compose_language_service")
 
       -- Go
       vim.lsp.config.gopls = {
-        capabilities = capabilities,
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
         settings = {
           gopls = {
@@ -86,7 +76,6 @@ return {
         cmd = { "helm_ls", "serve" },
         -- helm-ls provides completions for Helm charts and Helmfile etc.
         filetypes = { "helm", "helmfile" },
-        capabilities = capabilities, -- reuse your capabilities var
         settings = {
           -- note the exact key: 'helm-ls'
           ["helm-ls"] = {
@@ -107,11 +96,21 @@ return {
       }
       vim.lsp.enable("helm_ls")
 
+      -- JSON
+      vim.lsp.config.jsonls = {
+        settings = {
+          json = {
+            validate = { enable = true },
+            schemas = require("schemastore").json.schemas(),
+          },
+        },
+      }
+      vim.lsp.enable("jsonls")
+
       -- Lua
       vim.lsp.config.lua_ls = {
         cmd = { "lua-language-server" },
         filetypes = { "lua" },
-        capabilities = capabilities,
         settings = {
           Lua = {
             format = {
@@ -129,7 +128,6 @@ return {
 
       -- Pyright
       vim.lsp.config.pyright = {
-        capabilities = capabilities,
         settings = {
           python = {
             analysis = {
@@ -143,31 +141,15 @@ return {
       }
       vim.lsp.enable("pyright")
 
-      -- -- Terraform
-      -- local util = require("lspconfig.util")
-      -- vim.lsp.config.terraformls = {
-      --   capabilities = capabilities,
-      --   filetypes = { "tf", "terraform", "hcl" },
-      --   root_dir = util.root_pattern(".git"),
-      --   settings = {
-      --     terraform = {
-      --       ignorePaths = {
-      --         ".terraform",
-      --         ".terraform/*",
-      --       },
-      --     },
-      --   },
-      -- }
-      -- vim.lsp.enable("terraformls")
-
-      -- There is a bug in tofu ls as of now, once it is resolved we can go back
-      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
       -- Opentofu
+      -- tofu-ls issue #156 (semantic tokens CPU loop on heredocs) is fixed since v0.4.1,
+      -- so the -req-concurrency workaround is removed.
       vim.lsp.config.tofu_ls = {
-        cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
+        -- tofu-ls writes its normal log to stderr, and Neovim copies all server stderr into lsp.log as ERROR.
+        -- That made lsp.log grow past 1 GB, so send the tofu-ls log to /dev/null.
+        cmd = { "tofu-ls", "serve", "-log-file=/dev/null" },
         filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
         root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
-        capabilities = capabilities,
         -- Workaround: Neovim incremental sync assertion failure in vim/lsp/sync.lua
         -- tofu_ls uses incremental sync which triggers a bug in compute_end_range on delete.
         -- flags.allow_incremental_sync = false forces full document sync via the
@@ -190,60 +172,6 @@ return {
         },
       }
       vim.lsp.enable("tofu_ls")
-
-      -- There is a bug in tofu ls as of now, once it is resolved we can go back
-      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
-      -- -- Opentofu
-      -- vim.lsp.config.tofu_ls = {
-      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
-      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
-      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
-      --   capabilities = capabilities,
-      --   settings = {
-      --     terraform = {
-      --       languageServer = {
-      --         indexing = {
-      --           ignorePaths = {
-      --             "**/.terraform",
-      --             "**/.terraform/**",
-      --           },
-      --           ignoreDirectoryNames = { ".terraform" },
-      --         },
-      --       },
-      --     },
-      --   },
-      -- }
-      -- vim.lsp.enable("tofu_ls")
-
-      -- There is a bug in tofu ls as of now, once it is resolved we can go back
-      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
-      -- -- Opentofu
-      -- vim.lsp.config.tofu_ls = {
-      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
-      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
-      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
-      --   capabilities = capabilities,
-      --   settings = {
-      --     terraform = {
-      --       languageServer = {
-      --         indexing = {
-      --           ignorePaths = {
-      --             "**/.terraform",
-      --             "**/.terraform/**",
-      --           },
-      --           ignoreDirectoryNames = { ".terraform" },
-      --         },
-      --       },
-      --     },
-      --   },
-      -- }
-      -- vim.lsp.enable("tofu_ls")
-
-      -- Texlab
-      vim.lsp.config.texlab = {
-        capabilities = capabilities,
-      }
-      vim.lsp.enable("texlab")
 
       -- Yaml
       vim.lsp.config.yamlls = {
@@ -286,35 +214,78 @@ return {
       }
       vim.lsp.enable("yamlls")
 
-      -- Navigation
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
-      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, {})
-      vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-
-      -- Refactor / actions
-      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, {})
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+      -- Buffer-local keymaps, set when a server attaches.
+      -- The rest comes from Neovim defaults: grr references, gri implementation, grn rename, gra code action,
+      -- grt type definition, gO document symbols, K hover
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local buffer_opts = { buffer = args.buf }
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, buffer_opts)
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, buffer_opts)
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, buffer_opts)
+          vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, buffer_opts)
+        end,
+      })
 
       -- Diagnostics
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {})
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {})
+      vim.keymap.set("n", "[d", function()
+        vim.diagnostic.jump({ count = -1, float = true })
+      end, {})
+      vim.keymap.set("n", "]d", function()
+        vim.diagnostic.jump({ count = 1, float = true })
+      end, {})
       -- vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})  -- set for open picker
       vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, {})
 
       -- Autoformat
+      -- If none-ls can format the buffer, only it formats. Otherwise all LSP clients with formatting may run.
+      -- This avoids two clients (e.g. lua_ls and none-ls/stylua) formatting the same buffer.
+      -- The filter is built per buffer, because :wa also formats buffers that are not the current one.
+      local format_filter_for = function(bufnr)
+        return function(client)
+          local null_ls_clients =
+            vim.lsp.get_clients({ bufnr = bufnr, name = "null-ls", method = "textDocument/formatting" })
+          if #null_ls_clients > 0 then
+            return client.name == "null-ls"
+          end
+          return true
+        end
+      end
       vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function(args)
           local clients = vim.lsp.get_clients({ bufnr = args.buf })
           if #clients > 0 then
-            vim.lsp.buf.format({ async = false, bufnr = args.buf })
+            -- Go: organize imports via gopls (synchronous, so the format below sees the result).
+            -- The params come from args.buf, not from the current window, because :wa also saves hidden buffers.
+            local gopls = vim.lsp.get_clients({ bufnr = args.buf, name = "gopls" })[1]
+            if gopls then
+              local params = {
+                textDocument = vim.lsp.util.make_text_document_params(args.buf),
+                range = {
+                  start = { line = 0, character = 0 },
+                  ["end"] = { line = vim.api.nvim_buf_line_count(args.buf) - 1, character = 0 },
+                },
+                context = { only = { "source.organizeImports" }, diagnostics = {} },
+              }
+              local result = vim.lsp.buf_request_sync(args.buf, "textDocument/codeAction", params, 1000)
+              for _, response in pairs(result or {}) do
+                for _, action in pairs(response.result or {}) do
+                  if action.edit then
+                    vim.lsp.util.apply_workspace_edit(action.edit, gopls.offset_encoding)
+                  end
+                end
+              end
+            end
+            vim.lsp.buf.format({ async = false, bufnr = args.buf, filter = format_filter_for(args.buf) })
           end
         end,
       })
       local opts = {}
       vim.keymap.set("n", "<space>f", function()
-        vim.lsp.buf.format({ async = true })
+        vim.lsp.buf.format({ async = true, filter = format_filter_for(vim.api.nvim_get_current_buf()) })
+      end, opts)
+      vim.keymap.set("n", "<leader>gf", function()
+        vim.lsp.buf.format({ filter = format_filter_for(vim.api.nvim_get_current_buf()) })
       end, opts)
     end,
   },
@@ -322,25 +293,22 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = {
       ensure_installed = {
-        "ansiblels",
-        "ansible-lint",
         "bash-language-server",
         "bashls",
         "black",
+        "delve",
         "docker-compose-language-service",
         "dockerls",
         "gopls",
         "hadolint",
         "helm_ls",
         "isort",
+        "json-lsp",
         "lua-language-server",
         "lua_ls",
         "markdownlint",
         "tofu_ls",
-        "pylama",
-        "pylint",
         "pyright",
-        "selene",
         "shellcheck",
         -- "shellharden", -- needs cargo
         "shfmt",

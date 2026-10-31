@@ -1,7 +1,3 @@
-if vim.g.treesitter_branch ~= "main" then
-  return {}
-end
-
 -- on main branch, treesitter isn't started automatically
 vim.api.nvim_create_autocmd({ "Filetype" }, {
   callback = function(event)
@@ -26,7 +22,7 @@ vim.api.nvim_create_autocmd({ "Filetype" }, {
 
     local ft = vim.bo[event.buf].ft
     local lang = vim.treesitter.language.get_lang(ft)
-    if not lang then
+    if not lang or not vim.tbl_contains(nvim_treesitter.get_available(), lang) then
       return
     end
     nvim_treesitter.install({ lang }):await(function(err)
@@ -51,6 +47,8 @@ return {
     event = "VeryLazy",
     dependencies = {
       { "folke/ts-comments.nvim", opts = {} },
+      -- sticky parent keys at the top of the window (deep YAML, long .tf files)
+      { "nvim-treesitter/nvim-treesitter-context", opts = { max_lines = 4 } },
     },
 
     branch = "main",
@@ -81,6 +79,7 @@ return {
         "hcl",
         "helm",
         "html",
+        "java",
         "javascript",
         "jq",
         "json",
@@ -90,12 +89,12 @@ return {
         "markdown_inline",
         "python",
         "query",
+        "regex",
         "terraform",
-        "tmux",
         "typescript",
         "vim",
-        "vim",
         "vimdoc",
+        "yaml",
       }
 
       -- make sure nvim-treesitter can load

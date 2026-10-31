@@ -14,16 +14,12 @@ vim.keymap.set("i", "<C-s>", "<esc>:w<CR>", silencio)
 -- disable highlight of search after esc
 vim.keymap.set("n", "<esc>", ":noh<return><esc>", silencio)
 
--- Use vim motions for window navigation
-vim.keymap.set("n", "<C-k>", ":wincmd k<CR>")
-vim.keymap.set("n", "<C-j>", ":wincmd j<CR>")
-vim.keymap.set("n", "<C-h>", ":wincmd h<CR>")
-vim.keymap.set("n", "<C-l>", ":wincmd l<CR>")
+-- Window navigation in normal mode is handled by vim-tmux-navigator (plugins/tmux.lua)
 
 function _G.set_terminal_keymaps()
   local opts = { buffer = 0 }
   for _, key in ipairs({ "h", "j", "k", "l" }) do
-    vim.keymap.set("t", "<C-" .. key .. ">", [[<Cmd>wincmd " .. key .. "<CR>]], opts)
+    vim.keymap.set("t", "<C-" .. key .. ">", "<Cmd>wincmd " .. key .. "<CR>", opts)
   end
   vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
 end
@@ -84,5 +80,11 @@ vim.keymap.set("n", "<leader>hs", "<C-w>s")
 vim.keymap.set("n", "<leader>vs", "<C-w>v")
 
 -- Insert empty line above/below (m keeps cursor in place)
-vim.keymap.set("n", "<CR>", "m`o<Esc>``", silencio)
+-- Special buffers (quickfix, help, fugitive, ...) keep the default <CR>
+vim.keymap.set("n", "<CR>", function()
+  if vim.bo.buftype ~= "" then
+    return "<CR>"
+  end
+  return "m`o<Esc>``"
+end, { silent = true, remap = false, expr = true })
 vim.keymap.set("n", "<S-CR>", "m`O<Esc>``", silencio)

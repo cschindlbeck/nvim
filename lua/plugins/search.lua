@@ -14,7 +14,7 @@ return {
       function()
         ---@diagnostic disable-next-line:undefined-global
         ---@diagnostic disable-next-line:undefined-global
-        Snacks.picker.recent({ filter == { cwd = true } })
+        Snacks.picker.recent({ filter = { cwd = true } })
       end,
       desc = "Recent files",
     },
