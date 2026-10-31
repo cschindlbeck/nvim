@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd({ "Filetype" }, {
 
     local ft = vim.bo[event.buf].ft
     local lang = vim.treesitter.language.get_lang(ft)
-    if not lang then
+    if not lang or not vim.tbl_contains(nvim_treesitter.get_available(), lang) then
       return
     end
     nvim_treesitter.install({ lang }):await(function(err)
@@ -90,7 +90,6 @@ return {
         "regex",
         "scss",
         "terraform",
-        "tmux",
         "tsx",
         "typescript",
         "vim",
