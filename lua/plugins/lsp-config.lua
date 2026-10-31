@@ -145,7 +145,9 @@ return {
       -- tofu-ls issue #156 (semantic tokens CPU loop on heredocs) is fixed since v0.4.1,
       -- so the -req-concurrency workaround is removed.
       vim.lsp.config.tofu_ls = {
-        cmd = { "tofu-ls", "serve" },
+        -- tofu-ls writes its normal log to stderr, and Neovim copies all server stderr into lsp.log as ERROR.
+        -- That made lsp.log grow past 1 GB, so send the tofu-ls log to /dev/null.
+        cmd = { "tofu-ls", "serve", "-log-file=/dev/null" },
         filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
         root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
         -- Workaround: Neovim incremental sync assertion failure in vim/lsp/sync.lua
