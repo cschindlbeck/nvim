@@ -37,18 +37,11 @@ return {
         -----------------
         -- linter --
         -----------------
-        -- null_ls.builtins.diagnostics.ansiblelint,
         null_ls.builtins.diagnostics.golangci_lint, -- uses golangci-lint from PATH (brew) and the repo config
         null_ls.builtins.diagnostics.hadolint,
         null_ls.builtins.diagnostics.markdownlint.with({
           extra_args = { "--max-line-length=120" },
         }),
-        -- null_ls.builtins.diagnostics.selene, -- lua needs glibc2.33 not available on ubuntu2004
-        -- null_ls.builtins.diagnostics.pylint.with({
-        --   diagnostics_postprocess = function(diagnostic)
-        --     diagnostic.code = diagnostic.message_id
-        --   end,
-        -- }),
         null_ls.builtins.diagnostics.yamllint.with({
           filetypes = { "yaml", "yml" }, -- remove helm here
           extra_args = {

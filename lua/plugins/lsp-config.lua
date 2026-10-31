@@ -22,14 +22,6 @@ return {
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- Ansible
-      -- vim.lsp.config.ansiblels = {
-      --   capabilities = capabilities,
-      --   filetypes = { "yaml", "yml", "ansible" },
-      --   -- root_dir = lspconfig.util.root_pattern("roles", "playbooks")
-      -- }
-      -- vim.lsp.enable("ansiblels")
-
       -- Bash
       vim.lsp.config.bashls = {
         capabilities = capabilities,
@@ -239,12 +231,6 @@ return {
       -- }
       -- vim.lsp.enable("tofu_ls")
 
-      -- Texlab
-      vim.lsp.config.texlab = {
-        capabilities = capabilities,
-      }
-      vim.lsp.enable("texlab")
-
       -- Yaml
       vim.lsp.config.yamlls = {
         cmd = { "yaml-language-server", "--stdio" },
@@ -349,8 +335,6 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = {
       ensure_installed = {
-        "ansiblels",
-        "ansible-lint",
         "bash-language-server",
         "bashls",
         "black",
@@ -365,10 +349,7 @@ return {
         "lua_ls",
         "markdownlint",
         "tofu_ls",
-        "pylama",
-        "pylint",
         "pyright",
-        "selene",
         "shellcheck",
         -- "shellharden", -- needs cargo
         "shfmt",

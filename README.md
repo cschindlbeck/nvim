@@ -78,7 +78,7 @@ Selectable in `lua/plugins/codepilot.lua`:
 Managed by [Mason](https://github.com/williamboman/mason.nvim) and configured via `nvim-lspconfig`:
 
 `bashls` · `dockerls` · `docker_compose_language_service` · `gopls` · `helm_ls` ·
-`lua_ls` · `pyright` · `terraformls` · `texlab` · `yamlls`
+`lua_ls` · `pyright` · `terraformls` · `yamlls`
 
 ### 🖊️ Formatters & Linters
 

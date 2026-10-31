@@ -166,7 +166,7 @@ git-conflict), not by plugin name.
 - **Leader key**: Space
 - **Colorscheme**: Nord (alternatives defined but inactive in `colorscheme.lua`)
 - **LSP servers**: bashls, dockerls, docker_compose, gopls, lua_ls, pyright,
-  terraformls, texlab, yamlls
+  terraformls, yamlls
 - **Formatters via none-ls**: black, isort, stylua, shfmt, terraform_fmt,
   markdownlint, hadolint, yamllint
 - **AI assistants**: none active. Avante.nvim is disabled (`lua/plugins/avante.lua`
