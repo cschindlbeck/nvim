@@ -133,28 +133,11 @@ return {
       }
       vim.lsp.enable("pyright")
 
-      -- -- Terraform
-      -- local util = require("lspconfig.util")
-      -- vim.lsp.config.terraformls = {
-      --   capabilities = capabilities,
-      --   filetypes = { "tf", "terraform", "hcl" },
-      --   root_dir = util.root_pattern(".git"),
-      --   settings = {
-      --     terraform = {
-      --       ignorePaths = {
-      --         ".terraform",
-      --         ".terraform/*",
-      --       },
-      --     },
-      --   },
-      -- }
-      -- vim.lsp.enable("terraformls")
-
-      -- There is a bug in tofu ls as of now, once it is resolved we can go back
-      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
       -- Opentofu
+      -- tofu-ls issue #156 (semantic tokens CPU loop on heredocs) is fixed since v0.4.1,
+      -- so the -req-concurrency workaround is removed.
       vim.lsp.config.tofu_ls = {
-        cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
+        cmd = { "tofu-ls", "serve" },
         filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
         root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
         -- Workaround: Neovim incremental sync assertion failure in vim/lsp/sync.lua
@@ -179,54 +162,6 @@ return {
         },
       }
       vim.lsp.enable("tofu_ls")
-
-      -- There is a bug in tofu ls as of now, once it is resolved we can go back
-      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
-      -- -- Opentofu
-      -- vim.lsp.config.tofu_ls = {
-      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
-      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
-      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
-      --   capabilities = capabilities,
-      --   settings = {
-      --     terraform = {
-      --       languageServer = {
-      --         indexing = {
-      --           ignorePaths = {
-      --             "**/.terraform",
-      --             "**/.terraform/**",
-      --           },
-      --           ignoreDirectoryNames = { ".terraform" },
-      --         },
-      --       },
-      --     },
-      --   },
-      -- }
-      -- vim.lsp.enable("tofu_ls")
-
-      -- There is a bug in tofu ls as of now, once it is resolved we can go back
-      -- https://github.com/opentofu/tofu-ls/issues/156#issue-4258346987
-      -- -- Opentofu
-      -- vim.lsp.config.tofu_ls = {
-      --   cmd = { "tofu-ls", "serve", "-req-concurrency", "1" },
-      --   filetypes = { "opentofu", "opentofu-vars", "terraform", "tf", "hcl" },
-      --   root_markers = { ".terraform", ".terraform.lock.hcl", ".git" },
-      --   capabilities = capabilities,
-      --   settings = {
-      --     terraform = {
-      --       languageServer = {
-      --         indexing = {
-      --           ignorePaths = {
-      --             "**/.terraform",
-      --             "**/.terraform/**",
-      --           },
-      --           ignoreDirectoryNames = { ".terraform" },
-      --         },
-      --       },
-      --     },
-      --   },
-      -- }
-      -- vim.lsp.enable("tofu_ls")
 
       -- Yaml
       vim.lsp.config.yamlls = {

@@ -47,6 +47,8 @@ return {
     event = "VeryLazy",
     dependencies = {
       { "folke/ts-comments.nvim", opts = {} },
+      -- sticky parent keys at the top of the window (deep YAML, long .tf files)
+      { "nvim-treesitter/nvim-treesitter-context", opts = { max_lines = 4 } },
     },
 
     branch = "main",

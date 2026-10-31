@@ -15,6 +15,7 @@ local options = {
   expandtab = true, -- enable the use of space in tab
   -- foldenable = true, -- enable fold
   -- foldmethod = "manual", -- manual fold
+  foldlevelstart = 99, -- open files with all folds expanded (treesitter foldexpr is set in treesitter.lua)
   hlsearch = true, --
   incsearch = true, --
   ignorecase = true, -- case insensitive searching
