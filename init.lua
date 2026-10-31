@@ -14,6 +14,3 @@ vim.opt.rtp:prepend(lazypath)
 
 require("config")
 require("lazy").setup("plugins")
-require("mini.icons").setup() -- is this the best place to put this?
-
-require("vim._core.ui2").enable({})

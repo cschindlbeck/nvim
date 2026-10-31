@@ -57,14 +57,16 @@ lua/
     autocmds.lua          Autocommands
     keymaps.lua           Global keybindings
     diagnostics.lua       Diagnostic display config
-    k8s-schema.lua        Per-buffer Kubernetes JSON schema for yamlls (from apiVersion and kind)
   plugins/
     <feature>.lua         One file per feature/concern, each returns a lazy.nvim spec
+after/
+  plugin/
+    k8s-schema.lua        Per-buffer Kubernetes JSON schema for yamlls (from apiVersion and kind)
 ```
 
 **Load order** (defined in `init.lua`):
-`config/general` → `config/autocmds` → `config/keymaps` → `config/diagnostics` → `config/k8s-schema` →
-`lazy.setup("plugins")`
+`config/general` → `config/autocmds` → `config/keymaps` → `config/diagnostics` → `lazy.setup("plugins")`.
+`after/plugin/*` runs at startup after all plugins, before the first buffer is read.
 
 Plugin files are organized **by feature** (e.g., `git.lua` groups gitsigns, fugitive,
 git-conflict), not by plugin name.
@@ -151,6 +153,9 @@ git-conflict), not by plugin name.
 - Plugin globals (e.g., `Snacks`) are declared via luacheck directives per file
 - Warning 211 (unused locals) is globally ignored in `.luacheckrc`
 
+Format a Lua buffer in the editor with `<leader>gf` (via none-ls and StyLua).
+`.stylua.toml` sets `line_endings = "Unix"`.
+
 ## Tool Configuration Reference
 
 | Tool          | Config File          | Key Settings                              |
@@ -173,7 +178,6 @@ git-conflict), not by plugin name.
   stylua, yamlfmt
 - **Linters via none-ls**: golangci_lint, hadolint, kubeconform, markdownlint,
   yamllint (golangci-lint and kubeconform come from brew, not Mason)
-- **AI assistants**: none active. Avante.nvim is disabled (`lua/plugins/avante.lua`
-  returns `{}`) and `lua/plugins/codepilot.lua` returns `{}`. The GitHub Copilot
-  subscription ended and all Copilot config was removed
+- **AI assistants**: none active. The GitHub Copilot subscription ended and all
+  Copilot and Avante config was removed
 - **`lazy-lock.json`** is gitignored — do not commit it

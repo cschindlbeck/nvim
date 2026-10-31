@@ -8,10 +8,8 @@ and code style guidelines (formatting, naming, module patterns, keymaps, comment
 
 ## Notes not covered in AGENTS.md
 
-- Avante.nvim (`lua/plugins/avante.lua`) is disabled — it ends with `return {}` (the real spec is
-  commented out as `-- return avante`).
-  No AI assistant plugin is active (the Copilot subscription ended and its config was removed). Don't re-enable
-  Avante unless asked to.
+- No AI assistant plugin is active (the Copilot subscription ended and its config was removed).
+  Avante and codepilot files were deleted. Don't add an AI plugin unless asked to.
 
 - This is the user's personal editor config, installed at `~/.config/nvim` — changes take effect
   immediately on next Neovim launch (or `:Lazy reload <plugin>` for a single plugin), there's no

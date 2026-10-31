@@ -42,5 +42,8 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+-- experimental UI2 (private Neovim API, can break on updates)
+require("vim._core.ui2").enable({})
+
 -- vim.o.autocomplete = true
 -- vim.o.completeopt = "menu,menuone,noselect"

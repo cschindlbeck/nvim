@@ -30,11 +30,9 @@ lua/
     keymaps.lua           Global keybindings
     diagnostics.lua       Diagnostic display configuration
   plugins/
-    avante.lua            Avante.nvim AI chat sidebar (disabled, not in use)
     bufferline.lua        Buffer tab bar (bufferline.nvim)
-    codepilot.lua         AI inline completion (none active; ChatGPT, Codeium, llm.nvim selectable)
     colorscheme.lua       Colorscheme (Nord active; Catppuccin, Dracula, VSCode selectable)
-    completion.lua        Autocompletion (nvim-cmp + LuaSnip)
+    completion.lua        Autocompletion (blink.cmp + friendly-snippets)
     dashboard.lua         Start screen (snacks.nvim dashboard)
     explorer.lua          File explorer (snacks.nvim)
     git.lua               Git integration (gitsigns, fugitive, git-conflict, lazygit)
@@ -43,7 +41,6 @@ lua/
     motions.lua           Enhanced navigation (flash.nvim)
     none-ls.lua           Formatters and linters bridged as LSP (none-ls)
     search.lua            Fuzzy finder and grep (snacks.nvim picker)
-    terminal.lua          Integrated terminal (snacks.nvim)
     tmux.lua              Tmux navigation integration
     treesitter.lua        Syntax highlighting and code parsing (nvim-treesitter)
     trouble.lua           Diagnostics list (trouble.nvim)
@@ -61,17 +58,6 @@ Selectable in `lua/plugins/colorscheme.lua` (change the `return` at the bottom):
 | Catppuccin | `catppuccin/nvim` |
 | Dracula | `Mofiqul/dracula.nvim` |
 | VSCode | `Mofiqul/vscode.nvim` |
-
-### 🤖 AI Assistance
-
-Selectable in `lua/plugins/codepilot.lua`:
-
-| Tool | Plugin | Notes |
-| --- | --- | --- |
-| Avante.nvim | `yetone/avante.nvim` | AI chat sidebar; disabled, no longer in use |
-| ChatGPT | `jackMort/ChatGPT.nvim` | Requires `OPENAI_API_KEY` |
-| Codeium | `Exafunction/codeium.vim` | Free alternative |
-| llm.nvim | `huggingface/llm.nvim` | Open-source, requires glibc ≥ 2.32 |
 
 ### 🧠 LSP Servers
 
@@ -100,10 +86,7 @@ Leader key: `<Space>`
 | `<leader>fr` | Recent files |
 | `<leader>fb` | Search open buffers |
 | `<leader>e` | Toggle file explorer |
-| `<leader>tt` | Toggle terminal |
-| `<leader>th` | Open terminal below |
-| `<leader>tv` | Open terminal to the right |
-| `<leader>tf` | Open floating terminal |
+| `<leader>tr` | Toggle diagnostics list (Trouble) |
 | `<leader>lg` | Open lazygit |
 | `<leader>gb` | Git blame |
 | `<leader>gp` | Preview git hunk |
