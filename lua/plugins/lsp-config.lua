@@ -321,6 +321,20 @@ return {
         callback = function(args)
           local clients = vim.lsp.get_clients({ bufnr = args.buf })
           if #clients > 0 then
+            -- Go: organize imports via gopls (synchronous, so the format below sees the result)
+            local gopls = vim.lsp.get_clients({ bufnr = args.buf, name = "gopls" })[1]
+            if gopls then
+              local params = vim.lsp.util.make_range_params(0, gopls.offset_encoding)
+              params.context = { only = { "source.organizeImports" }, diagnostics = {} }
+              local result = vim.lsp.buf_request_sync(args.buf, "textDocument/codeAction", params, 1000)
+              for _, response in pairs(result or {}) do
+                for _, action in pairs(response.result or {}) do
+                  if action.edit then
+                    vim.lsp.util.apply_workspace_edit(action.edit, gopls.offset_encoding)
+                  end
+                end
+              end
+            end
             vim.lsp.buf.format({ async = false, bufnr = args.buf, filter = format_filter })
           end
         end,
@@ -340,6 +354,7 @@ return {
         "bash-language-server",
         "bashls",
         "black",
+        "delve",
         "docker-compose-language-service",
         "dockerls",
         "gopls",

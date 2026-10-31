@@ -38,6 +38,7 @@ return {
         -- linter --
         -----------------
         -- null_ls.builtins.diagnostics.ansiblelint,
+        null_ls.builtins.diagnostics.golangci_lint, -- uses golangci-lint from PATH (brew) and the repo config
         null_ls.builtins.diagnostics.hadolint,
         null_ls.builtins.diagnostics.markdownlint.with({
           extra_args = { "--max-line-length=120" },
